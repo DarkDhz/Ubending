@@ -8,19 +8,25 @@ import { faFilter,faStar,faComments,faClipboardList,faIdBadge} from '@fortawesom
 })
 
 export class SearchBarComponent implements OnInit {
-  faFilter = faFilter;
-  faStar = faStar;
-  faIdBadge = faIdBadge;
-  faComments = faComments;
-  faClipboardList = faClipboardList;
+  isLogged = false
 
 
+  constructor() {
 
-  constructor() { }
 
+  }
   ngOnInit(): void {
+    // @ts-ignore
+
+
   }
 
+  onClickLogged(){
+    this.isLogged = true
+    // @ts-ignore
+
+
+  }
   search(){
     alert('Implement search...')
   }

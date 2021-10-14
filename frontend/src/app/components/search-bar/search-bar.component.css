@@ -2,6 +2,7 @@
 #block_container
 {
   background-color: #A7A5DB;
+  overflow: auto;
 }
 #div1 {
 
@@ -10,11 +11,23 @@
   width: 50%;
   height: 50px;
 }
+#param_logged{
+  display: inline-block;
+  height: 40px;
+  display: inline-block;
+
+}
 #cont_filter,#cont_liked,#cont_chat,#cont_products,#cont_profile {
   overflow: hidden;
   height: 40px;
   display: inline-block;
 }
+
+#param_not_logged{
+  display: inline-block;
+  hidden: true;
+}
+
 #cont_filter:hover,#cont_liked:hover,#cont_chat:hover,#cont_products:hover,#cont_profile:hover{
   border-bottom: 3px solid #AC5E90 ;
 }
