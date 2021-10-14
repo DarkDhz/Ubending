@@ -19,5 +19,11 @@ def getProductByIds(user_id, product_id):
             'description': result[3], 'price': result[4], 'state': result[5],
             'image': result[6], 'category_id': result[7]}
 
+def save_to_db(self):
+    db.session.add(self)
+    db.session.commit()
 
+def delete_from_db(self):
+    db.session.delete(self)
+    db.session.commit()
 
