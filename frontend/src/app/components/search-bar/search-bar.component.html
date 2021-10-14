@@ -25,7 +25,6 @@
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     "
     >Search</button>
-
     </div>
     <div  id ="cont_filter"
           style="cursor: pointer;
@@ -35,12 +34,16 @@
           <a style=" margin-left:5px;
                 font-family: monospace;">FILTER</a>
     </div>
+
+    <div id = "param_logged"
+         *ngIf="isLogged">
     <div id = "cont_liked"
          style=" margin-left:250px;
                   cursor: pointer;
                   color: #F0EDFF;"
          (click)="liked()">
-          <i class="fa fa-star fa-2x"></i>
+          <i class="fa fa-star fa-2x"
+             disabled = "!isActive"></i>
           <a style=" margin-left:5px;
                 font-family: monospace;">LIKED</a>
     </div>
@@ -71,6 +74,22 @@
       <a style=" margin-left:5px;
                 font-family: monospace;">PROFILE</a>
     </div>
+  </div>
+    <div id = "param_not_logged"
+         *ngIf="!isLogged">
+      <button id = "btnLogIn" (click)="onClickLogged()"
+              type="button"
+              style="background-color: #F0EDFF;
+              border: 2px solid #7E68C1;
+              font-size: 20px;
+              width: 50%;
+              margin-left:450px;
+              border-radius: 12px;
+              box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+              "
+      >LOG IN</button>
+    </div>
+
   </div>
   </body>
 </form>
