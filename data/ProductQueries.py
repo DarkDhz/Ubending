@@ -55,6 +55,20 @@ def getProductByIds(user_id, product_id):
     return _toJson(myresult[0])
 
 
+def addProduct(data):
+    mycursor = db.cursor()
+    print(data)
+    query = "INSERT INTO Products (product_id, owner_id, name, description, price, state, image, category_id) " \
+            "VALUES (%s, %s, %s, %s, %f, %i, %s, %i)"
+    values = (data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7])
+    mycursor.execute(query, values)
+    db.commit()
+
+def deleteProduct(product_id):
+    mycursor = db.cursor()
+    query = "DELETE FROM Products WHERE product_id = %s"
+    mycursor.execute(query)
+
 def updateProduct(product_id, owner_id, data):
     mycursor = db.cursor()
     print(data)
