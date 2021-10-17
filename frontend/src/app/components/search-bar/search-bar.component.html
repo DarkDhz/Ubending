@@ -1,7 +1,7 @@
 <form>
   <body>
   <div id = "block_container">
-    <div id="div1" class="topnav" >
+    <div id="div1" class="topnav" style = "width: 60%">
       <img src="assets/images/logo.png"
            width="20"
            height="20"
@@ -12,11 +12,10 @@
              style="border: 2px solid #7E68C1;
             display: inline-block;
           font-size: 20px;
-          width: 50%;
+          width: 60%;
           margin: 8px 0;
           margin-left:15px;
           border-radius: 12px;"
-
       >
       <button (click)="search()"
               type="button"
@@ -26,8 +25,7 @@
     font-size: 20px;
     margin-left:15px;                        border-radius: 12px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    "
-      >Search</button>
+    ">Search</button>
     </div>
     <div  id ="cont_filter"
           style="cursor: pointer;
@@ -70,6 +68,7 @@
       </div>
       <div id = "cont_profile"
            style=" margin-left:50px;
+                 margin-right: 20px;
                  color: #F0EDFF;
                  cursor: pointer;"
            (click)="profile()"
@@ -82,13 +81,17 @@
     <div id = "param_not_logged"
          *ngIf="!isLogged"
          style= "float:right;
+               width: 300px;
+               margin-top: 10px;
                  ">
+
       <button id = "btnLogIn" (click)="onClickLogged()"
               type="button"
               style="background-color: #F0EDFF;
               border: 2px solid #7E68C1;
               font-size: 20px;
-              width: 50%;
+              width: 100%;
+
               border-radius: 12px;
               box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
               "
