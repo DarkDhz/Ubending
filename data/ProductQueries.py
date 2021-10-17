@@ -19,11 +19,17 @@ def getProductByIds(user_id, product_id):
             'description': result[3], 'price': result[4], 'state': result[5],
             'image': result[6], 'category_id': result[7]}
 
-def save_to_db(self):
-    db.session.add(self)
-    db.session.commit()
+def addProduct(data):
+    mycursor = db.cursor()
+    print(data)
+    query = "INSERT INTO Products (product_id, owner_id, name, description, price, state, image, category_id) " \
+            "VALUES (%s, %s, %s, %s, %f, %i, %s, %i)"
+    values = (data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7])
+    mycursor.execute(query, values)
+    db.commit()
 
-def delete_from_db(self):
-    db.session.delete(self)
-    db.session.commit()
-
+def deleteProduct(product_id):
+    mycursor = db.cursor()
+    query = "DELETE FROM Products WHERE product_id = %s"
+    mycursor.execute(query)
+    db.commit()
