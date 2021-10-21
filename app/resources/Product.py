@@ -20,7 +20,7 @@ class ProductResource(Resource):
         parser.add_argument('description', type=str, required=True, help="This field cannot be left blank")
         parser.add_argument('price', type=float, required=True, help="This field cannot be left blank")
         parser.add_argument('state', type=int, required=True, help="This field cannot be left blank")
-        parser.add_argument('image', type=str)
+        parser.add_argument('image', type=werkzeug.datastructures.FileStorage, location='files')
         parser.add_argument('category_id', type=int)
 
         data = parser.parse_args()
@@ -74,7 +74,7 @@ class UserProductResource(Resource):
 
     def put(self, user_id, product_id):
         parser = reqparse.RequestParser()  # create parameters parser from request
-        parser.add_argument('name', type=str, help="This field cannot be left blanck")
+        parser.add_argument('name', type=str, help="This field cannot be left blank")
         parser.add_argument('description', type=str)
         parser.add_argument('price', type=int)
         parser.add_argument('state', type=int)

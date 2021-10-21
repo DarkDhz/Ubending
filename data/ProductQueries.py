@@ -68,6 +68,7 @@ def deleteProduct(product_id):
     mycursor = db.cursor()
     query = "DELETE FROM Products WHERE product_id = %s"
     mycursor.execute(query)
+    db.commit()
 
 def updateProduct(product_id, owner_id, data):
     mycursor = db.cursor()
