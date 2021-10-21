@@ -7,11 +7,11 @@
       <h1><span>Seller</span> Items</h1>
     </div>
     <div class="row">
-      <div class="col-md-3">
-        <div class="card" *ngFor="let product of products">
-          <div class="card-main" v-for="(show) in shows_added" :key="show.id">
+      <div class="col-md-3" *ngFor="let product of state.products">
+        <div class="card">
+          <div class="card-main">
             <div class="discount">-10%</div>
-            <div class="label label-green">State</div>
+            <div class="label label-green">{{product['state']}}</div>
             <div class="product-container">
               <div class="p" (mouseover)="changeImage($event)"><img src="../assets/img2.jpg" alt="Product"></div>
             </div>
@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="content">
-            <a href="">{{product.name}}</a>
+            <a href="">{{product['name']}}</a>
             <div class="rating">
               <i class="fa fa-star-o"></i>
               <i class="fa fa-star-o"></i>
@@ -35,7 +35,7 @@
               <i class="fa fa-star-o"></i>
               <i class="fa fa-star-o"></i>
             </div>
-            <p><span class="money">{{product.price}}€</span><span class="old-price">800,00€</span></p>
+            <p><span class="money">{{product['price']}}€</span><span class="old-price">800,00€</span></p>
           </div>
         </div>
       </div>
