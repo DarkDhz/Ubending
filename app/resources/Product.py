@@ -1,5 +1,7 @@
 import werkzeug
 from flask_restful import Resource, reqparse
+
+import lock
 from data.ProductQueries import getProductByIds, getProductById, getAllProductsOfUserByID, updateProduct
 
 
@@ -20,13 +22,16 @@ class ProductResource(Resource):
                             action="append")  # action = "append" is needed to determine that is a list of strings
 
         data = parser.parse_args()
-        return {'message': "Not developed yet"}, 404
+        with lock.lock:
+            return {'message': "Not developed yet"}, 404
 
     def delete(self, id):
-        return {'message': "Not developed yet"}, 404
+        with lock.lock:
+            return {'message': "Not developed yet"}, 404
 
     def put(self, id):
-        return {'message': "Not developed yet"}, 404
+        with lock.lock:
+            return {'message': "Not developed yet"}, 404
 
 
 class ProductListResource(Resource):
@@ -35,13 +40,16 @@ class ProductListResource(Resource):
         return {'message': "Not developed yet"}, 404
 
     def post(self, id):
-        return {'message': "Not developed yet"}, 404
+        with lock.lock:
+            return {'message': "Not developed yet"}, 404
 
     def delete(self, id):
-        return {'message': "Not developed yet"}, 404
+        with lock.lock:
+            return {'message': "Not developed yet"}, 404
 
     def put(self, id):
-        return {'message': "Not developed yet"}, 404
+        with lock.lock:
+            return {'message': "Not developed yet"}, 404
 
 
 class UserProductResource(Resource):
@@ -54,7 +62,8 @@ class UserProductResource(Resource):
             return result, 200
 
     def post(self, id):
-        return {'message': "Not developed yet"}, 404
+        with lock.lock:
+            return {'message': "Not developed yet"}, 404
 
     def delete(self, id):
         return {'message': "Not developed yet"}, 404

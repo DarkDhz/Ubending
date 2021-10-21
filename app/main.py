@@ -5,9 +5,16 @@ from resources.User import UserAccount, UserLogin
 from flask import session
 from utils.security import secret_key
 from flask_cors import CORS
+from config import config
+from decouple import config as config_decouple
 # https://flask.palletsprojects.com/en/2.0.x/quickstart/#sessions
 
 app = Flask(__name__)
+environment = config['development']
+if config_decouple('PRODUCTION', cast=bool, default=False):
+    environment = config['production']
+
+app.config.from_object(environment)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 app.config['SECRET_KEY'] = secret_key
