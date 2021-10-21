@@ -9,7 +9,7 @@ import axios from 'axios'
 
 export class AppComponent implements OnInit{
   title = 'frontend';
-  products = [{"name":"AAA","price":40}];
+  state = {products: []}
   constructor() {
     this.getShows()
   }
@@ -20,8 +20,8 @@ export class AppComponent implements OnInit{
     const path = 'http://127.0.0.1:5000/user/1/products'
     axios.get(path)
       .then((res) => {
-        this.products =  res.data
-        console.log(this.products)
+        const products =  res.data
+        console.log(products)
       })
       .catch((error) => {
         console.error(error)
