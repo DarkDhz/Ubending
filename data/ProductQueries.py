@@ -2,6 +2,8 @@ from app.database import db
 
 
 def _toJson(elem):
+    if elem[6] is not None:
+        elem[6] = elem[6].decode('ascii')
     return {'product_id': elem[0], 'owner_id': elem[1], 'name': elem[2],
             'description': elem[3], 'price': elem[4], 'state': elem[5],
             'image': elem[6], 'category_id': elem[7]}
@@ -21,7 +23,7 @@ def getAllProductsOfUserByID(user_id):
 
     toReturn = list()
     for elem in myresult:
-        toReturn.append(_toJson(elem))
+        toReturn.append(_toJson(list(elem)))
     return toReturn
 
 
@@ -37,7 +39,7 @@ def getProductById(product_id):
     if len(myresult) == 0:
         return 404
 
-    return _toJson(myresult[0])
+    return _toJson(list(myresult[0]))
 
 
 def getProductByIds(user_id, product_id):
@@ -55,20 +57,22 @@ def getProductByIds(user_id, product_id):
     return _toJson(myresult[0])
 
 
-def addProduct(data):
+def addProduct(user_id, data):
     mycursor = db.cursor()
     print(data)
-    query = "INSERT INTO Products (product_id, owner_id, name, description, price, state, image, category_id) " \
-            "VALUES (%s, %s, %s, %s, %f, %i, %s, %i)"
-    values = (data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7])
+    query = "INSERT INTO Products (owner_id, name, description, price, state, image, category_id) " \
+            "VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    values = (user_id, data['name'], data['description'], data['price'], data['state'], data['image'], data['category_id'])
     mycursor.execute(query, values)
     db.commit()
 
+def deleteProduct(product_id, owner_id):
 
-def deleteProduct(product_id):
     mycursor = db.cursor()
-    query = "DELETE FROM Products WHERE product_id = %s"
-    mycursor.execute(query)
+    query = "DELETE FROM Products WHERE product_id = %s and owner_id = %s"
+    values = (product_id, owner_id)
+    mycursor.execute(query, values)
+    db.commit()
 
 
 def updateProduct(product_id, owner_id, data):
