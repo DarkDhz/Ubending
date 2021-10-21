@@ -4,6 +4,7 @@ from resources.Product import ProductResource, UserProductResource, UserProductL
 from resources.User import UserAccount, UserLogin
 from flask import session
 from utils.security import secret_key
+from flask_cors import CORS
 
 # https://flask.palletsprojects.com/en/2.0.x/quickstart/#sessions
 
@@ -11,6 +12,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = secret_key
 api = Api(app)
 
+CORS(app, resources={r'/*': {'origins': '*'}})
 
 @app.route('/')
 def mainPage():

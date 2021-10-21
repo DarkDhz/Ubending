@@ -67,11 +67,13 @@ def addProduct(user_id, data):
     db.commit()
 
 def deleteProduct(product_id, owner_id):
+
     mycursor = db.cursor()
     query = "DELETE FROM Products WHERE product_id = %s and owner_id = %s"
     values = (product_id, owner_id)
     mycursor.execute(query, values)
     db.commit()
+
 
 def updateProduct(product_id, owner_id, data):
     mycursor = db.cursor()
@@ -86,7 +88,13 @@ def updateProduct(product_id, owner_id, data):
     # myresult = mycursor.fetchall()
     # print(myresult)
 
-# import requests
-# url = 'http://127.0.0.1:5000/user/1/product/1'
-# myobj = {'price': '299', 'name': 'testing'}
-# x = requests.put(url, data = myobj)
+"""
+import requests
+url = 'http://127.0.0.1:5000/user/1/product/1'
+myobj = {'price': '299', 'name': 'testing'}
+x = requests.put(url, data=myobj)
+"""
+
+
+
+

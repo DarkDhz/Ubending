@@ -1,9 +1,9 @@
 import mysql.connector as connection
 
 db = connection.connect(
-    host="localhost",
-    user="root",
-    password="Waterbottle1",
-    database="UBending"
+    host="sql11.freesqldatabase.com",
+    user="sql11445855",
+    password="Xny8nFtYVz",
+    database="sql11445855"
 )
 
