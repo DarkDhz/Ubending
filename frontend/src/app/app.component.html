@@ -7,7 +7,7 @@
       <h1><span>Seller</span> Items</h1>
     </div>
     <div class="row">
-      <div class="col-md-3" *ngFor="let product of state['products']">
+      <div class="col-md-3" >
         <div class="card">
           <div class="card-main">
             <div class="discount">-10%</div>
@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="content">
-            <a href="">{{product['name']}}</a>
+            <a href="">{{state.products}}</a>
             <div class="rating">
               <i class="fa fa-star-o"></i>
               <i class="fa fa-star-o"></i>
@@ -35,7 +35,7 @@
               <i class="fa fa-star-o"></i>
               <i class="fa fa-star-o"></i>
             </div>
-            <p><span class="money">{{product['price']}}</span><span class="old-price">800,00€</span></p>
+            <p><span class="money">30€</span><span class="old-price">800,00€</span></p>
           </div>
         </div>
       </div>
