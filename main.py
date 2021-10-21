@@ -20,6 +20,7 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 app.config['SECRET_KEY'] = secret_key
 api = Api(app)
 
+CORS(app, resources={r'/*': {'origins': '*'}})
 
 @app.route('/')
 def mainPage():
