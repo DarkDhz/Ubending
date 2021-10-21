@@ -54,7 +54,7 @@ def getProductByIds(user_id, product_id):
     if len(myresult) == 0:
         return 404
 
-    return _toJson(myresult[0])
+    return _toJson(list(myresult[0]))
 
 
 def addProduct(user_id, data):
