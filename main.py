@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api
-from resources.Product import ProductResource, UserProductResource, UserProductListResource
-from resources.User import UserAccount, UserLogin
+from app.resources.Product import ProductResource, UserProductResource, UserProductListResource
+from app.resources.User import UserAccount, UserLogin
 from flask import session
 from utils.security import secret_key
 from flask_cors import CORS
