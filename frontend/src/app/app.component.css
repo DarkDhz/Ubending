@@ -8,7 +8,7 @@
 }
 
 .containers{
-  width: 100%;
+  width: 90%;
   margin: 0 auto;
 }
 
@@ -71,8 +71,7 @@
   display: inline-block;
   margin-left: 15px;
 
-
-
+  margin-bottom: 50px;
 }
 
 .card-main{
