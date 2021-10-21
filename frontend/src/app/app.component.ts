@@ -17,7 +17,7 @@ export class AppComponent implements OnInit{
   ngOnInit() {
   }
   getProducts(){
-    const path = 'http://127.0.0.1:5000/user/1/products'
+    const path = 'https://ubending3.herokuapp.com/user/1/products'
     axios.get(path)
       .then((res) => {
         // @ts-ignore
