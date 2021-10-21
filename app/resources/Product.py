@@ -1,7 +1,9 @@
 import werkzeug
 from flask_restful import Resource, reqparse
-from data.ProductQueries import getProductByIds, getProductById, getAllProductsOfUserByID, updateProduct, deleteProduct, addProduct
 
+
+import lock
+from data.ProductQueries import getProductByIds, getProductById, getAllProductsOfUserByID, updateProduct, deleteProduct, addProduct
 
 class ProductResource(Resource):
 
@@ -12,6 +14,7 @@ class ProductResource(Resource):
         else:
             return result, 200
 
+
     def post(self, product_id, user_id):
         return {'message': "Not developed yet"}, 404
 
@@ -19,7 +22,8 @@ class ProductResource(Resource):
         return {'message': "Not developed yet"}, 404
 
     def put(self, id):
-        return {'message': "Not developed yet"}, 404
+        with lock.lock:
+            return {'message': "Not developed yet"}, 404
 
 
 class ProductListResource(Resource):
@@ -28,13 +32,16 @@ class ProductListResource(Resource):
         return {'message': "Not developed yet"}, 404
 
     def post(self, id):
-        return {'message': "Not developed yet"}, 404
+        with lock.lock:
+            return {'message': "Not developed yet"}, 404
 
     def delete(self, id):
-        return {'message': "Not developed yet"}, 404
+        with lock.lock:
+            return {'message': "Not developed yet"}, 404
 
     def put(self, id):
-        return {'message': "Not developed yet"}, 404
+        with lock.lock:
+            return {'message': "Not developed yet"}, 404
 
 
 class UserProductResource(Resource):
@@ -82,9 +89,9 @@ class UserProductResource(Resource):
 
         data = parser.parse_args()
 
-        updateProduct(owner_id=user_id, product_id=product_id, data=data)
-        # https://www.py4u.net/discuss/140647
-
+        with lock.lock:
+            updateProduct(owner_id=user_id, product_id=product_id, data=data)
+            # https://www.py4u.net/discuss/140647
         return 201
 
 
