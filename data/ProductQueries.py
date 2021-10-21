@@ -64,10 +64,11 @@ def addProduct(data):
     mycursor.execute(query, values)
     db.commit()
 
-def deleteProduct(product_id):
+def deleteProduct(product_id, owner_id):
     mycursor = db.cursor()
-    query = "DELETE FROM Products WHERE product_id = %s"
-    mycursor.execute(query)
+    query = "DELETE FROM Products WHERE product_id = %s and owner_id = %s"
+    values = (product_id, owner_id)
+    mycursor.execute(query, values)
     db.commit()
 
 def updateProduct(product_id, owner_id, data):
