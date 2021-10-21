@@ -35,7 +35,7 @@ def getAllProductsOfUserByID(user_id):
 
     toReturn = list()
     for elem in myresult:
-        toReturn.append(_toJson(elem))
+        toReturn.append(_toJson(list(elem)))
     return toReturn
 
 
@@ -51,7 +51,7 @@ def getProductById(product_id):
     if len(myresult) == 0:
         return 404
 
-    return _toJson(myresult[0])
+    return _toJson(list(myresult[0]))
 
 
 def getProductByIds(user_id, product_id):
@@ -66,7 +66,25 @@ def getProductByIds(user_id, product_id):
     if len(myresult) == 0:
         return 404
 
-    return _toJson(myresult[0])
+    return _toJson(list(myresult[0]))
+
+
+def addProduct(user_id, data):
+    mycursor = db.cursor()
+    print(data)
+    query = "INSERT INTO Products (owner_id, name, description, price, state, image, category_id) " \
+            "VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    values = (user_id, data['name'], data['description'], data['price'], data['state'], data['image'], data['category_id'])
+    mycursor.execute(query, values)
+    db.commit()
+
+def deleteProduct(product_id, owner_id):
+
+    mycursor = db.cursor()
+    query = "DELETE FROM Products WHERE product_id = %s and owner_id = %s"
+    values = (product_id, owner_id)
+    mycursor.execute(query, values)
+    db.commit()
 
 
 def updateProduct(product_id, owner_id, data):
@@ -82,7 +100,13 @@ def updateProduct(product_id, owner_id, data):
     # myresult = mycursor.fetchall()
     # print(myresult)
 
-# import requests
-# url = 'http://127.0.0.1:5000/user/1/product/1'
-# myobj = {'price': '299', 'name': 'testing'}
-# x = requests.put(url, data = myobj)
+"""
+import requests
+url = 'http://127.0.0.1:5000/user/1/product/1'
+myobj = {'price': '299', 'name': 'testing'}
+x = requests.put(url, data=myobj)
+"""
+
+
+
+
