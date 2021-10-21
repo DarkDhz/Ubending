@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<div class="wrapper">
+    <button id="btn-abrir-popup" class="btn-abrir-popup" (click)="open()"
+          style="background-color: #F0EDFF;
+            border: 2px solid #CCA715;
+             display: inline-block;
+            font-size: 20px;
+            margin-left:15px;
+            border-radius: 50%;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            "
+          >
+      <i class="fa fa-plus fa-2x"
+      style="margin-top: 3px;
+              color: #FFC664"></i>
+    </button>
+</div>
+<div class="contenedor">
+  <div class="overlay" id="overlay">
+    <div class="popup" id="popup">
+      <a id="btn-cerrar-popup" class="btn-cerrar-popup" (click)="close()"><i class="fa fa-times"></i></a>
+      <h3>POST NEW PRODUCT</h3>
+      <h4>FILL IN ALL THE FIELDS</h4>
+
+      <form action="">
+        <div class="contenedor-inputs">
+          <input id = "product_name" type="text" placeholder="Name of the product" style="border-radius: 4px;
+                                                                      border: 2px solid #8E8CB9;
+
+          ">
+          <input id = "product_price" type="price" placeholder="Price(EURO)" style="
+          border-radius: 4px;
+          border: 2px solid #8E8CB9;
+          width: 50%;">
+          <select id = "product_category" formProductName="selectProduct" class="form-control" style="margin-bottom: 10px;
+                                                                                    border: 2px solid #8E8CB9;
+                                                                                    color: #ABA9BC;
+                                                                                    border-radius: 4px;
+                                                                                    font-size: 20px;
+                                                                                    margin-left:15px;">
+            <option value="" selected disabled hidden>SELECT THE CATEGORY</option>
+            <option value=""></option>
+            <option value="Mr">Mr</option>
+            <option value="Mrs">Mrs</option>
+            <option value="Miss">Miss</option>
+            <option value="Ms">Ms</option>
+          </select>
+          <input id = "product_desc" type="description" placeholder="Description" style="height:300px;
+                                                                     border-radius: 4px;
+                                                                     border: 2px solid #8E8CB9;">
+
+          <label for="img">Select image:</label>
+
+          <input id = "product_img" type="file" style="border-radius: 4px;
+                                                                      border: 2px solid #8E8CB9;
+                                                                                    color: #ABA9BC;
+" (change)="onFile($event)">
+
+        </div>
+        <button   (click)="postProduct()" class="btn-submit" value="Post product"></button>
+      </form>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
