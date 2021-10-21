@@ -67,11 +67,6 @@
 .card{
   transition: all .2s ease-in-out;
   border-radius: 3px;
-  width: 30%;
-  display: inline-block;
-  margin-left: 15px;
-
-  margin-bottom: 50px;
 }
 
 .card-main{

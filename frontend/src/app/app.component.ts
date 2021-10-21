@@ -20,8 +20,9 @@ export class AppComponent implements OnInit{
     const path = 'http://127.0.0.1:5000/user/1/products'
     axios.get(path)
       .then((res) => {
-        const products =  res.data
-        console.log(products)
+        // @ts-ignore
+        this.state.products =  res.data
+        console.log(this.state.products)
       })
       .catch((error) => {
         console.error(error)
