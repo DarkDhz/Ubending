@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import Api
 from app.resources.Product import ProductResource, UserProductResource, UserProductListResource
 from app.resources.User import UserAccount, UserLogin
@@ -23,7 +23,7 @@ api = Api(app)
 
 @app.route('/')
 def mainPage():
-    return 'Main page of ubending!'
+    return render_template("index.html")
 
 
 api.add_resource(UserLogin, '/login', methods=['POST'])
