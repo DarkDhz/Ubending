@@ -8,22 +8,21 @@
 
   overflow: hidden;
   display: inline-block;
-  width: 50%;
-  height: 50px;
 }
 #param_logged{
   display: inline-block;
-  height: 40px;
+  margin-top: 10px;
+
   display: inline-block;
 
 }
 #cont_filter,#cont_liked,#cont_chat,#cont_products,#cont_profile {
   overflow: hidden;
-  height: 40px;
   display: inline-block;
 }
 
 #param_not_logged{
+
   display: inline-block;
   hidden: true;
 }
