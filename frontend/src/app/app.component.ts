@@ -28,7 +28,7 @@ export class AppComponent implements OnInit{
         console.error(error)
       })
   }
-  url:string = "../assets/img2.jpg"
+  url:string = "/assets/sneaker.jpg"
   url1:string = "../assets/img2.jpg"
   url2:string = "../assets/img2.jpg"
   url3:string = "../assets/img2.jpg"
