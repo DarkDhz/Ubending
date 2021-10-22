@@ -10,10 +10,10 @@
       <div class="col-md-3" *ngFor="let product of state.products">
         <div class="card">
           <div class="card-main">
-            <div class="discount">-10%</div>
+            <div class="discount">{{product['category_id']}}</div>
             <div class="label label-green">{{product['state']}}</div>
             <div class="product-container">
-              <div class="p" (mouseover)="changeImage($event)"><img src="../assets/sneaker.jpg" alt="Product"></div>
+              <div class="p" (mouseover)="changeImage($event)"><img src="/assets/sneaker.jpg" alt="Product"></div>
             </div>
             <div class="image">
               <img src="{{url}}" alt="Image">
@@ -35,7 +35,7 @@
               <i class="fa fa-star-o"></i>
               <i class="fa fa-star-o"></i>
             </div>
-            <p><span class="money">{{product['price']}}€</span><span class="old-price">800,00€</span></p>
+            <p><span class="money">{{product['price']}}€</span></p>
           </div>
         </div>
       </div>

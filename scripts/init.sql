@@ -16,8 +16,11 @@ DROP TABLE IF EXISTS ProductsFollowing;
 CREATE TABLE ProductsFollowing (product_id INTEGER, user_id INTEGER);
 
 DROP TABLE IF EXISTS Category;
-CREATE TABLE IF NOT EXISTS Category (categoryID INTEGER AUTO_INCREMENT, name TINYTEXT, PRIMARY KEY (categoryID));
+CREATE TABLE IF NOT EXISTS Category (category_id INTEGER AUTO_INCREMENT, name TINYTEXT, PRIMARY KEY (category_id));
 
 INSERT INTO Category (name) VALUES ("Cars");
 INSERT INTO Category (name) VALUES ("Bikes");
 INSERT INTO Category (name) VALUES ("Home");
+INSERT INTO Category (name) VALUES ("Toys");
+INSERT INTO Category (name) VALUES ("Sports");
+INSERT INTO Category (name) VALUES ("Phones");
