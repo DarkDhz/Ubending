@@ -7,7 +7,7 @@ from utils.security import secret_key
 from flask_cors import CORS
 from config import config
 from decouple import config as config_decouple
-from app.resources.Category import CategoryListResource
+from app.resources.Category import CategoryListResource, CategoryResource
 
 # https://flask.palletsprojects.com/en/2.0.x/quickstart/#sessions
 
@@ -31,6 +31,7 @@ def mainPage():
 
 
 api.add_resource(CategoryListResource, '/categories', methods=['GET'])
+api.add_resource(CategoryResource, '/category/<int:category_id>', methods=['GET'])
 api.add_resource(UserLogin, '/login', methods=['POST'])
 api.add_resource(UserAccount, '/user/<int:user_id>')
 api.add_resource(ProductResource, '/product/<int:product_id>')
