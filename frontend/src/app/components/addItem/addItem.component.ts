@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import axios from 'axios'
 
 @Component({
   selector: 'app-prova2',
@@ -35,7 +36,8 @@ export class addItemComponent implements OnInit {
     product_price = document.getElementById('product_price')
    // @ts-ignore
     product_desc = document.getElementById('product_desc')
-
+  // @ts-ignore
+    product_category = document.getElementById('product_category')
 
 
 
@@ -55,6 +57,23 @@ export class addItemComponent implements OnInit {
 
 
   }
+  onProductName(event: any){
+    // @ts-ignore
+    this.product_name = (<HTMLInputElement>event.target).value
+  }
+  onProductPrice(event: any){
+    // @ts-ignore
+    this.product_price = Number((<HTMLInputElement>event.target).value)
+  }
+  onProductDesc(event: any){
+    // @ts-ignore
+    this.product_desc = (<HTMLInputElement>event.target).value
+  }
+  onProductCat(event: any){
+    // @ts-ignore
+    this.product_category = (<HTMLInputElement>event.target).value
+  }
+
   onFile(event: any){
     // @ts-ignore
     event.target.files[0].name
@@ -67,26 +86,52 @@ export class addItemComponent implements OnInit {
       product_name.style.border = "2px solid red"
     }
     // @ts-ignore
+    else if(this.product_desc.length < 3){
+      // @ts-ignore
+      product_name.style.border = "2px solid red"
+    }
+    // @ts-ignore
+    else if(this.product_name.length < 3){
+      // @ts-ignore
+      product_name.style.border = "2px solid red"
+    }
+    // @ts-ignore
     else if(isNaN(Number(product_price.value)) == true){
       // @ts-ignore
       product_price.style.border = "2px solid red"
     }
-    // @ts-ignore
-    else if(product_desc.value.length < 5){
-      // @ts-ignore
-      product_desc.style.border = "2px solid red"
-    }
-    // @ts-ignore
-    else if(event.target.files[0].name.length < 5){
-      // @ts-ignore
-      product_img.style.border = "2px solid red"
-    }
+
+
     else{
+      // @ts-ignore
+      console.log(this.product_name)
+
+      var params = { name:  this.product_name, price: this.product_price,
+        description: this.product_desc,category_id : this.product_category,state: 1,image : 1};
+      console.log(params)
+
+      const path = `https://ubending3.herokuapp.com/user/2/product`
+      axios.post(path, params)
+        .then((res) => {
+          alert('SHOW UPDATE CORRECTAMENT')
+        })
+        .catch((error) => {
+          console.error(error)
+          alert('ERROR AL AFEGIR SHOW')
+        })
+      // @ts-ignore
+      alert(product_name.value)
+      // @ts-ignore
+
+      alert(product_price.value)
+      /*
       // @ts-ignore
       overlay.classList.remove('active');
       // @ts-ignore
       popup.classList.remove('active');
-    }
+*/}
+
+
 
 
   }
