@@ -39,7 +39,7 @@ def allowed_file(filename, extensions=None):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in extensions
 
-
+# https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
 @app.route('/user/<int:user_id>/product/<int:product_id>/files', methods=['GET', 'POST', 'PUT'])
 def upload_file(user_id, product_id):
     if request.method == 'GET':
