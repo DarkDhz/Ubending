@@ -38,15 +38,24 @@
           <select id = "product_category" formProductName="selectProduct" (change)="onProductCat($event)" class="form-control" style="margin-bottom: 10px;
                                                                                     border: 2px solid #8E8CB9;
                                                                                     color: #ABA9BC;
+                                                                                    height:60px;
                                                                                     border-radius: 4px;
                                                                                     font-size: 20px;
                                                                                     margin-left:15px;">
             <option value="" selected disabled hidden>SELECT THE CATEGORY</option>
-            <option value=""></option>
-            <option value="Mr" >Mr</option>
-            <option value="Mrs">Mrs</option>
-            <option value="Miss">Miss</option>
-            <option value="Ms">Ms</option>
+            <option [value]="item" *ngFor="let item of state.categories">{{item['name']}}</option>
+          </select>
+          <select id = "product_state" formProductName="selectProduct" (change)="onProductState($event)" class="form-control" style="margin-bottom: 10px;
+                                                                                    border: 2px solid #8E8CB9;
+                                                                                    color: #ABA9BC;
+                                                                                    height:60px;
+                                                                                    border-radius: 4px;
+                                                                                    font-size: 20px;
+                                                                                    margin-left:15px;">
+            <option value="" selected disabled hidden>SELECT THE STATE</option>
+            <option value="NEW" >NEW</option>
+            <option value="WORN OUT">WORN OUT</option>
+            <option value="DEPLORABLE">DEPLORABLE</option>
           </select>
           <input id = "product_desc" type="description" (keyup)="onProductDesc($event)"  placeholder="Description" style="height:300px;
                                                                      border-radius: 4px;

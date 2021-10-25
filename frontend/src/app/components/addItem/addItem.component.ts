@@ -4,7 +4,7 @@ import axios from 'axios'
 @Component({
   selector: 'app-prova2',
   templateUrl: './addItem.component.html',
-  styleUrls: ['./addItem.component.css']
+  styleUrls: ['./addItem.component.css'],
 })
 export class addItemComponent implements OnInit {
   // @ts-ignore
@@ -15,10 +15,21 @@ export class addItemComponent implements OnInit {
   btnAbrirPopup:object;
   // @ts-ignore
   btnCerrarPopup:object;
-
+  state = {categories: []}
   constructor() { }
 
   ngOnInit(): void {
+    const path = 'https://ubending3.herokuapp.com/categories'
+    axios.get(path)
+      .then((res) => {
+
+        // @ts-ignore
+        this.state.categories =  res.data
+        console.log(this.state.categories)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
       // @ts-ignore
     overlay = document.getElementById('overlay')
@@ -38,7 +49,8 @@ export class addItemComponent implements OnInit {
     product_desc = document.getElementById('product_desc')
   // @ts-ignore
     product_category = document.getElementById('product_category')
-
+  // @ts-ignore
+  product_state = document.getElementById('product_state')
 
 
 
@@ -73,25 +85,28 @@ export class addItemComponent implements OnInit {
     // @ts-ignore
     this.product_category = (<HTMLInputElement>event.target).value
   }
+  onProductState(event: any){
+    // @ts-ignore
+    this.product_state = (<HTMLInputElement>event.target).value
+  }
 
   onFile(event: any){
     // @ts-ignore
     event.target.files[0].name
   }
   postProduct(){
-
     // @ts-ignore
     if(product_name.value.length < 3){
       // @ts-ignore
       product_name.style.border = "2px solid red"
     }
     // @ts-ignore
-    else if(this.product_desc.length < 3){
+    else if(!this.product_desc){
       // @ts-ignore
       product_name.style.border = "2px solid red"
     }
     // @ts-ignore
-    else if(this.product_name.length < 3){
+    else if(!this.product_name || this.product_name.length < 3){
       // @ts-ignore
       product_name.style.border = "2px solid red"
     }
@@ -99,6 +114,12 @@ export class addItemComponent implements OnInit {
     else if(isNaN(Number(product_price.value)) == true){
       // @ts-ignore
       product_price.style.border = "2px solid red"
+    }
+
+    // @ts-ignore
+    else if(!this.product_category){
+      // @ts-ignore
+      product_category.style.border = "2px solid red"
     }
 
 
