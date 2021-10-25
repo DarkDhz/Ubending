@@ -45,7 +45,7 @@ def allowed_file(filename, extensions=None):
            filename.rsplit('.', 1)[1].lower() in extensions
 
 
-@app.route('/user/<int:user_id>/product/<int:product_id>/upload', methods=['GET', 'POST', 'PUT'])
+@app.route('/user/<int:user_id>/product/<int:product_id>/files', methods=['GET', 'POST', 'PUT'])
 def upload_file(user_id, product_id):
     if request.method == 'GET':
         try:

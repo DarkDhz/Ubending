@@ -110,14 +110,14 @@ myobj = {'price': '299', 'name': 'testing'}
 x = requests.put(url, data=myobj)
 
 import requests
-url = 'http://127.0.0.1:5000/user/1/product/1/upload'
+url = 'http://127.0.0.1:5000/user/1/product/1/files'
 files = {'file': open('readme.txt','rb')}
 values = {'DB': 'photcat', 'OUT': 'csv', 'SHORT': 'short'}
 
 r = requests.post(url, files=files, data=values)
 
 import requests
-url = 'http://127.0.0.1:5000/user/1/product/1/upload'
+url = 'http://127.0.0.1:5000/user/1/product/1/files'
 x = requests.get(url)
 print(x.content)
 
