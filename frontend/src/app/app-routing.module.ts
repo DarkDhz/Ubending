@@ -5,8 +5,8 @@ import { SearchBarComponent } from "./components/search-bar/search-bar.component
 import {UserProductsComponent} from "./components/user-products/user-products.component";
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login',pathMatch: 'full'},
-  { path: 'login', component: LogInSignUpComponent},
+  { path: '', redirectTo: '/login-signup',pathMatch: 'full'},
+  { path: 'login-signup', component: LogInSignUpComponent},
   { path: 'user-products', component: UserProductsComponent}
 ];
 
