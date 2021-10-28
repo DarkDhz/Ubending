@@ -20,3 +20,8 @@ def getAccountByUsername(username):
         return 404
 
     return _toJson(list(myresult[0]))
+
+def verifyPassword(username, password):
+    #return pwd_context.verify(password, self.password)
+    user = getAccountByUsername(username)
+    return password == user[2]
