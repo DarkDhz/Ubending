@@ -5,7 +5,6 @@
   overflow: auto;
 }
 #div1 {
-
   overflow: hidden;
   display: inline-block;
 }
@@ -27,7 +26,7 @@
   hidden: true;
 }
 
-#cont_filter:hover,#cont_liked:hover,#cont_chat:hover,#cont_products:hover,#cont_profile:hover{
+#cont_filter:hover,#cont_liked:hover,#cont_chat:hover,#cont_products:hover{
   border-bottom: 3px solid #AC5E90 ;
 }
 
