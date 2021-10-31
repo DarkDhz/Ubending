@@ -37,20 +37,4 @@ export class UserProductsComponent implements OnInit{
     this.url = event.target.src;
   }
 
-  changeImage1(event:any){
-    this.url1 = event.target.src;
-  }
-
-  changeImage2(event:any){
-    this.url2 = event.target.src;
-  }
-
-  changeImage3(event:any){
-    this.url3 = event.target.src;
-  }
-
-  changeImage4(event:any){
-    this.url4 = event.target.src;
-  }
-
 }

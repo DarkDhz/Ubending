@@ -1,11 +1,14 @@
 <div class="wrapper">
+  <button class="transparent-button" (click)="onClickHome()" routerLink="/home">
+    <img src="../../assets/transparent-logo.png">
+  </button>
   <div class="container" id="container">
     <div class="form-container sign-up-container">
       <form action="#">
         <h1>Create Account</h1>
-        <input type="text" placeholder="Name" />
         <input type="email" placeholder="Email" />
         <input type="password" placeholder="Password" />
+        <input type="password" placeholder="Repeat password" />
         <button style="margin-top: 20px" >Sign Up</button>
       </form>
     </div>
@@ -14,7 +17,7 @@
         <h1>Sign in</h1>
         <input type="email" placeholder="Email" />
         <input type="password" placeholder="Password" />
-        <a href="#">Forgot your password?</a>
+        <a href="#" (click)="onClickForgot()" routerLink="/user-products">Forgot your password?</a>
         <button>Sign In</button>
       </form>
     </div>

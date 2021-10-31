@@ -23,4 +23,14 @@ export class LogInSignUpComponent implements OnInit {
     });
   }
 
+  onClickHome(){
+    // @ts-ignore
+    this.$router.replace({path: '/', query: {}})
+  }
+
+  onClickForgot(){
+    // @ts-ignore
+    this.$router.replace({path: '/', query: {}})
+  }
+
 }

@@ -49,6 +49,10 @@ a {
   margin: 15px 0;
 }
 
+a:hover{
+  text-decoration: underline;
+}
+
 button {
   border-radius: 20px;
   border: 1px solid white;
@@ -74,6 +78,30 @@ button.ghost {
   background-color: transparent;
   border-color: #7E68C1;
   color: #7E68C1;
+}
+
+.transparent-button {
+  background-color: transparent;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  border-color: transparent;
+  border-radius: 10px;
+  padding: 5px;
+  margin-top: 25px;
+  margin-left: 70px;
+  z-index: 2;
+  position: absolute;
+}
+
+.transparent-button img{
+  width: 60px;
+  height: 40px;
+  z-index: 2;
+}
+
+.transparent-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255,255,255,0.65), 0 0 40px rgba(255,255,255,0.65), 0 0 80px rgba(255,255,255,0.65);
 }
 
 form {
@@ -125,7 +153,7 @@ input:focus {
   width: 768px;
   max-width: 100%;
   min-height: 480px;
-  margin-top: 100px
+  margin-top: 140px
 }
 
 .form-container {
@@ -134,8 +162,8 @@ input:focus {
   height: 100%;
   transition: all 0.6s ease-in-out;
   background-color: rgba(255, 255, 255, 0.13);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 2px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
 }
@@ -148,6 +176,7 @@ input:focus {
 
 .container.right-panel-active .sign-in-container {
   transform: translateX(100%);
+  opacity: 0;
 }
 
 .sign-up-container {
