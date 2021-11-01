@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import {SearchBarComponent} from "./components/search-bar/search-bar.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import { addItemComponent } from "./components/addItem/addItem.component";
+import { FooterComponent } from "./components/footer/footer.component";
 import { AppRoutingModule, routingComponents } from "./app-routing.module";
 
 /*import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';*/
@@ -14,6 +15,7 @@ import { AppRoutingModule, routingComponents } from "./app-routing.module";
     AppComponent,
     SearchBarComponent,
     addItemComponent,
+    FooterComponent,
     routingComponents
     ],
   imports: [
