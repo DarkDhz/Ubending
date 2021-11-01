@@ -1,6 +1,6 @@
 
 <app-search-bar></app-search-bar>
-<section class="bg-color">
+<section class="bg-color" style="margin-top: 30px">
   <div class="containers">
     <div class="title">
       <p>My List of Seller</p>
@@ -13,7 +13,7 @@
             <div class="discount">{{product['category_id']}}</div>
             <div class="label label-green">{{product['state']}}</div>
             <div class="product-container">
-              <div class="p" (mouseover)="changeImage($event)"><img src="/assets/sneaker.jpg" alt="Product"></div>
+              <div class="p" (mouseover)="changeImage($event)"><img src="https://i.imgur.com/Kz2bPI0.jpg" alt="Product"></div>
             </div>
             <div class="image">
               <img src="{{url}}" alt="Image">
@@ -21,8 +21,12 @@
             <div class="cart-line"></div>
             <div class="cart-item">
               <ul>
-                <li><a href=""><i class="fa fa-pencil"></i></a></li>
-                <li><a href=""><i class="fa fa-trash"></i></a></li>
+                <button
+                  mat-button (click)="openDialogEdit(product['name'],product['idProduct'])" style="background: #555">
+                  <i class="fa fa-pencil" ></i></button>
+                <button
+                  mat-button (click)="openDialogDelete(product['name'],product['idProduct'])"style="background: #555">
+                  <i class="fa fa-trash "></i></button>
               </ul>
             </div>
           </div>
@@ -40,7 +44,7 @@
         </div>
       </div>
     </div>
+    <app-prova2></app-prova2>
   </div>
 </section>
-<app-prova2></app-prova2>
 

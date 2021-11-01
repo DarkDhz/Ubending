@@ -9,6 +9,8 @@ import { AppRoutingModule, routingComponents } from "./app-routing.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbCollapseModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 /*import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';*/
 
@@ -26,7 +28,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     NgbModule,
     NgbCollapseModule,
     NgbDropdownModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatDialogModule,
+    BrowserAnimationsModule
     /*FontAwesomeModule*/
   ],
   providers: [],

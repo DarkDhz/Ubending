@@ -1,79 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<body>
 <div class="wrapper">
-    <button id="btn-abrir-popup" class="btn-abrir-popup" (click)="open()"
+  <button id="btn-abrir-popup" class="btn-abrir-popup" (click)="open()"
           style="background-color: #F0EDFF;
             border: 2px solid #CCA715;
              display: inline-block;
             font-size: 20px;
-            margin-left:15px;
             border-radius: 50%;
             box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
             "
-          >
-      <i class="fa fa-plus fa-2x"
-      style="margin-top: 3px;
+  >
+    <i class="fa fa-plus fa-2x"
+       style="margin-top: 3px;
               color: #FFC664"></i>
-    </button>
+  </button>
 </div>
-<div class="contenedor">
-  <div class="overlay" id="overlay">
-    <div class="popup" id="popup">
-      <a id="btn-cerrar-popup" class="btn-cerrar-popup" (click)="close()"><i class="fa fa-times"></i></a>
-      <h3>POST NEW PRODUCT</h3>
-      <h4>FILL IN ALL THE FIELDS</h4>
+<div class="overlay" id="overlay">
+  <div class="popup" id="popup">
+    <a id="btn-cerrar-popup" class="btn-cerrar-popup" (click)="close()"><i class="fa fa-times"></i></a>
+    <h3>POST NEW PRODUCT</h3>
+    <h4>FILL IN ALL THE FIELDS</h4>
 
-      <form action="">
-        <div class="contenedor-inputs">
-          <input id = "product_name" (keyup)="onProductName($event)" type="text" placeholder="Name of the product" style="border-radius: 4px;
+    <form action="">
+      <div class="contenedor-inputs">
+        <input id = "product_name" (keyup)="onProductName($event)" type="text" placeholder="Name of the product" style="border-radius: 4px;
                                                                       border: 2px solid #8E8CB9;
 
           ">
-          <input id = "product_price" (keyup)="onProductPrice($event)" type="price" placeholder="Price(EURO)" style="
+        <input id = "product_price" (keyup)="onProductPrice($event)" type="price" placeholder="Price(EURO)" style="
           border-radius: 4px;
           border: 2px solid #8E8CB9;
           width: 50%;">
-          <select id = "product_category" formProductName="selectProduct" (change)="onProductCat($event)" class="form-control" style="margin-bottom: 10px;
+        <select id = "product_category" formProductName="selectProduct" (change)="onProductCat($event)" class="form-control" style="margin-bottom: 10px;
                                                                                     border: 2px solid #8E8CB9;
                                                                                     color: #ABA9BC;
                                                                                     height:60px;
                                                                                     border-radius: 4px;
                                                                                     font-size: 20px;
                                                                                     margin-left:15px;">
-            <option value="" selected disabled hidden>SELECT THE CATEGORY</option>
-            <option [value]="item" *ngFor="let item of state.categories">{{item['name']}}</option>
-          </select>
-          <select id = "product_state" formProductName="selectProduct" (change)="onProductState($event)" class="form-control" style="margin-bottom: 10px;
+          <option value="" selected disabled hidden>SELECT THE CATEGORY</option>
+          <option [value]="item" *ngFor="let item of state.categories">{{item['name']}}</option>
+        </select>
+        <select id = "product_state" formProductName="selectProduct" (change)="onProductState($event)" class="form-control" style="margin-bottom: 10px;
                                                                                     border: 2px solid #8E8CB9;
                                                                                     color: #ABA9BC;
                                                                                     height:60px;
                                                                                     border-radius: 4px;
                                                                                     font-size: 20px;
                                                                                     margin-left:15px;">
-            <option value="" selected disabled hidden>SELECT THE STATE</option>
-            <option value="NEW" >NEW</option>
-            <option value="WORN OUT">WORN OUT</option>
-            <option value="DEPLORABLE">DEPLORABLE</option>
-          </select>
-          <input id = "product_desc" type="description" (keyup)="onProductDesc($event)"  placeholder="Description" style="height:300px;
+          <option value="" selected disabled hidden>SELECT THE STATE</option>
+          <option value="NEW" >NEW</option>
+          <option value="WORN OUT">WORN OUT</option>
+          <option value="DEPLORABLE">DEPLORABLE</option>
+        </select>
+        <input id = "product_desc" type="description" (keyup)="onProductDesc($event)"  placeholder="Description" style="height:300px;
                                                                      border-radius: 4px;
                                                                      border: 2px solid #8E8CB9;">
 
-          <label for="img">Select image:</label>
+        <label for="img">Select image:</label>
 
-          <input id = "product_img" type="file" style="border-radius: 4px;
+        <input id = "product_img" type="file" style="border-radius: 4px;
                                                                       border: 2px solid #8E8CB9;
                                                                                     color: #ABA9BC;
 " (change)="onFile($event)">
 
-        </div>
-        <a   id="btn-submit" class="btn-submit" (click)="postProduct()" ><i class="fa fa-times"></i></a>
-      </form>
-    </div>
-
+      </div>
+      <a   id="btn-submit" class="btn-submit" (click)="postProduct()" ><i class="fa fa-times"></i></a>
+    </form>
   </div>
+
 </div>
-</body>
-</html>
