@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./recover-password.component.css']
 })
 export class RecoverPasswordComponent implements OnInit {
+  showEmailSent: Boolean = false;
 
   constructor() { }
 
@@ -13,6 +14,11 @@ export class RecoverPasswordComponent implements OnInit {
   }
 
   onClickHome(){
+    // @ts-ignore
+    this.$router.replace({path: '/', query: {}})
+  }
+
+  onClickCancel(){
     // @ts-ignore
     this.$router.replace({path: '/', query: {}})
   }
