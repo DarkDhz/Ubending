@@ -17,4 +17,9 @@ export class ResetPasswordComponent implements OnInit {
     this.$router.replace({path: '/', query: {}})
   }
 
+  onClickReset(){
+    // @ts-ignore
+    this.$router.replace({path: '/', query: {}})
+  }
+
 }
