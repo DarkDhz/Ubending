@@ -1,4 +1,7 @@
 from app.database import db
+from flask import g, current_app
+from flask_httpauth import HTTPBasicAuth
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 
 def _toJson(elem):
     if elem[6] is not None:
@@ -25,3 +28,8 @@ def verifyPassword(username, password):
     #return pwd_context.verify(password, self.password)
     user = getAccountByUsername(username)
     return password == user[2]
+
+
+def generate_auth_token(self, expiration=600):
+    s = Serializer(current_app.secret_key, expires_in=expiration)
+    return s.dumps({'username': self.username})

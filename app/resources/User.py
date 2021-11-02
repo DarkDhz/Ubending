@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
-from data.UserQueries import getAccountByUsername
+from data.UserQueries import getAccountByUsername, verifyPassword, generate_auth_token
+
 
 class UserAccount(Resource):
 
@@ -20,7 +21,7 @@ class UserLogin(Resource):
     def get(self, id):
         return {'message': "Not developed yet"}, 404
 
-    def post(self, id):
+    def post(self):
         parser = reqparse.RequestParser()  # create parameters parser from request
 
         # define all input parameters need and their type
@@ -31,7 +32,11 @@ class UserLogin(Resource):
         result = getAccountByUsername(data['username'])
         if result == 404:
             return {'Message': 'Username does not exist'}, 404
-        return {'message': "Not developed yet"}, 404
+        if not verifyPassword(data["password"]):
+            return {"message": "Invalid password."}, 400
+
+        token = generate_auth_token()
+        return {'token': token.decode('ascii')}, 200
 
     def delete(self, id):
         return {'message': "Not developed yet"}, 404
