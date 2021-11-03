@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 
 export class SearchBarComponent implements OnInit {
   isLogged = false
-
+  isCollapsed = true;
 
   constructor() {
 

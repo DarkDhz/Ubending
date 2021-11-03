@@ -6,6 +6,11 @@ import {SearchBarComponent} from "./components/search-bar/search-bar.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import { addItemComponent } from "./components/addItem/addItem.component";
 import { AppRoutingModule, routingComponents } from "./app-routing.module";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbCollapseModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 /*import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';*/
 
@@ -19,7 +24,13 @@ import { AppRoutingModule, routingComponents } from "./app-routing.module";
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule,
+    NgbCollapseModule,
+    NgbDropdownModule,
+    FontAwesomeModule,
+    MatDialogModule,
+    BrowserAnimationsModule
     /*FontAwesomeModule*/
   ],
   providers: [],

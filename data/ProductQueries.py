@@ -1,5 +1,5 @@
 from app.database import db
-
+from data.CategoryQueries import getCategoryNameByID
 
 def convertState(value):
     if value is None:
@@ -14,7 +14,7 @@ def convertState(value):
 def _toJson(elem):
     if elem[6] is not None:
         elem[6] = elem[6].decode('ascii')
-
+    elem[7] = getCategoryNameByID(elem[7])
     elem[5] = convertState(elem[5])
     return {'product_id': elem[0], 'owner_id': elem[1], 'name': elem[2],
             'description': elem[3], 'price': elem[4], 'state': elem[5],
@@ -101,10 +101,26 @@ def updateProduct(product_id, owner_id, data):
     # print(myresult)
 
 """
+https://docs.python-requests.org/es/latest/user/quickstart.html
+
+
 import requests
 url = 'http://127.0.0.1:5000/user/1/product/1'
 myobj = {'price': '299', 'name': 'testing'}
 x = requests.put(url, data=myobj)
+
+import requests
+url = 'http://127.0.0.1:5000/user/1/product/2/files'
+files = {'file': open('readme.txt','rb')}
+values = {'DB': 'photcat', 'OUT': 'csv', 'SHORT': 'short'}
+
+r = requests.put(url, files=files, data=values)
+
+import requests
+url = 'http://127.0.0.1:5000/user/1/product/1/files'
+x = requests.get(url)
+print(x.content)
+
 """
 
 
