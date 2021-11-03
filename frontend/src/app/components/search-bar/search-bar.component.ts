@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 
 export class SearchBarComponent implements OnInit {
   isLogged = false
-
+  isCollapsed = true;
 
   constructor() {
 
@@ -23,8 +23,7 @@ export class SearchBarComponent implements OnInit {
   onClickLogged(){
     this.isLogged = true
     // @ts-ignore
-
-
+    this.$router.replace({path: '/', query: {}})
   }
   search(){
     alert('Implement search...')

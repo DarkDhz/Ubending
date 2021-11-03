@@ -9,8 +9,8 @@ INSERT INTO Products (owner_id, name, price) VALUES (2, "Product2", 200);
 INSERT INTO Products (owner_id, name, price) VALUES (1, "Product3", 290);
 
 DROP TABLE IF EXISTS Users;
-CREATE TABLE Users (user_id INTEGER AUTO_INCREMENT, username TINYTEXT, password TINYTEXT, mail MEDIUMTEXT, location MEDIUMTEXT, userphoto LONGBLOB, PRIMARY KEY (user_id));
-INSERT INTO Users (username, password) VALUES ("test", "1234")
+CREATE TABLE Users (user_id INTEGER AUTO_INCREMENT, username TINYTEXT, password MEDIUMTEXT, admin BOOLEAN, mail MEDIUMTEXT, location MEDIUMTEXT, userphoto LONGBLOB, PRIMARY KEY (user_id));
+INSERT INTO Users (username, password, admin, mail, location) VALUES ("test", "1234", 1, "test@gmail.com", "Barcelona");
 
 DROP TABLE IF EXISTS ProductsFollowing;
 CREATE TABLE ProductsFollowing (product_id INTEGER, user_id INTEGER);
