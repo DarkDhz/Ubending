@@ -14,7 +14,7 @@ def verify_password(password, hash):
 
 def generate_auth_token(user_id, expiration=600):
     s = Serializer(secret_key, expires_in=expiration)
-    return s.dumps({'username': user_id})
+    return s.dumps({'user_id': user_id})
 
 
 def verify_auth_token(cls, token):
@@ -26,7 +26,5 @@ def verify_auth_token(cls, token):
     except BadSignature:
         return None  # invalid token
 
-    #TODO REPLACE WITH MYSQL NOT POSTGRESS
-    user = cls.query.filter_by(username=data['username']).first()
-
-    return user
+    return data['user_id']
+    #todo get user info by id

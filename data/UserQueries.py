@@ -1,9 +1,7 @@
 import re
 from app.database import db
-from flask import g, current_app
-from flask_httpauth import HTTPBasicAuth
-from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
-from utils.security import hash_password
+from utils.security import hash_password, verify_password, generate_auth_token
+
 
 def _toJson(elem):
     print(elem)
@@ -19,6 +17,21 @@ def getAccountByEmail(email):
 
     query = "SELECT * FROM Users WHERE mail = %s"
     values = (email,)
+
+    mycursor.execute(query, values)
+
+    myresult = mycursor.fetchall()
+
+    if len(myresult) == 0:
+        return 404
+
+    return _toJson(list(myresult[0]))
+
+def getAccountByID(id):
+    mycursor = db.cursor()
+
+    query = "SELECT * FROM Users WHERE user_id = %s"
+    values = (id,)
 
     mycursor.execute(query, values)
 
@@ -45,25 +58,44 @@ def checkPasswords(password, repeat_password):
 
 def addUserToDB(username, email, password):
     mycursor = db.cursor()
-    query = "INSERT INTO Users (username, password, mail) " \
-            "VALUES (%s, %s, %s)"
+    query = "INSERT INTO Users (username, password, mail, admin) " \
+            "VALUES (%s, %s, %s, 0)"
 
     password = hash_password(password)
-    values = (username, email, password)
+    values = (username, password, email)
     mycursor.execute(query, values)
     db.commit()
 
 
+def validateLogin(mail, password):
+    mycursor = db.cursor()
+    query = "SELECT * FROM Users WHERE mail = %s"
+
+    values = (mail,)
+
+    mycursor.execute(query, values)
+    myresult = mycursor.fetchall()
+
+    if len(myresult) == 0:
+        return 404
+
+    if verify_password(password, myresult[0][2]):
+        return generate_auth_token(myresult[0][0])
+    else:
+        return 400
+
+
 """
 
-parser.add_argument('username', type=str, required=True, help="This field cannot be left blank")
-        parser.add_argument('mail', type=str, required=True, help="This field cannot be left blank")
-        parser.add_argument('password', type=str, required=True, help="This field cannot be left blank")
-        parser.add_argument('repeat_password', type=float, required=True, help="This field cannot be left blank")
-        
 import requests
 url = 'http://127.0.0.1:5000/register'
 myobj = {'username': 'hola', 'mail': '2test@gmail.com', 'password': '123bdhewbdehfvgfvASVCFDgvfj', 'repeat_password': '123bdhewbdehfvgfvASVCFDgvfj'}
+x = requests.post(url, data=myobj)
+x.json()
+
+import requests
+url = 'http://127.0.0.1:5000/login'
+myobj = {'mail': '2test@gmail.com', 'password': '123bdhewbdehfvgfvASVCFDgvfj'}
 x = requests.post(url, data=myobj)
 x.json()
 """

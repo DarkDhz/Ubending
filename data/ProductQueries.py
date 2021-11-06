@@ -1,6 +1,7 @@
 from app.database import db
 from data.CategoryQueries import getCategoryNameByID
 
+
 def convertState(value):
     if value is None:
         return "Brandnew"
@@ -10,6 +11,7 @@ def convertState(value):
         return "Used"
     else:
         return "Destroyed"
+
 
 def _toJson(elem):
     if elem[6] is not None:
@@ -28,7 +30,6 @@ def getAllProductsOfUserByID(user_id):
 
     query = "SELECT * FROM Products WHERE owner_id = %s"
     values = (user_id,)
-    print(user_id)
     mycursor.execute(query, values)
 
     myresult = mycursor.fetchall()
@@ -77,12 +78,13 @@ def addProduct(user_id, data):
     print(data)
     query = "INSERT INTO Products (owner_id, name, description, price, state, image, category_id) " \
             "VALUES (%s, %s, %s, %s, %s, %s, %s)"
-    values = (user_id, data['name'], data['description'], data['price'], data['state'], data['image'], data['category_id'])
+    values = (
+    user_id, data['name'], data['description'], data['price'], data['state'], data['image'], data['category_id'])
     mycursor.execute(query, values)
     db.commit()
 
-def deleteProduct(product_id, owner_id):
 
+def deleteProduct(product_id, owner_id):
     mycursor = db.cursor()
     query = "DELETE FROM Products WHERE product_id = %s and owner_id = %s"
     values = (product_id, owner_id)
@@ -103,13 +105,10 @@ def updateProduct(product_id, owner_id, data):
     # myresult = mycursor.fetchall()
     # print(myresult)
 
+
 """
 import requests
 url = 'http://127.0.0.1:5000/user/3/product'
 myobj = {'price': '299', 'name': 'testing', 'description': 'hola', 'state': 0}
 x = requests.post(url, data=myobj)
 """
-
-
-
-

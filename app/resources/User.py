@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from data.UserQueries import checkPasswords, getAccountByEmail, addUserToDB
+from data.UserQueries import checkPasswords, getAccountByEmail, addUserToDB, validateLogin
 
 
 class UserAccount(Resource):
@@ -33,7 +33,6 @@ class UserAccount(Resource):
             return {"Your password must have at least 1 number"}, 400
         elif pwCode == 4:
             return {"Your password must have at least 1 uppercase letter."}, 400
-        print('jffjfj')
         addUserToDB(data['username'], data['mail'], data['password'])
 
         return {'message': "Account created succesfully"}, 200
@@ -54,20 +53,19 @@ class UserLogin(Resource):
         parser = reqparse.RequestParser()  # create parameters parser from request
 
         # define all input parameters need and their type
-        parser.add_argument('username', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('mail', type=str, required=True, help="This field cannot be left blank")
         parser.add_argument('password', type=str, required=True, help="This field cannot be left blank")
 
         data = parser.parse_args()
-        '''
-        # TODO result = getAccountByUsername(data['username'])
-        if result == 404:
-            return {'Message': 'Username does not exist'}, 404
-        if not verifyPassword(data["password"]):
-            return {"message": "Invalid password."}, 400
 
-        token = generate_auth_token()
-        return {'token': token.decode('ascii')}, 200
-        '''
+        result = validateLogin(mail=data['mail'], password=data['password'])
+
+        if result == 404:
+            return {'message': 'user not found'}, 404
+        if result == 400:
+            return {'message': 'invalid password'}, 400
+        return {'token': result.decode('ascii')}, 200
+
 
     def delete(self, id):
         return {'message': "Not developed yet"}, 404
