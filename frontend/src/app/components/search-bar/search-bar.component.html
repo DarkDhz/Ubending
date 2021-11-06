@@ -4,8 +4,8 @@
   </button>
   <a>LOGO</a>
   <div class="collapse navbar-collapse" id="navbarsExampleDefault" [ngbCollapse]="isCollapsed">
-    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="color: #F0EDFF;border: 2px solid #F0EDFF">Search</button>
+    <input style="margin-left: 10px" type="text" placeholder="Search">
+    <button style="margin-left: 10px">Search</button>
     <div  id ="cont_filter"
           style="cursor: pointer;
                  color: #F0EDFF;
@@ -41,10 +41,10 @@
                  border-color: #A7A5DB;
                  cursor: pointer;"
     >
-      <div class="row">
+      <div class="row" >
         <div class="col">
           <div ngbDropdown class="d-inline-block" >
-            <button class="btn btn-outline-primary" id="dropdownBasic1"data-bs-toggle="dropdown" ngbDropdownToggle style="color: #F0EDFF;border: 2px solid #F0EDFF">
+            <button id="dropdownBasic1"data-bs-toggle="dropdown" ngbDropdownToggle style="color: #F0EDFF;border: 2px solid #F0EDFF">
               <i class = "fa fa-id-badge fa2x" style="color: #F0EDFF;"></i>
               <a style=" margin-left:5px;
                 font-family: monospace;">PROFILE</a></button>
@@ -60,20 +60,12 @@
     <div id = "param_not_logged"
          *ngIf="!isLogged"
          style= "float:right;
-               width: 300px;
-               margin-top: 10px;
+         align-items: end;
+               align-content: flex-end;
                  ">
 
       <button id = "btnLogIn" (click)="onClickLogged()"
-              type="button"
-              style="background-color: #F0EDFF;
-              border: 2px solid #7E68C1;
-              font-size: 20px;
-              width: 50%;
-              margin-left: 50px;
-              border-radius: 12px;
-              box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-              "
+              style="float: right"
       >LOG IN</button>
     </div>
   </div>

@@ -1,4 +1,3 @@
-
 <div class="wrapper">
   <button id="btn-abrir-popup" class="btn-abrir-popup" (click)="open()"
           style="background-color: #F0EDFF;
@@ -17,54 +16,33 @@
 <div class="overlay" id="overlay">
   <div class="popup" id="popup">
     <a id="btn-cerrar-popup" class="btn-cerrar-popup" (click)="close()"><i class="fa fa-times"></i></a>
-    <h3>POST NEW PRODUCT</h3>
-    <h4>FILL IN ALL THE FIELDS</h4>
+    <h1>Post new product</h1>
+    <h4>Fill in all the fields</h4>
 
     <form action="">
       <div class="contenedor-inputs">
-        <input id = "product_name" (keyup)="onProductName($event)" type="text" placeholder="Name of the product" style="border-radius: 4px;
-                                                                      border: 2px solid #8E8CB9;
-
-          ">
+        <input id = "product_name" (keyup)="onProductName($event)" type="text" placeholder="Name of the product" style="border: 2px solid #8E8CB9;">
         <input id = "product_price" (keyup)="onProductPrice($event)" type="price" placeholder="Price(EURO)" style="
-          border-radius: 4px;
-          border: 2px solid #8E8CB9;
-          width: 50%;">
-        <select id = "product_category" formProductName="selectProduct" (change)="onProductCat($event)" class="form-control" style="margin-bottom: 10px;
-                                                                                    border: 2px solid #8E8CB9;
-                                                                                    color: #ABA9BC;
-                                                                                    height:60px;
-                                                                                    border-radius: 4px;
-                                                                                    font-size: 20px;
-                                                                                    margin-left:15px;">
-          <option value="" selected disabled hidden>SELECT THE CATEGORY</option>
+          border: 2px solid #8E8CB9;">
+        <select id = "product_category" formProductName="selectProduct" (change)="onProductCat($event)" class="form-control" style="border: 2px solid #8E8CB9;margin-bottom: 20px; color: #ABA9BC;">
+          <option value="" selected disabled hidden>Select the category</option>
           <option [value]="item" *ngFor="let item of state.categories">{{item['name']}}</option>
         </select>
-        <select id = "product_state" formProductName="selectProduct" (change)="onProductState($event)" class="form-control" style="margin-bottom: 10px;
-                                                                                    border: 2px solid #8E8CB9;
-                                                                                    color: #ABA9BC;
-                                                                                    height:60px;
-                                                                                    border-radius: 4px;
-                                                                                    font-size: 20px;
-                                                                                    margin-left:15px;">
-          <option value="" selected disabled hidden>SELECT THE STATE</option>
-          <option value="NEW" >NEW</option>
-          <option value="WORN OUT">WORN OUT</option>
-          <option value="DEPLORABLE">DEPLORABLE</option>
+        <select id = "product_state" formProductName="selectProduct" (change)="onProductState($event)" class="form-control" style="margin-bottom: 20px;border: 2px solid #8E8CB9;color: #ABA9BC;">
+          <option value="" selected disabled hidden>Select the state</option>
+          <option value="New" >New</option>
+          <option value="Worn out">Worn out</option>
+          <option value="Deplorable">Deplorable</option>
         </select>
-        <input id = "product_desc" type="description" (keyup)="onProductDesc($event)"  placeholder="Description" style="height:300px;
-                                                                     border-radius: 4px;
-                                                                     border: 2px solid #8E8CB9;">
+        <input id = "product_desc" type="description" (keyup)="onProductDesc($event)"  placeholder="Description" style="height:300px;border: 2px solid #8E8CB9;color: #ABA9BC;">
 
-        <label for="img">Select image:</label>
+        <p for="img">Select image:</p>
 
-        <input id = "product_img" type="file" style="border-radius: 4px;
-                                                                      border: 2px solid #8E8CB9;
-                                                                                    color: #ABA9BC;
-" (change)="onFile($event)">
+        <input id = "product_img" type="file" style="border: 2px solid #8E8CB9; height: 70px" (change)="onFile($event)">
+
+        <button id="btn-submit" (click)="postProduct()" class="ghost" id="signUp">Post product</button>
 
       </div>
-      <a   id="btn-submit" class="btn-submit" (click)="postProduct()" ><i class="fa fa-times"></i></a>
     </form>
   </div>
 
