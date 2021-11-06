@@ -4,7 +4,7 @@ from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSign
 secret_key = "ubendinglaostia1234"
 
 
-def hash_password(self, password):
+def hash_password(password):
     return pwd_context.encrypt(password)
 
 

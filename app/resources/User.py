@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from data.UserQueries import getAccountByUsername, verifyPassword, generate_auth_token, checkPasswords, getAccountByEmail, addUserToDB
+from data.UserQueries import checkPasswords, getAccountByEmail, addUserToDB
 
 
 class UserAccount(Resource):
@@ -14,14 +14,14 @@ class UserAccount(Resource):
         parser.add_argument('username', type=str, required=True, help="This field cannot be left blank")
         parser.add_argument('mail', type=str, required=True, help="This field cannot be left blank")
         parser.add_argument('password', type=str, required=True, help="This field cannot be left blank")
-        parser.add_argument('repeat_password', type=float, required=True, help="This field cannot be left blank")
+        parser.add_argument('repeat_password', type=str, required=True, help="This field cannot be left blank")
 
         data = parser.parse_args()
-
         result = getAccountByEmail(data['mail'])
 
         if result != 404:
-            return {'Email already registered.'}
+
+            return {'message': 'Email already registered.'}, 400
 
         pwCode = checkPasswords(data['password'], data['repeat_password'])
 
@@ -33,11 +33,8 @@ class UserAccount(Resource):
             return {"Your password must have at least 1 number"}, 400
         elif pwCode == 4:
             return {"Your password must have at least 1 uppercase letter."}, 400
-
-        try:
-            addUserToDB(data['user'], data['password'])
-        except:
-            return {"Error creating user."}, 500
+        print('jffjfj')
+        addUserToDB(data['username'], data['mail'], data['password'])
 
         return {'message': "Account created succesfully"}, 200
 
@@ -61,7 +58,8 @@ class UserLogin(Resource):
         parser.add_argument('password', type=str, required=True, help="This field cannot be left blank")
 
         data = parser.parse_args()
-        result = getAccountByUsername(data['username'])
+        '''
+        # TODO result = getAccountByUsername(data['username'])
         if result == 404:
             return {'Message': 'Username does not exist'}, 404
         if not verifyPassword(data["password"]):
@@ -69,6 +67,7 @@ class UserLogin(Resource):
 
         token = generate_auth_token()
         return {'token': token.decode('ascii')}, 200
+        '''
 
     def delete(self, id):
         return {'message': "Not developed yet"}, 404
