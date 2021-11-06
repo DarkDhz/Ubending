@@ -1,6 +1,7 @@
 from app.database import db
 from data.CategoryQueries import getCategoryNameByID
 
+
 def convertState(value):
     if value is None:
         return "Brandnew"
@@ -11,11 +12,14 @@ def convertState(value):
     else:
         return "Destroyed"
 
+
 def _toJson(elem):
     if elem[6] is not None:
         elem[6] = elem[6].decode('ascii')
-    elem[7] = getCategoryNameByID(elem[7])
-    elem[5] = convertState(elem[5])
+    if elem[7] is not None:
+        elem[7] = getCategoryNameByID(elem[7])
+    if elem[5] is not None:
+        elem[5] = convertState(elem[5])
     return {'product_id': elem[0], 'owner_id': elem[1], 'name': elem[2],
             'description': elem[3], 'price': elem[4], 'state': elem[5],
             'image': elem[6], 'category_id': elem[7]}
@@ -74,12 +78,13 @@ def addProduct(user_id, data):
     print(data)
     query = "INSERT INTO Products (owner_id, name, description, price, state, image, category_id) " \
             "VALUES (%s, %s, %s, %s, %s, %s, %s)"
-    values = (user_id, data['name'], data['description'], data['price'], data['state'], data['image'], data['category_id'])
+    values = (
+    user_id, data['name'], data['description'], data['price'], data['state'], data['image'], data['category_id'])
     mycursor.execute(query, values)
     db.commit()
 
-def deleteProduct(product_id, owner_id):
 
+def deleteProduct(product_id, owner_id):
     mycursor = db.cursor()
     query = "DELETE FROM Products WHERE product_id = %s and owner_id = %s"
     values = (product_id, owner_id)
@@ -100,11 +105,15 @@ def updateProduct(product_id, owner_id, data):
     # myresult = mycursor.fetchall()
     # print(myresult)
 
+
 """
 https://docs.python-requests.org/es/latest/user/quickstart.html
 
 
-import requests
+url = 'http://127.0.0.1:5000/user/3/product'
+myobj = {'price': '299', 'name': 'testing', 'description': 'hola', 'state': 0}
+x = requests.post(url, data=myobj)
+
 url = 'http://127.0.0.1:5000/user/1/product/1'
 myobj = {'price': '299', 'name': 'testing'}
 x = requests.put(url, data=myobj)
@@ -122,7 +131,3 @@ x = requests.get(url)
 print(x.content)
 
 """
-
-
-
-
