@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
 from data.UserQueries import checkPasswords, getAccountByEmail, addUserToDB
 
+
 class UserAccount(Resource):
 
     def get(self, id):
@@ -10,16 +11,17 @@ class UserAccount(Resource):
 
         parser = reqparse.RequestParser()  # create parameters parser from request
 
-        parser.add_argument('email', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('username', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('mail', type=str, required=True, help="This field cannot be left blank")
         parser.add_argument('password', type=str, required=True, help="This field cannot be left blank")
         parser.add_argument('repeat_password', type=float, required=True, help="This field cannot be left blank")
 
         data = parser.parse_args()
 
-        result = getAccountByEmail(data['email'])
+        result = getAccountByEmail(data['mail'])
 
         if result != 404:
-            return {'Email already  registered.'}
+            return {'Email already registered.'}
 
         pwCode = checkPasswords(data['password'], data['repeat_password'])
 
@@ -44,6 +46,7 @@ class UserAccount(Resource):
 
     def put(self, id):
         return {'message': "Not developed yet"}, 404
+
 
 class UserLogin(Resource):
 

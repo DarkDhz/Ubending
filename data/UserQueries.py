@@ -1,6 +1,7 @@
 import re
 from app.database import db
 
+
 def getAccountByEmail(email):
     mycursor = db.cursor()
 
@@ -15,26 +16,24 @@ def getAccountByEmail(email):
 
     return _toJson(list(myresult[0]))
 
-def checkPasswords(password, repeat_password):
 
+def checkPasswords(password, repeat_password):
     if password != repeat_password:
         return 1
     elif len(password) < 8:
         return 2
-    elif re.search('[0-9]',password) is None:
+    elif re.search('[0-9]', password) is None:
         return 3
-    elif re.search('[A-Z]',password) is None:
+    elif re.search('[A-Z]', password) is None:
         return 4
 
     return 0
 
-def addUserToDB(email, password):
+
+def addUserToDB(username, email, password):
     mycursor = db.cursor()
-    username = "User"
-    location = "BCN"
-    userphoto = 0
-    query = "INSERT INTO User (username, password, email, location, userphoto) " \
-            "VALUES (%s, %s, %s, %s, %d)"
-    values = (username, password, email, location, userphoto)
+    query = "INSERT INTO User (username, password, mail) " \
+            "VALUES (%s, %s, %s)"
+    values = (username, email, password)
     mycursor.execute(query, values)
     db.commit()
