@@ -22,8 +22,15 @@
             <div class="cart-item">
               <ul>
                 <li><a href=""><i class="fa fa-pencil"></i></a></li>
-                <li><a href=""><i class="fa fa-trash"></i></a></li>
+                <li id="deleteProduct"><a href=""><i class="fa fa-trash"></i></a></li>
               </ul>
+            </div>
+            <div class="contenedor">
+              <div class="overlay" id="overlay">
+                <div class="popup" id="popup">
+                <app-delete-item></app-delete-item>
+                </div>
+              </div>
             </div>
           </div>
           <div class="content">
