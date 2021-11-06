@@ -107,8 +107,27 @@ def updateProduct(product_id, owner_id, data):
 
 
 """
-import requests
+https://docs.python-requests.org/es/latest/user/quickstart.html
+
+
 url = 'http://127.0.0.1:5000/user/3/product'
 myobj = {'price': '299', 'name': 'testing', 'description': 'hola', 'state': 0}
 x = requests.post(url, data=myobj)
+
+url = 'http://127.0.0.1:5000/user/1/product/1'
+myobj = {'price': '299', 'name': 'testing'}
+x = requests.put(url, data=myobj)
+
+import requests
+url = 'http://127.0.0.1:5000/user/1/product/2/files'
+files = {'file': open('readme.txt','rb')}
+values = {'DB': 'photcat', 'OUT': 'csv', 'SHORT': 'short'}
+
+r = requests.put(url, files=files, data=values)
+
+import requests
+url = 'http://127.0.0.1:5000/user/1/product/1/files'
+x = requests.get(url)
+print(x.content)
+
 """
