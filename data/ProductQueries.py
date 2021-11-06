@@ -14,8 +14,10 @@ def convertState(value):
 def _toJson(elem):
     if elem[6] is not None:
         elem[6] = elem[6].decode('ascii')
-    elem[7] = getCategoryNameByID(elem[7])
-    elem[5] = convertState(elem[5])
+    if elem[7] is not None:
+        elem[7] = getCategoryNameByID(elem[7])
+    if elem[5] is not None:
+        elem[5] = convertState(elem[5])
     return {'product_id': elem[0], 'owner_id': elem[1], 'name': elem[2],
             'description': elem[3], 'price': elem[4], 'state': elem[5],
             'image': elem[6], 'category_id': elem[7]}
@@ -26,6 +28,7 @@ def getAllProductsOfUserByID(user_id):
 
     query = "SELECT * FROM Products WHERE owner_id = %s"
     values = (user_id,)
+    print(user_id)
     mycursor.execute(query, values)
 
     myresult = mycursor.fetchall()
@@ -102,9 +105,9 @@ def updateProduct(product_id, owner_id, data):
 
 """
 import requests
-url = 'http://127.0.0.1:5000/user/1/product/1'
-myobj = {'price': '299', 'name': 'testing'}
-x = requests.put(url, data=myobj)
+url = 'http://127.0.0.1:5000/user/3/product'
+myobj = {'price': '299', 'name': 'testing', 'description': 'hola', 'state': 0}
+x = requests.post(url, data=myobj)
 """
 
 
