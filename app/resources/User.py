@@ -1,11 +1,23 @@
 from flask_restful import Resource, reqparse
+from utils.security import verify_auth_token
 from data.UserQueries import checkPasswords, getAccountByEmail, addUserToDB, validateLogin
 
 
 class UserAccount(Resource):
 
-    def get(self, id):
-        return {'message': "Not developed yet"}, 404
+    def get(self):
+        parser = reqparse.RequestParser()  # create parameters parser from request
+
+        parser.add_argument('token', type=str, required=True, help="This field cannot be left blank")
+
+        data = parser.parse_args()
+
+        user = verify_auth_token(data['token'])
+
+        if user is None:
+            return {'message': 'invalid token'}, 400
+        else:
+            return user, 200
 
     def post(self):
 
@@ -40,7 +52,7 @@ class UserAccount(Resource):
     def delete(self, id):
         return {'message': "Not developed yet"}, 404
 
-    def put(self, id):
+    def put(self):
         return {'message': "Not developed yet"}, 404
 
 
