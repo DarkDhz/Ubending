@@ -5,7 +5,7 @@ from flask_restful import Api
 from werkzeug.utils import secure_filename
 
 from app.resources.Product import ProductResource, UserProductResource, UserProductListResource
-from app.resources.User import UserAccount, UserLogin
+from app.resources.User import UserAccount, UserLogin, UserRegister
 from flask import session
 from utils.security import secret_key
 from flask_cors import CORS
@@ -15,8 +15,8 @@ from app.resources.Category import CategoryListResource, CategoryResource
 
 # https://flask.palletsprojects.com/en/2.0.x/quickstart/#sessions
 #for production
-# UPLOAD_FOLDER = "/imagedata/products"
-UPLOAD_FOLDER_PRODUCTS = "C:/Users/DarkDhz/PycharmProjects/imagedata/products"
+UPLOAD_FOLDER_PRODUCTS = "/imagedata/products"
+#UPLOAD_FOLDER_PRODUCTS = "C:/Users/DarkDhz/PycharmProjects/imagedata/products"
 
 app = Flask(__name__)
 environment = config['development']
@@ -66,16 +66,17 @@ def upload_file(user_id, product_id):
         return {'message': 'invalid file extension'}, 404
 
 
-api.add_resource(CategoryListResource, '/categories', methods=['GET'])
+api.add_resource(CategoryListResource, '/categories', '/categories/', methods=['GET'])
 api.add_resource(CategoryResource, '/category/<int:category_id>', methods=['GET'])
-api.add_resource(UserLogin, '/login', methods=['POST'])
-api.add_resource(UserAccount, '/register', methods=['POST'])
-api.add_resource(UserAccount, '/userinfo', methods=['GET', 'PUT'])
+api.add_resource(UserLogin, '/login', '/login/', methods=['POST'])
+api.add_resource(UserRegister, '/register', '/register/', methods=['POST'])
+api.add_resource(UserAccount, '/userinfo', '/userinfo/', methods=['GET', 'PUT'])
 api.add_resource(ProductResource, '/product/<int:product_id>')
 api.add_resource(UserProductResource, '/user/<int:user_id>/product/<int:product_id>', "/user/<int:user_id>/product")
 api.add_resource(UserProductListResource, '/user/<int:user_id>/products', methods=['GET'])
 
 if __name__ == '__main__':
+    '''
     import os
 
     directory = os.path.dirname(app.config['PRODUCTS_IMAGES'] + "/test.txt")
@@ -84,7 +85,6 @@ if __name__ == '__main__':
         os.stat(directory)
     except:
         os.mkdir(directory)
-
-    import os
+    '''
 
     app.run(port=5000, debug=True)
