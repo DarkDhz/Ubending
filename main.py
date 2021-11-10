@@ -69,7 +69,7 @@ def upload_file(user_id, product_id):
 api.add_resource(CategoryListResource, '/categories', methods=['GET'])
 api.add_resource(CategoryResource, '/category/<int:category_id>', methods=['GET'])
 api.add_resource(UserLogin, '/login', methods=['POST'])
-api.add_resource(UserAccount, '/user/<int:user_id>')
+api.add_resource(UserAccount, '/register', methods=['POST'])
 api.add_resource(ProductResource, '/product/<int:product_id>')
 api.add_resource(UserProductResource, '/user/<int:user_id>/product/<int:product_id>', "/user/<int:user_id>/product")
 api.add_resource(UserProductListResource, '/user/<int:user_id>/products', methods=['GET'])
