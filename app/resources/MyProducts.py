@@ -47,8 +47,7 @@ class UserProductResource(Resource):
 
         data = parser.parse_args()
 
-        with lock.lock:
-            updateProduct(owner_id=user_id, product_id=product_id, data=data)
+        updateProduct(owner_id=user_id, product_id=product_id, data=data)
             # https://www.py4u.net/discuss/140647
         return 201
 
