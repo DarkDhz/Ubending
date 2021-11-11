@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request,send_from_directory
+from flask import Flask, request, send_from_directory
 from flask_restful import Api
 
 from app.resources.Product import *
@@ -12,7 +12,6 @@ from utils.security import secret_key
 from flask_cors import CORS
 from config import config
 from decouple import config as config_decouple
-
 
 UPLOAD_FOLDER_PRODUCTS = "/imagedata/products"
 # UPLOAD_FOLDER_PRODUCTS = "C:/Users/DarkDhz/PycharmProjects/imagedata/products"
@@ -72,6 +71,11 @@ def allowed_file(filename, extensions=None):
         extensions = ['jpg', 'png', 'txt']
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in extensions
+
+
+@app.route('/')
+def mainPage():
+    return render_template("index.html")
 
 
 # https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
