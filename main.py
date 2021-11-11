@@ -38,7 +38,7 @@ api.add_resource(CategoryResource, '/category/<int:category_id>', methods=['GET'
 # USER INFO RESOURCES
 api.add_resource(UserLogin, '/login', '/login/', methods=['POST'])
 api.add_resource(UserRegister, '/register', '/register/', methods=['POST'])
-api.add_resource(UserAccount, '/userinfo', '/userinfo/', methods=['GET', 'PUT'])
+api.add_resource(UserAccount, '/userinfo', '/userinfo/')
 
 # PRODUCTS RESOURCES
 api.add_resource(ProductResource, '/product/<int:product_id>')

@@ -58,8 +58,7 @@ class UserAccount(Resource):
         user = getAccountByID(user)
         if user is None:
             return {'message': 'invalid token'}, 400
-        else:
-            return user, 200
+        return user, 200
 
     def post(self):
         return 404
@@ -78,8 +77,15 @@ class UserAccount(Resource):
         data = parser.parse_args()
 
         user = verify_auth_token(data['token'])
+        print(user)
+        if user is None:
+            return {'message': 'invalid token'}, 400
+        result = updateUserProfile(user, data)
 
-        updateUserProfile(user, data[1::])
+        if result == 404:
+            return {'message': 'not fields to update'}, 400
+
+        return 201
 
 
 

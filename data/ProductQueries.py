@@ -95,7 +95,7 @@ def deleteProduct(product_id, owner_id):
 def updateProduct(product_id, owner_id, data):
     mycursor = db.cursor()
     for item in data:
-        if data[item] is not None:
+        if data[item] is not None and item != 'token':
             query = "UPDATE Products SET " + item + " = %s WHERE product_id = %s and owner_id = %s"
             values = (data[item], product_id, owner_id,)
             mycursor.execute(query, values)

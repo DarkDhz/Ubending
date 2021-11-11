@@ -86,13 +86,16 @@ def validateLogin(mail, password):
 
 
 def updateUserProfile(user_id, data):
-    print(data)
-    mycursor = db.cursor()
+    if len(data) == 0 or data is None:
+        return 404
+
+    cursor = db.cursor()
+
     for item in data:
-        if data[item] is not None:
+        if data[item] is not None and item != 'token':
             query = "UPDATE Users SET " + item + " = %s WHERE user_id = %s"
             values = (data[item], user_id)
-            mycursor.execute(query, values)
+            cursor.execute(query, values)
 
     db.commit()
 
@@ -124,7 +127,7 @@ x.json()
 
 import requests
 url = 'http://127.0.0.1:5000/userinfo'
-myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0MzI2NywiZXhwIjoxNjM2NjQzODY3fQ.eyJ1c2VyX2lkIjozfQ.TrwAJqBiEdIjoslKRvcB4CQ0pkRtZ4WvNqWU-eMgcdhEREAsoXL9fvSfj81D6R0VAbzeAolUCwNYFvWCCsyKnQ'}
+myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0NTYzMiwiZXhwIjoxNjM2NjQ2MjMyfQ.eyJ1c2VyX2lkIjozfQ.icu6kea246nGoBsiuCyBtWiGWkBjiNQq08uxQ1qRGtWy8KGOIfpBI6wmRNAu7rQjOZCKv0wUYG_29DUry1Ifmg', 'username': 'Roberto'}
 x = requests.put(url, data=myobj)
 x.json()
 
