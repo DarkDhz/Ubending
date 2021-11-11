@@ -27,23 +27,24 @@ def getAccountByEmail(email):
 
     return _toJson(list(myresult[0]))
 
-def getAccountByID(id):
-    mycursor = db.cursor()
+
+def getAccountByID(user_id):
+    cursor = db.cursor()
 
     query = "SELECT * FROM Users WHERE user_id = %s"
-    values = (id,)
+    values = (user_id,)
 
-    mycursor.execute(query, values)
+    cursor.execute(query, values)
 
-    myresult = mycursor.fetchall()
+    result = cursor.fetchall()
 
-    if len(myresult) == 0:
+    if len(result) == 0:
         return 404
 
-    return _toJson(list(myresult[0]))
+    return _toJson(list(result[0]))
 
 
-def checkPasswords(password, repeat_password):
+def validatePasswordFormat(password, repeat_password):
     if password != repeat_password:
         return 1
     elif len(password) < 8:
@@ -85,15 +86,42 @@ def validateLogin(mail, password):
         return 400
 
 
+def updateProduct(user_id, data):
+    mycursor = db.cursor()
+    for item in data:
+        if data[item] is not None:
+            query = "UPDATE Users SET " + item + " = %s WHERE user_id = %s"
+            values = (data[item], user_id)
+            mycursor.execute(query, values)
+
+    db.commit()
+
+
 """
+REGISTER
+
 import requests
 url = 'http://127.0.0.1:5000/register'
 myobj = {'username': 'hola', 'mail': '2test@gmail.com', 'password': '123bdhewbdehfvgfvASVCFDgvfj', 'repeat_password': '123bdhewbdehfvgfvASVCFDgvfj'}
 x = requests.post(url, data=myobj)
 x.json()
+
+LOGIN
+
 import requests
 url = 'http://127.0.0.1:5000/login'
 myobj = {'mail': '2test@gmail.com', 'password': '123bdhewbdehfvgfvASVCFDgvfj'}
 x = requests.post(url, data=myobj)
 x.json()
+
+USERINFO
+
+import requests
+url = 'http://127.0.0.1:5000/userinfo'
+token = 123
+myobj = {'token': str(token)}
+x = requests.get(url, data=myobj)
+x.json()
+
+
 """
