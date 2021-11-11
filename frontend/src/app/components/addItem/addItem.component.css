@@ -1,3 +1,37 @@
+body {
+  background-color: #F1F1F1;
+}
+.banner-wrapper {
+  position: relative;
+  background: #646DCC;
+  min-height: 70vh;
+  background: -webkit-linear-gradient(top left, #7E68C1 0%,#A7A5DB 100%);
+  background: -moz-linear-gradient(top left,#646DCC 0%,#A7A5DB 100%);
+  background: -o-linear-gradient(top left,#646DCC 0%,#A7A5DB 100%);
+  background: linear-gradient(to bottom right,#646DCC 0%,#A7A5DB 100%);
+
+}
+.custom-shape-divider-bottom-1635768508 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1635768508 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 144px;
+}
+
+.custom-shape-divider-bottom-1635768508 .shape-fill {
+  fill: #F1F1F1;
+}
+
 .wrapper {
   text-align: center;
 }
@@ -331,3 +365,4 @@ button.ghost {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+

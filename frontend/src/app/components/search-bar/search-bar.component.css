@@ -51,6 +51,10 @@ a {
   font-size: 14px;
   text-decoration: none;
   margin: 15px 0;
+  font-weight: bold;
+  padding: 12px 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 a:hover{
@@ -138,7 +142,6 @@ input:focus {
   width: 300px;
   color: #646DCC;
 }
-
 
 
 
