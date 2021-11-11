@@ -30,6 +30,12 @@ api = Api(app)
 
 CORS(app, resources={r'/*': {'origins': '*'}})
 
+
+@app.route('/')
+def mainPage():
+    return render_template("index.html")
+
+
 # CATEGORY INFO RESOURCES
 api.add_resource(CategoryListResource, '/categories', '/categories/', methods=['GET'])
 api.add_resource(CategoryResource, '/category/<int:category_id>', methods=['GET'])
@@ -73,13 +79,8 @@ def allowed_file(filename, extensions=None):
            filename.rsplit('.', 1)[1].lower() in extensions
 
 
-@app.route('/')
-def mainPage():
-    return render_template("index.html")
-
-
 # https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
-#@app.route('/user/<int:user_id>/product/<int:product_id>/files', methods=['GET', 'POST', 'PUT'])
+# @app.route('/user/<int:user_id>/product/<int:product_id>/files', methods=['GET', 'POST', 'PUT'])
 def upload_file(user_id, product_id):
     if request.method == 'GET':
         try:
