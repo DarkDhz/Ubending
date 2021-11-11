@@ -44,7 +44,6 @@ class UserProductResource(Resource):
         parser.add_argument('description', type=str)
         parser.add_argument('price', type=int)
         parser.add_argument('state', type=int)
-        parser.add_argument('image', type=werkzeug.datastructures.FileStorage)
         parser.add_argument('category', type=int)
 
         data = parser.parse_args()
