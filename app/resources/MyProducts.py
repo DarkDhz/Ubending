@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from data.ProductQueries import *
+from utils.security import verify_auth_token
 
 
 class UserProductResource(Resource):
@@ -47,9 +48,7 @@ class UserProductResource(Resource):
 
         data = parser.parse_args()
 
-        with lock.lock:
-            updateProduct(owner_id=user_id, product_id=product_id, data=data)
-            # https://www.py4u.net/discuss/140647
+        updateProduct(owner_id=user_id, product_id=product_id, data=data)
         return 201
 
 
@@ -63,12 +62,38 @@ class UserProductListResource(Resource):
             return result, 200
 
     def post(self, id):
-        return {'message': "Not developed yet"}, 404
+        return 404
 
     def delete(self, id):
-        return {'message': "Not developed yet"}, 404
+        return 404
 
-    def put(self, user_id, product_id):
+    def put(self):
+        return 404
 
 
-        return {'message': "Not developed yet"}, 404
+class MyProductListResource(Resource):
+
+    def get(self):
+        parser = reqparse.RequestParser()  # create parameters parser from request
+
+        parser.add_argument('token', type=str, required=True, help="This field cannot be left blank")
+
+        data = parser.parse_args()
+
+        user_id = verify_auth_token(data['token'])
+
+        result = getAllProductsOfUserByID(user_id=user_id)
+
+        if result == 404:
+            return {'Message': 'owner has no products or do not exist'}, 404
+        else:
+            return result, 200
+
+    def post(self, id):
+        return 404
+
+    def delete(self, id):
+        return 404
+
+    def put(self):
+        return 404

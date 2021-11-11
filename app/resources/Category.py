@@ -21,8 +21,6 @@ class CategoryListResource(Resource):
 
         return {'message': "Not developed yet"}, 404
 
-
-# TODO
 class CategoryResource(Resource):
 
     def get(self, category_id):
@@ -31,7 +29,6 @@ class CategoryResource(Resource):
             return {'Message': 'owner has no products or do not exist'}, 404
         else:
             return result, 200
-
 
     def post(self, id):
         return {'message': "Not developed yet"}, 404
