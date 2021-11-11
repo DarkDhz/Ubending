@@ -120,6 +120,13 @@ import requests
 url = 'http://127.0.0.1:5000/user/1/product/1/files'
 x = requests.get(url)
 print(x.content)
+
+
+import requests
+url = 'http://127.0.0.1:5000/myproducts'
+myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0OTEzNywiZXhwIjoxNjM2NjQ5NzM3fQ.eyJ1c2VyX2lkIjozfQ.U4fjXix65nT_1xqVKQGVKZoh818kh0Rc1zlUSLMtLnkHOktZ4Rm13YCImedCnZNxS6lTbiI6YSdReBJcCJZ7hQ'}
+x = requests.get(url, data=myobj)
+x.json()
 """
 
 

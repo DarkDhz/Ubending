@@ -77,7 +77,7 @@ class UserAccount(Resource):
         data = parser.parse_args()
 
         user = verify_auth_token(data['token'])
-        print(user)
+
         if user is None:
             return {'message': 'invalid token'}, 400
         result = updateUserProfile(user, data)
