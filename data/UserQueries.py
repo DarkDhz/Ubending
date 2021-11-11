@@ -121,7 +121,7 @@ USERINFO
 
 import requests
 url = 'http://127.0.0.1:5000/userinfo'
-myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0MzI2NywiZXhwIjoxNjM2NjQzODY3fQ.eyJ1c2VyX2lkIjozfQ.TrwAJqBiEdIjoslKRvcB4CQ0pkRtZ4WvNqWU-eMgcdhEREAsoXL9fvSfj81D6R0VAbzeAolUCwNYFvWCCsyKnQ'}
+myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0OTEzNywiZXhwIjoxNjM2NjQ5NzM3fQ.eyJ1c2VyX2lkIjozfQ.U4fjXix65nT_1xqVKQGVKZoh818kh0Rc1zlUSLMtLnkHOktZ4Rm13YCImedCnZNxS6lTbiI6YSdReBJcCJZ7hQ'}
 x = requests.get(url, data=myobj)
 x.json()
 
