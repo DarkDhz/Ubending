@@ -4,7 +4,6 @@ from utils.security import hash_password, verify_password, generate_auth_token
 
 
 def _toJson(elem):
-    print(elem)
     if elem[6] is not None:
         elem[6] = elem[6].decode('ascii')
     return {'user_id': elem[0], 'username': elem[1], 'password': elem[2],
@@ -27,23 +26,24 @@ def getAccountByEmail(email):
 
     return _toJson(list(myresult[0]))
 
-def getAccountByID(id):
-    mycursor = db.cursor()
+
+def getAccountByID(user_id):
+    cursor = db.cursor()
 
     query = "SELECT * FROM Users WHERE user_id = %s"
-    values = (id,)
+    values = (user_id,)
 
-    mycursor.execute(query, values)
+    cursor.execute(query, values)
 
-    myresult = mycursor.fetchall()
+    result = cursor.fetchall()
 
-    if len(myresult) == 0:
+    if len(result) == 0:
         return 404
 
-    return _toJson(list(myresult[0]))
+    return _toJson(list(result[0]))
 
 
-def checkPasswords(password, repeat_password):
+def validatePasswordFormat(password, repeat_password):
     if password != repeat_password:
         return 1
     elif len(password) < 8:
@@ -85,7 +85,23 @@ def validateLogin(mail, password):
         return 400
 
 
+def updateUserProfile(user_id, data):
+    if len(data) == 0 or data is None:
+        return 404
+
+    cursor = db.cursor()
+
+    for item in data:
+        if data[item] is not None and item != 'token':
+            query = "UPDATE Users SET " + item + " = %s WHERE user_id = %s"
+            values = (data[item], user_id)
+            cursor.execute(query, values)
+
+    db.commit()
+
+
 """
+REGISTER
 
 import requests
 url = 'http://127.0.0.1:5000/register'
@@ -93,9 +109,27 @@ myobj = {'username': 'hola', 'mail': '2test@gmail.com', 'password': '123bdhewbde
 x = requests.post(url, data=myobj)
 x.json()
 
+LOGIN
+
 import requests
 url = 'http://127.0.0.1:5000/login'
 myobj = {'mail': '2test@gmail.com', 'password': '123bdhewbdehfvgfvASVCFDgvfj'}
 x = requests.post(url, data=myobj)
 x.json()
+
+USERINFO
+
+import requests
+url = 'http://127.0.0.1:5000/userinfo'
+myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0MzI2NywiZXhwIjoxNjM2NjQzODY3fQ.eyJ1c2VyX2lkIjozfQ.TrwAJqBiEdIjoslKRvcB4CQ0pkRtZ4WvNqWU-eMgcdhEREAsoXL9fvSfj81D6R0VAbzeAolUCwNYFvWCCsyKnQ'}
+x = requests.get(url, data=myobj)
+x.json()
+
+import requests
+url = 'http://127.0.0.1:5000/userinfo'
+myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0NTYzMiwiZXhwIjoxNjM2NjQ2MjMyfQ.eyJ1c2VyX2lkIjozfQ.icu6kea246nGoBsiuCyBtWiGWkBjiNQq08uxQ1qRGtWy8KGOIfpBI6wmRNAu7rQjOZCKv0wUYG_29DUry1Ifmg', 'username': 'Roberto'}
+x = requests.put(url, data=myobj)
+x.json()
+
+
 """

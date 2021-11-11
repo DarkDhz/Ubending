@@ -1,33 +1,23 @@
-from flask_httpauth import HTTPBasicAuth
 from passlib.apps import custom_app_context as pwd_context
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
-from flask import g, current_app
 
 secret_key = "ubendinglaostia1234"
 
-auth = HTTPBasicAuth()
-
-#TODO
 
 '''
-
 @auth.verify_password
 def verify_password(token, password):
     user = AccountsModel.verify_auth_token(token)
     if user is not None:
         g.user = user
         return user
-
-
 @auth.get_user_roles
 def get_user_roles(user):
     if user.is_admin == 1:
         return ['admin']
     else:
         return ['user']
-
 '''
-
 
 
 def hash_password(password):
@@ -53,4 +43,3 @@ def verify_auth_token(token):
         return None  # invalid token
 
     return data['user_id']
-    # todo get user info by id

@@ -94,40 +94,34 @@ def deleteProduct(product_id, owner_id):
 
 def updateProduct(product_id, owner_id, data):
     mycursor = db.cursor()
-    print(data)
     for item in data:
-        if data[item] is not None:
+        if data[item] is not None and item != 'token':
             query = "UPDATE Products SET " + item + " = %s WHERE product_id = %s and owner_id = %s"
             values = (data[item], product_id, owner_id,)
             mycursor.execute(query, values)
 
     db.commit()
-    # myresult = mycursor.fetchall()
-    # print(myresult)
 
 
 """
 https://docs.python-requests.org/es/latest/user/quickstart.html
-
-
 url = 'http://127.0.0.1:5000/user/3/product'
 myobj = {'price': '299', 'name': 'testing', 'description': 'hola', 'state': 0}
 x = requests.post(url, data=myobj)
-
 url = 'http://127.0.0.1:5000/user/1/product/1'
 myobj = {'price': '299', 'name': 'testing'}
 x = requests.put(url, data=myobj)
-
 import requests
 url = 'http://127.0.0.1:5000/user/1/product/2/files'
 files = {'file': open('readme.txt','rb')}
 values = {'DB': 'photcat', 'OUT': 'csv', 'SHORT': 'short'}
-
 r = requests.put(url, files=files, data=values)
-
 import requests
 url = 'http://127.0.0.1:5000/user/1/product/1/files'
 x = requests.get(url)
 print(x.content)
-
 """
+
+
+
+
