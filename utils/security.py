@@ -42,6 +42,4 @@ def verify_auth_token(token):
     except BadSignature:
         return None  # invalid token
 
-    print(data['user_id'])
     return data['user_id']
-    # todo get user info by id

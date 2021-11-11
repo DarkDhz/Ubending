@@ -38,10 +38,10 @@ class UserRegister(Resource):
         return {'message': "Account created succesfully"}, 200
 
     def delete(self, id):
-        return {'message': "Not developed yet"}, 404
+        return 404
 
     def put(self):
-        return {'message': "Not developed yet"}, 404
+        return 404
 
 
 class UserAccount(Resource):
@@ -65,10 +65,23 @@ class UserAccount(Resource):
         return 404
 
     def delete(self, id):
-        return {'message': "Not developed yet"}, 404
+        return 404
 
     def put(self):
-        return {'message': "Not developed yet"}, 404
+        parser = reqparse.RequestParser()  # create parameters parser from request
+
+        parser.add_argument('token', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('username', type=str, required=False)
+        parser.add_argument('password', type=str, required=False)
+        parser.add_argument('location', type=str, required=False)
+
+        data = parser.parse_args()
+
+        user = verify_auth_token(data['token'])
+
+        updateUserProfile(user, data[1::])
+
+
 
 
 class UserLogin(Resource):

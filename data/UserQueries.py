@@ -4,7 +4,6 @@ from utils.security import hash_password, verify_password, generate_auth_token
 
 
 def _toJson(elem):
-    print(elem)
     if elem[6] is not None:
         elem[6] = elem[6].decode('ascii')
     return {'user_id': elem[0], 'username': elem[1], 'password': elem[2],
@@ -86,7 +85,8 @@ def validateLogin(mail, password):
         return 400
 
 
-def updateProduct(user_id, data):
+def updateUserProfile(user_id, data):
+    print(data)
     mycursor = db.cursor()
     for item in data:
         if data[item] is not None:
@@ -118,9 +118,14 @@ USERINFO
 
 import requests
 url = 'http://127.0.0.1:5000/userinfo'
-token = 123
-myobj = {'token': str(token)}
+myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0MzI2NywiZXhwIjoxNjM2NjQzODY3fQ.eyJ1c2VyX2lkIjozfQ.TrwAJqBiEdIjoslKRvcB4CQ0pkRtZ4WvNqWU-eMgcdhEREAsoXL9fvSfj81D6R0VAbzeAolUCwNYFvWCCsyKnQ'}
 x = requests.get(url, data=myobj)
+x.json()
+
+import requests
+url = 'http://127.0.0.1:5000/userinfo'
+myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0MzI2NywiZXhwIjoxNjM2NjQzODY3fQ.eyJ1c2VyX2lkIjozfQ.TrwAJqBiEdIjoslKRvcB4CQ0pkRtZ4WvNqWU-eMgcdhEREAsoXL9fvSfj81D6R0VAbzeAolUCwNYFvWCCsyKnQ'}
+x = requests.put(url, data=myobj)
 x.json()
 
 

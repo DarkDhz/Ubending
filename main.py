@@ -1,22 +1,19 @@
 import os
 
-from flask import Flask, render_template, request, redirect, send_file, send_from_directory
+from flask import Flask, request,send_from_directory
 from flask_restful import Api
-from werkzeug.utils import secure_filename
 
 from app.resources.Product import ProductResource, UserProductResource, UserProductListResource
 from app.resources.User import UserAccount, UserLogin, UserRegister
-from flask import session
 from utils.security import secret_key
 from flask_cors import CORS
 from config import config
 from decouple import config as config_decouple
 from app.resources.Category import CategoryListResource, CategoryResource
+from app.resources.Search import SearchEngine
 
-# https://flask.palletsprojects.com/en/2.0.x/quickstart/#sessions
-#for production
 UPLOAD_FOLDER_PRODUCTS = "/imagedata/products"
-#UPLOAD_FOLDER_PRODUCTS = "C:/Users/DarkDhz/PycharmProjects/imagedata/products"
+# UPLOAD_FOLDER_PRODUCTS = "C:/Users/DarkDhz/PycharmProjects/imagedata/products"
 
 app = Flask(__name__)
 environment = config['development']
@@ -32,6 +29,39 @@ api = Api(app)
 
 CORS(app, resources={r'/*': {'origins': '*'}})
 
+# CATEGORY INFO RESOURCES
+api.add_resource(CategoryListResource, '/categories', '/categories/', methods=['GET'])
+api.add_resource(CategoryResource, '/category/<int:category_id>', methods=['GET'])
+
+# USER INFO RESOURCES
+api.add_resource(UserLogin, '/login', '/login/', methods=['POST'])
+api.add_resource(UserRegister, '/register', '/register/', methods=['POST'])
+api.add_resource(UserAccount, '/userinfo', '/userinfo/', methods=['GET', 'PUT'])
+
+# PRODUCTS RESOURCES
+api.add_resource(ProductResource, '/product/<int:product_id>')
+
+# SEARCH ENGINE RESOURCES
+api.add_resource(SearchEngine, '/search', '/search/', methods=['POST'])
+
+# MY PRODUCTS RESOURCES
+api.add_resource(UserProductResource, '/user/<int:user_id>/product/<int:product_id>', "/user/<int:user_id>/product")
+api.add_resource(UserProductListResource, '/user/<int:user_id>/products', methods=['GET'])
+
+if __name__ == '__main__':
+    '''
+    import os
+
+    directory = os.path.dirname(app.config['PRODUCTS_IMAGES'] + "/test.txt")
+
+    try:
+        os.stat(directory)
+    except:
+        os.mkdir(directory)
+    '''
+
+    app.run(port=5000, debug=True)
+
 
 def allowed_file(filename, extensions=None):
     if extensions is None:
@@ -39,13 +69,14 @@ def allowed_file(filename, extensions=None):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in extensions
 
+
 # https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
 @app.route('/user/<int:user_id>/product/<int:product_id>/files', methods=['GET', 'POST', 'PUT'])
 def upload_file(user_id, product_id):
     if request.method == 'GET':
         try:
             return send_from_directory(app.config["PRODUCTS_IMAGES"],
-                                       filename="user-" + str(user_id) + "-product-" + str(product_id)  + ".png",
+                                       filename="user-" + str(user_id) + "-product-" + str(product_id) + ".png",
                                        as_attachment=True), 200
         except FileNotFoundError:
             return {'message': 'file not found'}, 404
@@ -64,27 +95,3 @@ def upload_file(user_id, product_id):
 
             return {'message': 'file saved'}, 201
         return {'message': 'invalid file extension'}, 404
-
-
-api.add_resource(CategoryListResource, '/categories', '/categories/', methods=['GET'])
-api.add_resource(CategoryResource, '/category/<int:category_id>', methods=['GET'])
-api.add_resource(UserLogin, '/login', '/login/', methods=['POST'])
-api.add_resource(UserRegister, '/register', '/register/', methods=['POST'])
-api.add_resource(UserAccount, '/userinfo', '/userinfo/', methods=['GET', 'PUT'])
-api.add_resource(ProductResource, '/product/<int:product_id>')
-api.add_resource(UserProductResource, '/user/<int:user_id>/product/<int:product_id>', "/user/<int:user_id>/product")
-api.add_resource(UserProductListResource, '/user/<int:user_id>/products', methods=['GET'])
-
-if __name__ == '__main__':
-    '''
-    import os
-
-    directory = os.path.dirname(app.config['PRODUCTS_IMAGES'] + "/test.txt")
-
-    try:
-        os.stat(directory)
-    except:
-        os.mkdir(directory)
-    '''
-
-    app.run(port=5000, debug=True)
