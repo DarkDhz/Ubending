@@ -3,14 +3,16 @@ import os
 from flask import Flask, request,send_from_directory
 from flask_restful import Api
 
-from app.resources.Product import ProductResource, UserProductResource, UserProductListResource
-from app.resources.User import UserAccount, UserLogin, UserRegister
+from app.resources.Product import *
+from app.resources.MyProducts import *
+from app.resources.User import *
+from app.resources.Category import *
+from app.resources.Search import *
 from utils.security import secret_key
 from flask_cors import CORS
 from config import config
 from decouple import config as config_decouple
-from app.resources.Category import CategoryListResource, CategoryResource
-from app.resources.Search import SearchEngine
+
 
 UPLOAD_FOLDER_PRODUCTS = "/imagedata/products"
 # UPLOAD_FOLDER_PRODUCTS = "C:/Users/DarkDhz/PycharmProjects/imagedata/products"
