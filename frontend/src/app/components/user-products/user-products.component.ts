@@ -89,11 +89,11 @@ export class DialogContentExampleDialog {
     const path = `https://ubending3.herokuapp.com/user/1/product/`+ this.data.idProduct
     axios.delete(path)
       .then((res) => {
-        alert('PRODUCT DELATE CORRECTAMENT')
+        alert('PRODUCT DELETE CORRECTLY')
       })
       .catch((error) => {
         console.error(error)
-        alert('ERROR AL DELATE PRODUCT')
+        alert('ERROR AL DELETE PRODUCT')
       })
     this.dialogRef.close();
   }

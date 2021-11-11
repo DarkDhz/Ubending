@@ -6,19 +6,19 @@
     <div class="form-container sign-up-container">
       <form action="#">
         <h1>Create Account</h1>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <input type="password" placeholder="Repeat password" />
-        <button style="margin-top: 20px" >Sign Up</button>
+        <input type="email" placeholder="Email" id="email-signup"/>
+        <input type="password" placeholder="Password" id="password-signup"/>
+        <input type="password" placeholder="Repeat password" id="rep-password-signup"/>
+        <button style="margin-top: 20px" (click)="onClickSignUp()" routerLink="/home">Sign Up</button>
       </form>
     </div>
     <div class="form-container sign-in-container">
       <form action="#">
         <h1>Sign in</h1>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
+        <input type="email" placeholder="Email" id="email_signin"/>
+        <input type="password" placeholder="Password" id="password_signin"/>
         <a href="#" (click)="onClickForgot()" routerLink="/recover">Forgot your password?</a>
-        <button>Sign In</button>
+        <button (click)="onClickSignIn()" routerLink="/home">Sign In</button>
       </form>
     </div>
     <div class="overlay-container">
