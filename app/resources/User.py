@@ -88,8 +88,6 @@ class UserAccount(Resource):
         return 201
 
 
-
-
 class UserLogin(Resource):
 
     def get(self, id):

@@ -94,6 +94,8 @@ def deleteProduct(product_id, owner_id):
 
 def updateProduct(product_id, owner_id, data):
     mycursor = db.cursor()
+    if len(data) <= 1 or data is None:
+        return 404
     for item in data:
         if data[item] is not None and item != 'token':
             query = "UPDATE Products SET " + item + " = %s WHERE product_id = %s and owner_id = %s"
@@ -104,10 +106,12 @@ def updateProduct(product_id, owner_id, data):
 
 
 """
-https://docs.python-requests.org/es/latest/user/quickstart.html
+# get a product
 url = 'http://127.0.0.1:5000/user/3/product'
 myobj = {'price': '299', 'name': 'testing', 'description': 'hola', 'state': 0}
 x = requests.post(url, data=myobj)
+
+
 url = 'http://127.0.0.1:5000/user/1/product/1'
 myobj = {'price': '299', 'name': 'testing'}
 x = requests.put(url, data=myobj)
