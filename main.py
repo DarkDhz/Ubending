@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, send_from_directory, render_template
 from flask_restful import Api
 
 from app.resources.Product import *
