@@ -2,6 +2,7 @@ from flask_restful import Resource, reqparse
 from data.ProductQueries import *
 from utils.security import verify_auth_token
 
+# NO AUTHENTICATHED
 
 class UserProductResource(Resource):
 
@@ -70,6 +71,7 @@ class UserProductListResource(Resource):
     def put(self):
         return 404
 
+# AUTHENTICATED
 
 class MyProductResource(Resource):
 
