@@ -86,7 +86,7 @@ def validateLogin(mail, password):
 
 
 def updateUserProfile(user_id, data):
-    if len(data) == 0 or data is None:
+    if len(data) <= 1 or data is None:
         return 404
 
     cursor = db.cursor()
