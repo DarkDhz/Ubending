@@ -94,7 +94,6 @@ def deleteProduct(product_id, owner_id):
 
 def updateProduct(product_id, owner_id, data):
     mycursor = db.cursor()
-    print(data)
     for item in data:
         if data[item] is not None:
             query = "UPDATE Products SET " + item + " = %s WHERE product_id = %s and owner_id = %s"
@@ -102,8 +101,6 @@ def updateProduct(product_id, owner_id, data):
             mycursor.execute(query, values)
 
     db.commit()
-    # myresult = mycursor.fetchall()
-    # print(myresult)
 
 
 """

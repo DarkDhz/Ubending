@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from utils.security import verify_auth_token
-from data.UserQueries import checkPasswords, getAccountByEmail, addUserToDB, validateLogin
+from data.UserQueries import *
 
 
 class UserRegister(Resource):
@@ -23,7 +23,7 @@ class UserRegister(Resource):
         if result != 404:
             return {'message': 'Email already registered.'}, 400
 
-        pwCode = checkPasswords(data['password'], data['repeat_password'])
+        pwCode = validatePasswordFormat(data['password'], data['repeat_password'])
 
         if pwCode == 1:
             return {"Passwords do not match."}, 400
@@ -55,6 +55,7 @@ class UserAccount(Resource):
 
         user = verify_auth_token(data['token'])
 
+        user = getAccountByID(user)
         if user is None:
             return {'message': 'invalid token'}, 400
         else:
