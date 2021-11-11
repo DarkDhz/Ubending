@@ -1,8 +1,208 @@
+body {
+  background-color: #F1F1F1;
+}
+.banner-wrapper {
+  position: relative;
+  background: #646DCC;
+  min-height: 70vh;
+  background: -webkit-linear-gradient(top left, #7E68C1 0%,#A7A5DB 100%);
+  background: -moz-linear-gradient(top left,#646DCC 0%,#A7A5DB 100%);
+  background: -o-linear-gradient(top left,#646DCC 0%,#A7A5DB 100%);
+  background: linear-gradient(to bottom right,#646DCC 0%,#A7A5DB 100%);
+
+}
+.custom-shape-divider-bottom-1635768508 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1635768508 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 144px;
+}
+
+.custom-shape-divider-bottom-1635768508 .shape-fill {
+  fill: #F1F1F1;
+}
+
 .wrapper {
   text-align: center;
 }
 .btn-abrir-popup{
 }
+
+@font-face {
+  font-family: 'Montserrat', sans-serif;
+  src: url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f6f5f7;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  margin: -20px 0 50px;
+}
+
+h1 {
+  font-weight: bold;
+  color: #7E68C1;
+  font-weight: 640;
+  margin-bottom: 30px;
+}
+
+h2 {
+  text-align: center;
+}
+
+p {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 20px;
+  letter-spacing: .5px;
+  margin: 20px 0 30px;
+  color: #7E68C1;
+}
+
+span {
+  font-size: 12px;
+}
+
+a {
+  color: whitesmoke;
+  font-size: 14px;
+  text-decoration: none;
+  margin: 15px 0;
+}
+
+a:hover{
+  text-decoration: underline;
+}
+
+input {
+  background-color: white;
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 100%;
+  height: 60px;
+  display: block;
+  appearance: none;
+  outline: 0;
+  border: 1px solid rgba(255,255,255,0.4);
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 3px;
+  text-align: center;
+  font-size: 18px;
+  color: #7E68C1;
+  transition-duration: 0.25s;
+  font-weight: 300;
+}
+input::placeholder{
+  color: #ABA9BC;
+  opacity: 1;
+}
+input:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+input:focus {
+  background-color: white;
+  width: 300px;
+}
+
+select {
+  background-color: white;
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 100%;
+  height: 60px;
+  display: block;
+  appearance: none;
+  outline: 0;
+  border: 1px solid rgba(255,255,255,0.4);
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 3px;
+  text-align: center;
+  font-size: 18px;
+  color: #7E68C1;
+  transition-duration: 0.25s;
+  font-weight: 300;
+}
+select::placeholder{
+  color: #ABA9BC;
+  opacity: 1;
+}
+select:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+select:focus {
+  background-color: white;
+  color: #7E68C1;
+}
+
+button {
+  border-radius: 20px;
+  border: 1px solid white;
+  background-color: white;
+  color: #7E68C1;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:focus {
+  outline: none;
+}
+
+button.ghost {
+  background-color: transparent;
+  border-color: #7E68C1;
+  color: #7E68C1;
+}
+
+.transparent-button {
+  background-color: transparent;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  border-color: transparent;
+  border-radius: 10px;
+  padding: 5px;
+  margin-top: 25px;
+  margin-left: 70px;
+  z-index: 2;
+  position: absolute;
+}
+
+.transparent-button img{
+  width: 60px;
+  height: 40px;
+  z-index: 2;
+}
+
+.transparent-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255,255,255,0.65), 0 0 40px rgba(255,255,255,0.65), 0 0 80px rgba(255,255,255,0.65);
+}
+
 
 
 .contenedor article .btn-abrir-popup {
@@ -46,14 +246,22 @@
 }
 
 .popup {
-  background: #F8F8F8;
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
-  border-radius: 3px;
+
+  background: white;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 0;
+  color: #A7A5DB;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
   font-family: 'Montserrat', sans-serif;
   padding: 20px;
   text-align: center;
-  width: 80%;
-  height: 70%;
+  width: 65%;
+  height: 75%;
   overflow: scroll;
 
   transition: .3s ease all;
@@ -86,6 +294,8 @@
   font-weight: 300;
   margin-bottom: 40px;
   opacity: 0;
+  color: #7E68C1;
+  font-weight: bold;
 }
 
 .popup form .contenedor-inputs {
@@ -155,3 +365,4 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+

@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request,send_from_directory
+from flask import Flask, request, send_from_directory, render_template
 from flask_restful import Api
 
 from app.resources.Product import *
@@ -12,7 +12,6 @@ from utils.security import secret_key
 from flask_cors import CORS
 from config import config
 from decouple import config as config_decouple
-
 
 UPLOAD_FOLDER_PRODUCTS = "/imagedata/products"
 # UPLOAD_FOLDER_PRODUCTS = "C:/Users/DarkDhz/PycharmProjects/imagedata/products"
@@ -31,6 +30,12 @@ api = Api(app)
 
 CORS(app, resources={r'/*': {'origins': '*'}})
 
+
+@app.route('/')
+def mainPage():
+    return render_template("index.html")
+
+
 # CATEGORY INFO RESOURCES
 api.add_resource(CategoryListResource, '/categories', '/categories/', methods=['GET'])
 api.add_resource(CategoryResource, '/category/<int:category_id>', methods=['GET'])
@@ -47,6 +52,7 @@ api.add_resource(ProductResource, '/product/<int:product_id>')
 api.add_resource(SearchEngine, '/search', '/search/', methods=['POST'])
 
 # MY PRODUCTS RESOURCES
+api.add_resource(MyProductResource, '/myproduct/<int:product_id>', '/myproduct', '/myproduct/')
 api.add_resource(MyProductListResource, '/myproducts', '/myproducts/', methods=['GET'])
 
 api.add_resource(UserProductResource, '/user/<int:user_id>/product/<int:product_id>', "/user/<int:user_id>/product")
