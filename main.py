@@ -79,7 +79,7 @@ def mainPage():
 
 
 # https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
-@app.route('/user/<int:user_id>/product/<int:product_id>/files', methods=['GET', 'POST', 'PUT'])
+#@app.route('/user/<int:user_id>/product/<int:product_id>/files', methods=['GET', 'POST', 'PUT'])
 def upload_file(user_id, product_id):
     if request.method == 'GET':
         try:
