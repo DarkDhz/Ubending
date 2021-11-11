@@ -33,11 +33,11 @@ export class UserProductsComponent implements OnInit{
         console.error(error)
       })
   }
-  url:string = "/assets/sneaker.jpg"
-  url1:string = "../assets/img2.jpg"
-  url2:string = "../assets/img2.jpg"
-  url3:string = "../assets/img2.jpg"
-  url4:string = "../assets/img2.jpg"
+  url:string = "/images/sneaker.jpg"
+  url1:string = "../images/img2.jpg"
+  url2:string = "../images/img2.jpg"
+  url3:string = "../images/img2.jpg"
+  url4:string = "../images/img2.jpg"
 
   changeImage(event:any){
     this.url = event.target.src;

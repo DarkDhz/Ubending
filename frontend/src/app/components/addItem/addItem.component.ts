@@ -31,24 +31,24 @@ export class addItemComponent implements OnInit {
         console.error(error)
       })
   }
-      // @ts-ignore
-    overlay = document.getElementById('overlay')
-      // @ts-ignore
-    popup = document.getElementById('popup')
-    // @ts-ignore
-    btnAbrirPopup = document.getElementById('btn-abrir-popup')
-    // @ts-ignore
-    btnCerrarPopup = document.getElementById('btn-cerrar-popup')
-     // @ts-ignore
-    product_name = document.getElementById('product_name')
-    // @ts-ignore
-    product_img = document.getElementById('product_img')
-    // @ts-ignore
-    product_price = document.getElementById('product_price')
-   // @ts-ignore
-    product_desc = document.getElementById('product_desc')
   // @ts-ignore
-    product_category = document.getElementById('product_category')
+  overlay = document.getElementById('overlay')
+  // @ts-ignore
+  popup = document.getElementById('popup')
+  // @ts-ignore
+  btnAbrirPopup = document.getElementById('btn-abrir-popup')
+  // @ts-ignore
+  btnCerrarPopup = document.getElementById('btn-cerrar-popup')
+  // @ts-ignore
+  product_name = document.getElementById('product_name')
+  // @ts-ignore
+  product_img = document.getElementById('product_img')
+  // @ts-ignore
+  product_price = document.getElementById('product_price')
+  // @ts-ignore
+  product_desc = document.getElementById('product_desc')
+  // @ts-ignore
+  product_category = document.getElementById('product_category')
   // @ts-ignore
   product_state = document.getElementById('product_state')
 
@@ -63,7 +63,7 @@ export class addItemComponent implements OnInit {
   close(){
     // @ts-ignore
     popup.classList.remove('active');
-      // @ts-ignore
+    // @ts-ignore
     overlay.classList.remove('active');
 
 

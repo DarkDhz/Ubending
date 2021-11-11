@@ -20,6 +20,11 @@ export class SearchBarComponent implements OnInit {
 
   }
 
+  onClickHome(){
+    // @ts-ignore
+    this.$router.replace({path: '/', query: {}})
+  }
+
   onClickLogged(){
     this.isLogged = true
     // @ts-ignore
