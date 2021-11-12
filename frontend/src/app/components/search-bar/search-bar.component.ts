@@ -13,18 +13,21 @@ export class SearchBarComponent implements OnInit {
   token = "null";
 
   constructor() {
-  }
-
-
-  ngOnInit(): void {
-    // @ts-ignore
-
+    // https://newbedev.com/how-can-i-watch-for-changes-to-localstorage-in-angular2
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
     if (currentUser != null) {
       this.token = currentUser.token;
       this.isLogged = true;
     }
+    console.log("token:" +this.token)
+  }
 
+
+  ngOnInit(): void {
+  }
+
+  resetToken() {
+    localStorage.removeItem('currentUser')
   }
 
   onClickHome(){

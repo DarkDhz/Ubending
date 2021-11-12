@@ -54,7 +54,7 @@ width:40px;">
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
               <button ngbDropdownItem>EDIT PROFILE  </button>
               <button ngbDropdownItem routerLink="/user-products" >MY PRODUCTS</button>
-              <button ngbDropdownItem  routerLink="/login-signup">LOG OUT</button>
+              <button ngbDropdownItem (click)="resetToken()" routerLink="/login-signup">LOG OUT</button>
             </div>
           </div>
         </div>
