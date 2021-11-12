@@ -1,5 +1,6 @@
 import { Component, OnInit ,Inject} from '@angular/core';
 import axios from 'axios'
+import {AppComponent} from "../../app.component";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 export interface DialogData {
   idProduct: Number;
@@ -22,6 +23,7 @@ export class UserProductsComponent implements OnInit{
   ngOnInit() {
   }
   getProducts(){
+    console.log(AppComponent.token)
     const path = 'https://ubending3.herokuapp.com/user/1/products'
     axios.get(path)
       .then((res) => {
