@@ -9,7 +9,7 @@ import {ResetPasswordComponent} from "./components/reset-password/reset-password
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login-signup',pathMatch: 'full'},
+  { path: '', redirectTo: '/home',pathMatch: 'full'},
   { path: 'login-signup', component: LogInSignUpComponent},
   { path: 'user-products', component: UserProductsComponent},
   { path: 'home', component: HomeComponent},

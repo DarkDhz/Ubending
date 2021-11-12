@@ -23,8 +23,7 @@ export class UserProductsComponent implements OnInit{
   ngOnInit() {
   }
   getProducts(){
-    console.log(AppComponent.token)
-    const path = 'https://ubending3.herokuapp.com/user/1/products'
+    const path = 'https://ubending3.herokuapp.com/myproducts'
     axios.get(path)
       .then((res) => {
         // @ts-ignore

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AppComponent} from "../../app.component";
+import * as myGlobals from '../globals';
 
 @Component({
   selector: 'app-search-bar',
@@ -7,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class SearchBarComponent implements OnInit {
+
   isLogged = false
   isCollapsed = true;
 
@@ -16,6 +19,12 @@ export class SearchBarComponent implements OnInit {
   }
   ngOnInit(): void {
     // @ts-ignore
+    console.log("TOKEN: " + AppComponent.token)
+
+    if (myGlobals.token != 'null') {
+
+      this.isLogged = true;
+    }
 
 
   }
