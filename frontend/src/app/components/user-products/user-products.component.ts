@@ -15,14 +15,27 @@ export class UserProductsComponent implements OnInit{
   title = 'frontend';
   name: string | undefined;
   state = {products: []}
+  token = "null";
+
   constructor(public dialog: MatDialog) {
+    const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+    if (currentUser != null) {
+      this.token = currentUser.token;
+    } else {
+      //RETURN TO HOME
+    }
+
     this.getProducts()
+
   }
 
   ngOnInit() {
+
   }
+
   getProducts(){
-    const path = 'https://ubending3.herokuapp.com/myproducts'
+
+    const path = 'http://127.0.0.1:5000/myproducts/' + this.token
     axios.get(path)
       .then((res) => {
         // @ts-ignore

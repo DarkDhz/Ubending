@@ -2,6 +2,7 @@ from flask_restful import Resource, reqparse
 from data.ProductQueries import *
 from utils.security import verify_auth_token
 
+
 # NO AUTHENTICATHED
 
 class UserProductResource(Resource):
@@ -69,6 +70,7 @@ class UserProductListResource(Resource):
 
     def put(self):
         return 404
+
 
 # AUTHENTICATED
 
@@ -157,15 +159,9 @@ class MyProductResource(Resource):
 
 class MyProductListResource(Resource):
 
-    def get(self):
-        parser = reqparse.RequestParser()  # create parameters parser from request
-
-        parser.add_argument('token', type=str, required=True, help="This field cannot be left blank")
-
-        data = parser.parse_args()
-
-        user = verify_auth_token(data['token'])
-
+    def get(self, token):
+        user = verify_auth_token(token)
+        print(user)
         if user is None:
             return {'message': 'invalid token'}, 400
 

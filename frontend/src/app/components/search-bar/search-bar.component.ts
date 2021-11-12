@@ -19,7 +19,6 @@ export class SearchBarComponent implements OnInit {
       this.token = currentUser.token;
       this.isLogged = true;
     }
-    console.log("token:" +this.token)
   }
 
 

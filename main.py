@@ -53,7 +53,7 @@ api.add_resource(SearchEngine, '/search', '/search/', methods=['POST'])
 
 # MY PRODUCTS RESOURCES
 api.add_resource(MyProductResource, '/myproduct/<int:product_id>', '/myproduct', '/myproduct/')
-api.add_resource(MyProductListResource, '/myproducts', '/myproducts/', methods=['GET'])
+api.add_resource(MyProductListResource, '/myproducts/<string:token>', methods=['GET'])
 
 api.add_resource(UserProductResource, '/user/<int:user_id>/product/<int:product_id>', "/user/<int:user_id>/product")
 api.add_resource(UserProductListResource, '/user/<int:user_id>/products', methods=['GET'])
