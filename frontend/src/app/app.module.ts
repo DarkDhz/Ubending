@@ -12,6 +12,7 @@ import {NgbCollapseModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ParticlesButtonComponent } from './components/particles-button/particles-button.component';
 
 /*import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';*/
 
@@ -21,7 +22,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SearchBarComponent,
     addItemComponent,
     FooterComponent,
-    routingComponents
+    routingComponents,
+    ParticlesButtonComponent
     ],
   imports: [
     BrowserModule,
