@@ -1,105 +1,83 @@
-<form>
-  <body>
-  <div id = "block_container">
-    <div id="div1" class="topnav" style = "width: 60%">
-      <img src="../../assets/transparent-logo.png"
-           width="20"
-           height="20"
-           style="margin-top:15px;
-          display: inline-block;
-                margin-left:15px">
-      <input class="form-control"
-             style="border: 2px solid #7E68C1;
-            display: inline-block;
-          font-size: 20px;
-          width: 60%;
-          margin: 8px 0;
-          margin-left:15px;
-          border-radius: 12px;"
-      >
-      <button (click)="search()"
-              type="button"
-              style="background-color: #F0EDFF;
-    border: 2px solid #7E68C1;
-     display: inline-block;
-    font-size: 20px;
-    margin-left:15px;                        border-radius: 12px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    ">Search</button>
-    </div>
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background: #A7A5DB" >
+  <div class="container-fluid">
+    <button type="button"style=" background-color: Transparent" (click)="onClickHome()" routerLink="/home">
+      <img src="../../assets/transparent-logo.png" style="height:20px;
+width:40px;">
+    </button>
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault" [ngbCollapse]="isCollapsed">
+    <!-- Left links -->
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <input style="margin-left: 10px" type="text" placeholder="Search">
+    <button style="margin-left: 10px">Search</button>
     <div  id ="cont_filter"
           style="cursor: pointer;
-                 color: #F0EDFF;"
-          (click)="filters()">
-      <i class="fa fa-filter fa-2x"></i>
-      <a style=" margin-left:5px;
-                font-family: monospace;">FILTER</a>
-    </div>
-
-    <div id = "param_logged"
-         style = " float:right;"
-         *ngIf="isLogged">
-      <div id = "cont_liked"
-           style="  cursor: pointer;
-                  color: #F0EDFF;"
-           (click)="liked()">
-        <i class="fa fa-star fa-2x"
-           disabled = "!isActive"></i>
-        <a style=" margin-left:5px;
-                font-family: monospace;">LIKED</a>
-      </div>
-      <div id = "cont_chat"
-           style=" margin-left:50px;
-                 cursor: pointer;
-                 color: #F0EDFF;"
-           (click)="chat()">
-        <i class="fa fa-comments fa-2x" ></i>
-        <a style=" margin-left:5px;
-                font-family: monospace;">CHAT</a>
-      </div>
-      <div id = "cont_products"
-           style=" margin-left:50px;
                  color: #F0EDFF;
-                 cursor: pointer;"
-           (click)="products()">
-        <i class="fa fa-clipboard fa-2x"></i>
-        <a style=" margin-left:5px;
-                font-family: monospace;">MY PRODUCTS</a>
-      </div>
-      <div id = "cont_profile"
-           style=" margin-left:50px;
+                  margin-left: 25px">
+      <i class="fa fa-filter fa-2x"></i>
+    </div>
+    </ul>
+    <!-- Left links -->
+    <div id = "cont_liked"
+         *ngIf="isLogged"
+         style="  cursor: pointer;
+                  color: #F0EDFF;
+                  margin-left:75px;"
+    >
+      <i class="fa fa-star fa-2x"
+         disabled = "!isActive"></i>
+      <a>Liked</a>
+    </div>
+    <div id = "cont_chat"
+         *ngIf="isLogged"
+         style=" margin-left:25px;
+                 cursor: pointer;
+                 color: #F0EDFF;">
+      <i class="fa fa-comments fa-2x" ></i>
+      <a style="margin-left:5px">Chat</a>
+    </div>
+    <div id = "cont_profile"
+         *ngIf="isLogged"
+         style=" margin-left:25px;
                  margin-right: 20px;
                  color: #F0EDFF;
+                 border-color: #A7A5DB;
                  cursor: pointer;"
-           (click)="profile()"
-           data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-        <i class="fa fa-id-badge fa-2x" ></i>
-        <a style=" margin-left:5px;
-                font-family: monospace;">PROFILE</a>
+    >
+      <div class="row" >
+        <div class="col">
+          <div ngbDropdown class="d-inline-block" >
+            <button id="dropdownBasic1"data-bs-toggle="dropdown" ngbDropdownToggle style="color: #F0EDFF;border: 2px solid #F0EDFF">
+              <i class = "fa fa-id-badge fa2x" style="color: #F0EDFF;"></i>
+              <a style=" margin-left:5px;
+                font-family: monospace;">PROFILE</a></button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button ngbDropdownItem>EDIT PROFILE  </button>
+              <button ngbDropdownItem routerLink="/user-products" >MY PRODUCTS</button>
+              <button ngbDropdownItem  routerLink="/login-signup">LOG OUT</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <form class="form-inline waves-light waves-light ml-auto" mdbWavesEffect>
+      <div class="md-form my-0">
     <div id = "param_not_logged"
          *ngIf="!isLogged"
          style= "float:right;
-               width: 300px;
-               margin-top: 10px;
+         align-items: end;
+               align-content: flex-end;
                  ">
 
       <button id = "btnLogIn" (click)="onClickLogged()"
-              routerLink="/login-signup"
-              type="button"
-              style="background-color: #F0EDFF;
-              border: 2px solid #7E68C1;
-              font-size: 20px;
-              width: 100%;
-
-              border-radius: 12px;
-              box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-              "
+              style="float: right"
       >LOG IN</button>
     </div>
-
-
   </div>
-  </body>
-</form>
+    </form>
+  </div>
+    <!-- Collapsible wrapper -->
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->

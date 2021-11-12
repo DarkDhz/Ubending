@@ -10,7 +10,10 @@ import axios from 'axios'
 export class AppComponent implements OnInit{
   title = 'UBending';
   state = {products: []}
+  public static token = '';
+
   constructor() {
+
   }
 
   ngOnInit() {
