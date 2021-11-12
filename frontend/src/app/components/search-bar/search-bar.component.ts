@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {AppComponent} from "../../app.component";
-import * as myGlobals from '../globals';
 
 @Component({
   selector: 'app-search-bar',
@@ -10,22 +8,22 @@ import * as myGlobals from '../globals';
 
 export class SearchBarComponent implements OnInit {
 
-  isLogged = false
+  isLogged = false;
   isCollapsed = true;
+  token = "null";
 
   constructor() {
-
-
   }
+
+
   ngOnInit(): void {
     // @ts-ignore
-    console.log("TOKEN: " + AppComponent.token)
 
-    if (myGlobals.token != 'null') {
-
+    const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+    if (currentUser != null) {
+      this.token = currentUser.token;
       this.isLogged = true;
     }
-
 
   }
 

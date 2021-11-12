@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {AppComponent} from "../../app.component";
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
@@ -11,6 +10,8 @@ import axios from "axios";
   styleUrls: ['./log-in-sign-up.component.css']
 })
 export class LogInSignUpComponent implements OnInit {
+
+  @Output() messageEvent = new EventEmitter<string>();
 
   constructor() {
     const email = document.getElementById("email_signin")!;
@@ -42,8 +43,9 @@ export class LogInSignUpComponent implements OnInit {
   }
 
   onClickSignIn(){
-    const path = `https://ubending4.herokuapp.com/login`
-    // const path = `http://127.0.0.1:5000/login`
+    //const path = `https://ubending4.herokuapp.com/login`
+
+    const path = `http://127.0.0.1:5000/login`
     const parameters = {
       mail: (<HTMLInputElement>document.getElementById("email_signin")).value,
       password: (<HTMLInputElement>document.getElementById("password_signin")).value
@@ -51,13 +53,13 @@ export class LogInSignUpComponent implements OnInit {
     axios.post(path, parameters)
       .then((res) => {
         // @ts-ignore
-        AppComponent.token = res.data.token;
+        localStorage.setItem('currentUser', JSON.stringify({ token: res.data.token}));
         alert('USER LOGGED SUCCESSFULLY')
       })
       .catch((error) => {
         console.error(error)
-        // alert('ERROR LOGGING USER')
-        alert(error.response.data.message)
+        alert('ERROR LOGGING USER')
+        //alert(error.response.data.message)
       })
   }
 
@@ -78,7 +80,7 @@ export class LogInSignUpComponent implements OnInit {
       })
       .catch((error) => {
         console.error(error)
-        alert('ERROR REGISTERING USER')
+        alert(error.response.data.message)
       })
   }
 

@@ -1,6 +1,5 @@
 import { Component, OnInit ,Inject} from '@angular/core';
 import axios from 'axios'
-import {AppComponent} from "../../app.component";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 export interface DialogData {
   idProduct: Number;
