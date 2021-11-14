@@ -31,6 +31,11 @@ api = Api(app)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 
+@app.route("/reset")
+@app.route("/recover")
+@app.route("/home")
+@app.route("/user-products")
+@app.route("/login-signup")
 @app.route('/')
 def mainPage():
     return render_template("index.html")
