@@ -8,6 +8,8 @@ import axios from 'axios'
   styleUrls: ['./addItem.component.css'],
 })
 export class addItemComponent implements OnInit {
+
+  category_id: number = -1;
   // @ts-ignore
   overlay:object;
   // @ts-ignore
@@ -25,6 +27,7 @@ export class addItemComponent implements OnInit {
     if (currentUser != null) {
       this.token = currentUser.token;
     }
+
   }
 
   ngOnInit(): void {
@@ -48,18 +51,6 @@ export class addItemComponent implements OnInit {
   btnAbrirPopup = document.getElementById('btn-abrir-popup')
   // @ts-ignore
   btnCerrarPopup = document.getElementById('btn-cerrar-popup')
-  // @ts-ignore
-  product_name = document.getElementById('product_name')
-  // @ts-ignore
-  product_img = document.getElementById('product_img')
-  // @ts-ignore
-  product_price = document.getElementById('product_price')
-  // @ts-ignore
-  product_desc = document.getElementById('product_desc')
-  // @ts-ignore
-  product_category = document.getElementById('product_category')
-  // @ts-ignore
-  product_state = document.getElementById('product_state')
 
 
 
@@ -74,94 +65,47 @@ export class addItemComponent implements OnInit {
     popup.classList.remove('active');
     // @ts-ignore
     overlay.classList.remove('active');
-
-
-
-  }
-  onProductName(event: any){
-    // @ts-ignore
-    this.product_name = (<HTMLInputElement>event.target).value
-  }
-  onProductPrice(event: any){
-    // @ts-ignore
-    this.product_price = Number((<HTMLInputElement>event.target).value)
-  }
-  onProductDesc(event: any){
-    // @ts-ignore
-    this.product_desc = (<HTMLInputElement>event.target).value
-  }
-  onProductCat(event: any){
-    // @ts-ignore
-    this.product_category = (<HTMLInputElement>event.target).value
-  }
-  onProductState(event: any){
-    // @ts-ignore
-    this.product_state = (<HTMLInputElement>event.target).value
   }
 
-  onFile(event: any){
-    // @ts-ignore
-    event.target.files[0].name
+  selectCategory(event: any) {
+    //getted from event
+    this.category_id = (<HTMLSelectElement>event.target).selectedIndex;
+    //getted from binding
   }
+
   postProduct(){
-    console.log("hola")
-    // @ts-ignore
-    if(product_name.value.length < 3){
-      // @ts-ignore
-      product_name.style.border = "2px solid red"
-    }
-    // @ts-ignore
-    else if(!this.product_desc){
-      // @ts-ignore
-      product_name.style.border = "2px solid red"
-    }
-    // @ts-ignore
-    else if(!this.product_name || this.product_name.length < 3){
-      // @ts-ignore
-      product_name.style.border = "2px solid red"
-    }
-    // @ts-ignore
-    else if(isNaN(Number(product_price.value)) == true){
-      // @ts-ignore
-      product_price.style.border = "2px solid red"
-    }
+    let product_name = (<HTMLInputElement>document.getElementById("product_name")).value;
+    let product_price = (<HTMLInputElement>document.getElementById("product_price")).value;
 
-    // @ts-ignore
-    else if(!this.product_category){
-      // @ts-ignore
-      product_category.style.border = "2px solid red"
-    }
+    let product_state = (<HTMLSelectElement>document.getElementById("product_state")).selectedIndex;
+    let product_desc = (<HTMLInputElement>document.getElementById("product_desc")).value;
 
+    console.log(product_name)
 
-
-    else{
-      // @ts-ignore
-      console.log(this.product_name)
+    if (!product_name || !product_price || !product_desc || product_state == -1|| this.category_id == -1) {
+      alert("invalid params")
+    } else {
+      const path = `http://127.0.0.1:5000/myproduct/` + this.token
 
       const params = {
-        name: this.product_name,
-        description: this.product_desc,
-        price: this.product_price,
-        state: 1,
-        category_id: this.product_category
-      };
-      console.log(params)
-
-      const path = `http://127.0.0.1:5000/myproduct/` + this.token
+        name: product_name,
+        description: product_desc,
+        price: product_price,
+        state: product_state,
+        category_id: this.category_id
+      }
       axios.post(path, params)
         .then((res) => {
-          alert('SHOW UPDATE CORRECTAMENT')
+          alert('PRODUCT ADDED')
         })
         .catch((error) => {
           console.error(error)
-          alert('ERROR AL AFEGIR SHOW')
+          alert('ERROR ADDING PRODUCT')
         })
-      /*
-      // @ts-ignore
-      overlay.classList.remove('active');
-      // @ts-ignore
-      popup.classList.remove('active');
-*/}
+    }
+    // @ts-ignore
+
+
 
 
 

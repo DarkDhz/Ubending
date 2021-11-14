@@ -96,7 +96,6 @@ class MyProductResource(Resource):
             return result, 200
 
     def post(self, token):
-        print("hola")
         parser = reqparse.RequestParser()  # create parameters parser from request
         parser.add_argument('name', type=str, required=True, help="This field cannot be left blank")
         parser.add_argument('description', type=str, required=True, help="This field cannot be left blank")
@@ -105,7 +104,6 @@ class MyProductResource(Resource):
         parser.add_argument('category_id', type=int)
 
         data = parser.parse_args()
-        print("hola2")
         user = verify_auth_token(token)
 
         if user is None:
