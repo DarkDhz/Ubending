@@ -43,3 +43,19 @@ def verify_auth_token(token):
         return None  # invalid token
 
     return data['user_id']
+
+
+def get_reset_token(user_id, expires_sec=1800):
+    s = Serializer(secret_key, expires_sec) # Token expires in 30min
+    return s.dumps({'user_id': user_id}).decode('utf-8')
+
+def verify_reset_token(token):
+    s = Serializer(secret_key)
+    try:
+        data = s.loads(token)
+    except SignatureExpired:
+        return None  # valid token, but expired
+    except BadSignature:
+        return None  # invalid token
+
+    return data['user_id']

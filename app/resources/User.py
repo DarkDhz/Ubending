@@ -115,3 +115,28 @@ class UserLogin(Resource):
 
     def put(self, id):
         return {'message': "Not developed yet"}, 404
+
+class RecoverRequest(Resource):
+
+    def get(self, id):
+        return {'message': "Not developed yet"}, 404
+
+    def post(self):
+        parser = reqparse.RequestParser()  # create parameters parser from request
+
+        # define all input parameters need and their type
+        parser.add_argument('mail', type=str, required=True, help="This field cannot be left blank")
+
+        data = parser.parse_args()
+
+        result = validateLogin(mail=data['mail'], password=data['password'])
+
+        if result == 404:
+            return {'message': 'There are currently no accounts registered with that email'}, 404
+        return {'token': result.decode('ascii')}, 200
+
+    def delete(self, id):
+        return {'message': "Not developed yet"}, 404
+
+    def put(self, id):
+        return {'message': "Not developed yet"}, 404
