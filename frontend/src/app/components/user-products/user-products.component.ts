@@ -18,6 +18,9 @@ export class UserProductsComponent implements OnInit{
   token = "null";
 
   constructor(public dialog: MatDialog) {
+  }
+
+  ngOnInit() {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
     if (currentUser != null) {
       this.token = currentUser.token;
@@ -26,11 +29,6 @@ export class UserProductsComponent implements OnInit{
     }
 
     this.getProducts()
-
-  }
-
-  ngOnInit() {
-
   }
 
   getProducts(){
@@ -46,6 +44,7 @@ export class UserProductsComponent implements OnInit{
         console.error(error)
       })
   }
+
   url:string = "/images/sneaker.jpg"
   url1:string = "../images/img2.jpg"
   url2:string = "../images/img2.jpg"
@@ -56,21 +55,6 @@ export class UserProductsComponent implements OnInit{
     this.url = event.target.src;
   }
 
-  changeImage1(event:any){
-    this.url1 = event.target.src;
-  }
-
-  changeImage2(event:any){
-    this.url2 = event.target.src;
-  }
-
-  changeImage3(event:any){
-    this.url3 = event.target.src;
-  }
-
-  changeImage4(event:any){
-    this.url4 = event.target.src;
-  }
   openDialogDelete(nameProduct:String,idProduct:Number) {
     const dialogRef = this.dialog.open(DialogContentExampleDialog, {
       data: {idProduct: idProduct,nameProduct: nameProduct}
@@ -90,16 +74,27 @@ export class UserProductsComponent implements OnInit{
   templateUrl: 'dialog-content-example-dialog.html',
   styleUrls: ['dialog-content-example-dialog.css']
 })
+
 export class DialogContentExampleDialog {
+  token = "null";
   constructor(
+
     public dialogRef: MatDialogRef<DialogContentExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+    if (currentUser != null) {
+      this.token = currentUser.token;
+    } else {
+      //RETURN TO HOME
+    }
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
   onYesClick(): void {
-    const path = `https://ubending3.herokuapp.com/user/1/product/`+ this.data.idProduct
+    // TODO auto update list of products
+    const path = `http://127.0.0.1:5000/myproduct/` + this.data.idProduct + "/" + this.token
     axios.delete(path)
       .then((res) => {
         alert('PRODUCT DELETE CORRECTLY')

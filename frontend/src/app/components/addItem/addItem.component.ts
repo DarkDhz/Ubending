@@ -17,10 +17,18 @@ export class addItemComponent implements OnInit {
   // @ts-ignore
   btnCerrarPopup:object;
   state = {categories: []}
-  constructor() { }
+
+  token = "null";
+
+  constructor() {
+    const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+    if (currentUser != null) {
+      this.token = currentUser.token;
+    }
+  }
 
   ngOnInit(): void {
-    const path = 'https://ubending3.herokuapp.com/categories'
+    const path = 'https://ubending4.herokuapp.com/categories'
     axios.get(path)
       .then((res) => {
 
@@ -117,7 +125,6 @@ export class addItemComponent implements OnInit {
       product_price.style.border = "2px solid red"
     }
 
-    // @ts-ignore
     else if(!this.product_category){
       // @ts-ignore
       product_category.style.border = "2px solid red"
@@ -128,24 +135,23 @@ export class addItemComponent implements OnInit {
       // @ts-ignore
       console.log(this.product_name)
 
-      var params = { name:  this.product_name, price: this.product_price,
-        description: this.product_desc,category_id : this.product_category,state: 1,image : 1};
+      const params = {
+        name: this.product_name,
+        description: this.product_desc,
+        price: this.product_price,
+        state: 1,
+        category_id: this.product_category
+      };
       console.log(params)
 
-      const path = `https://ubending3.herokuapp.com/user/2/product`
+      const path = `http://127.0.0.1:5000/myproduct/` + this.token
       axios.post(path, params)
         .then((res) => {
           alert('SHOW UPDATE CORRECTAMENT')
         })
         .catch((error) => {
           console.error(error)
-          alert('ERROR AL AFEGIR SHOW')
         })
-      // @ts-ignore
-      alert(product_name.value)
-      // @ts-ignore
-
-      alert(product_price.value)
       /*
       // @ts-ignore
       overlay.classList.remove('active');
