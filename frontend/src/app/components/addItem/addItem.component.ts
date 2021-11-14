@@ -104,6 +104,7 @@ export class addItemComponent implements OnInit {
     event.target.files[0].name
   }
   postProduct(){
+    console.log("hola")
     // @ts-ignore
     if(product_name.value.length < 3){
       // @ts-ignore
@@ -125,10 +126,12 @@ export class addItemComponent implements OnInit {
       product_price.style.border = "2px solid red"
     }
 
+    // @ts-ignore
     else if(!this.product_category){
       // @ts-ignore
       product_category.style.border = "2px solid red"
     }
+
 
 
     else{
@@ -151,6 +154,7 @@ export class addItemComponent implements OnInit {
         })
         .catch((error) => {
           console.error(error)
+          alert('ERROR AL AFEGIR SHOW')
         })
       /*
       // @ts-ignore

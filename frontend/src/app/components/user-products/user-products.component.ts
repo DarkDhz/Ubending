@@ -62,6 +62,7 @@ export class UserProductsComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.getProducts()
     });
   }
   openDialogEdit(nameProduct:String,idProduct:Number) {
