@@ -138,14 +138,21 @@ nav{
 
 /*--------------Greeting Message----------------*/
 
-.text{
+.banner-content{
+  padding: 200px 100px 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.banner-content .text{
   position: absolute;
   z-index: 1;
   top: 130px;
   left: 180px;
 }
 
-.text p:nth-child(1){
+.banner-content .text p:nth-child(1){
   font-size: 40px;
   font-family: Poppins;
   font-weight: 560;
@@ -154,7 +161,7 @@ nav{
   margin: 13px 0;
 }
 
-.text p:nth-child(2){
+.banner-content .text p:nth-child(2){
   font-size: 1rem;
   font-family: Poppins;
   font-weight: 20;
@@ -162,4 +169,21 @@ nav{
   margin: 13px 0;
 }
 
+/*--------------Banner Illustration----------------*/
 
+.banner-content .illustration-container{
+  width:450px;
+  margin-right: 50px;
+  margin-left: auto;
+  margin-top: -200px;
+}
+
+.banner-content .illustration-container img{
+  position: absolute;
+  right: 220px;
+  float: right;
+  top: 100px;
+}
+
+.banner-content .illustration-container svg{
+}
