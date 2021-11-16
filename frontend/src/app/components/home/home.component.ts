@@ -12,4 +12,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onClickSignIn(){
+    // @ts-ignore
+    this.$router.replace({path: '/', query: {}})
+  }
+
 }
