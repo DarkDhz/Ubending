@@ -62,7 +62,7 @@ export class UserProductsComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.getProducts()
+      console.log(result)
     });
   }
   openDialogEdit(nameProduct:String,idProduct:Number) {
@@ -91,7 +91,7 @@ export class DialogContentExampleDialog {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close("here the result");
   }
   onYesClick(): void {
     // TODO auto update list of products
@@ -105,6 +105,7 @@ export class DialogContentExampleDialog {
         alert('ERROR DELETING PRODUCT')
       })
     this.dialogRef.close();
+
   }
 }
 
