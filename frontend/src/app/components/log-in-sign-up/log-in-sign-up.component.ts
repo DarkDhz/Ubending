@@ -11,9 +11,9 @@ import axios from "axios";
 })
 export class LogInSignUpComponent implements OnInit {
 
-  @Output() messageEvent = new EventEmitter<string>();
 
-  constructor() {
+  constructor(private router: Router) {
+
     const email = document.getElementById("email_signin")!;
     const password = document.getElementById("password_signin")!;
   }
@@ -54,18 +54,20 @@ export class LogInSignUpComponent implements OnInit {
       .then((res) => {
         // @ts-ignore
         localStorage.setItem('currentUser', JSON.stringify({ token: res.data.token}));
+        this.router.navigate(['/home']);
         alert('USER LOGGED SUCCESSFULLY')
       })
       .catch((error) => {
         console.error(error)
+        // @ts-ignore
         alert('ERROR LOGGING USER')
         //alert(error.response.data.message)
       })
   }
 
   onClickSignUp(){
-    const path = `https://ubending4.herokuapp.com/register`
-    // const path = `http://127.0.0.1:5000/register`
+    //const path = `https://ubending4.herokuapp.com/register`
+     const path = `http://127.0.0.1:5000/register`
     const parameters = {
       username: 'Undefined',
       mail: (<HTMLInputElement>document.getElementById("email-signup")).value,
@@ -74,9 +76,12 @@ export class LogInSignUpComponent implements OnInit {
     }
     axios.post(path, parameters)
       .then((res) => {
-        console.log('hola')
+        // @ts-ignore
+        localStorage.setItem('currentUser', JSON.stringify({ token: res.data.token}));
         // @ts-ignore
         alert(res.data.message)
+
+
       })
       .catch((error) => {
         console.error(error)
