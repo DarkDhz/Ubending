@@ -57,9 +57,6 @@ api.add_resource(UserAccount, '/userinfo', '/userinfo/')
 # PRODUCTS RESOURCES
 api.add_resource(ProductResource, '/product/<int:product_id>')
 
-# SEARCH ENGINE RESOURCES
-api.add_resource(SearchEngine, '/search', '/search/', methods=['POST'])
-
 # MY PRODUCTS RESOURCES
 api.add_resource(MyProductResource, '/myproduct/<int:product_id>', '/myproduct', '/myproduct/')
 api.add_resource(MyProductListResource, '/myproducts', '/myproducts/', methods=['GET'])

@@ -11,21 +11,27 @@ class SearchEngine(Resource):
 
         parser = reqparse.RequestParser()
         parser.add_argument('name', type=str, required=False, help="This field cannot be left blank")
-        parser.add_argument('category', type=str, required=False, help="This field cannot be left blank")
+        # category must be the id
+        parser.add_argument('category', type=int, required=False, help="This field cannot be left blank")
         parser.add_argument('from', type=int, required=False)
 
         data = parser.parse_args()
+
+        start_point = 0
+
+        if data['from'] is not None:
+            start_point = data['form']
 
         if data['name'] is None and data['category'] is None:
             return {"message": "invalid search format"}, 400
 
         if data['name'] is None:
-            result = searchByCategory(data['category'])
+            result = searchByCategory(category_id=data['category'], start_point=start_point)
 
         if data['category'] is None:
-            result = searchByName(data['name'])
+            result = searchByName(name=data['name'], start_point=start_point)
 
-        result = searchByCategoryAndName(data['category'], data['name'])
+        result = searchByCategoryAndName(category_id=data['category'], name=data['name'], start_point=start_point)
 
     def delete(self, id):
         return 404
