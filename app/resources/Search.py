@@ -20,13 +20,16 @@ class SearchEngine(Resource):
         start_point = 0
 
         if data['from'] is not None:
-            start_point = data['form']
+            start_point = data['from']
 
         if data['name'] is None and data['category'] is None:
             return {"message": "invalid search format"}, 400
 
         if data['name'] is None:
             result = searchByCategory(category_id=data['category'], start_point=start_point)
+            if result == 404:
+                return {"message": "No products found"}, 400
+            return result, 200
 
         if data['category'] is None:
             result = searchByName(name=data['name'], start_point=start_point)
