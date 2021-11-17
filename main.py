@@ -45,6 +45,10 @@ def mainPage():
 api.add_resource(CategoryListResource, '/categories', '/categories/', methods=['GET'])
 api.add_resource(CategoryResource, '/category/<int:category_id>', methods=['GET'])
 
+# SEARCH ENGINE RESOURCES
+
+api.add_resource(SearchEngine, '/api/search', '/api/search', methods=['POST'])
+
 # USER INFO RESOURCES
 api.add_resource(UserLogin, '/login', '/login/', methods=['POST'])
 api.add_resource(UserRegister, '/register', '/register/', methods=['POST'])
@@ -52,9 +56,6 @@ api.add_resource(UserAccount, '/userinfo', '/userinfo/')
 
 # PRODUCTS RESOURCES
 api.add_resource(ProductResource, '/product/<int:product_id>')
-
-# SEARCH ENGINE RESOURCES
-api.add_resource(SearchEngine, '/search', '/search/', methods=['POST'])
 
 # MY PRODUCTS RESOURCES
 api.add_resource(MyProductResource, '/myproduct/<int:product_id>', '/myproduct', '/myproduct/')
