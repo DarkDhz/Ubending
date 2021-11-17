@@ -1,6 +1,6 @@
 import re
 from app.database import db
-from utils.security import hash_password, verify_password, generate_auth_token
+from utils.security import hash_password, verify_password, generate_auth_token, get_reset_token
 
 
 def _toJson(elem):
@@ -83,6 +83,28 @@ def validateLogin(mail, password):
         return generate_auth_token(myresult[0][0])
     else:
         return 400
+
+
+def validateEmail(mail):
+    mycursor = db.cursor()
+    query = "SELECT * FROM Users WHERE mail = %s"
+
+    values = (mail,)
+
+    mycursor.execute(query, values)
+    myresult = mycursor.fetchall()
+
+    if len(myresult) == 0:
+        return 404
+    return get_reset_token(myresult[0][0])
+
+
+def updatePassword(user_id, password):
+    mycursor = db.cursor()
+    query = "UPDATE Users SET password = %s WHERE user_id = %s"
+    values = (password, user_id)
+    mycursor.execute(query, values)
+    db.commit()
 
 
 def updateUserProfile(user_id, data):

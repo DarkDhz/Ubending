@@ -1,8 +1,11 @@
+from flask import url_for
 from passlib.apps import custom_app_context as pwd_context
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
+from flask_mail import Message
 
 secret_key = "ubendinglaostia1234"
-
+email_user = 'ubending.social@gmail.com'
+email_pass = 'ubending2021'
 
 '''
 @auth.verify_password
@@ -49,6 +52,7 @@ def get_reset_token(user_id, expires_sec=1800):
     s = Serializer(secret_key, expires_sec) # Token expires in 30min
     return s.dumps({'user_id': user_id}).decode('utf-8')
 
+
 def verify_reset_token(token):
     s = Serializer(secret_key)
     try:
@@ -59,3 +63,15 @@ def verify_reset_token(token):
         return None  # invalid token
 
     return data['user_id']
+
+
+def send_reset_email(user_id, mail):
+    token = get_reset_token(user_id)
+    msg = Message('Password Reset Request',
+                  sender='noreply@ubending.com',
+                  recipients=[mail])
+    msg.body = f'''To reset your password visit the following link:
+{url_for('reset_token', token=token, _external=True)}
+
+If you did not make this request, please ignore this email and no changes will be made.
+    '''
