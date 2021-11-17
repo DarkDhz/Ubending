@@ -33,8 +33,14 @@ class SearchEngine(Resource):
 
         if data['category'] is None:
             result = searchByName(name=data['name'], start_point=start_point)
+            if result == 404:
+                return {"message": "No products found"}, 400
+            return result, 200
 
         result = searchByCategoryAndName(category_id=data['category'], name=data['name'], start_point=start_point)
+        if result == 404:
+            return {"message": "No products found"}, 400
+        return result, 200
 
     def delete(self, id):
         return 404
