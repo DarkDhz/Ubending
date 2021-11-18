@@ -6,40 +6,22 @@
       <p>My List of Seller</p>
       <h1><span>Seller</span> Items</h1>
     </div>
-    <div class="row">
+    <div class="row" style="margin-bottom: 1%;">
       <div class="col-md-3" *ngFor="let product of state.products">
-        <div class="card">
-          <div class="card-main">
-            <div class="discount">{{product['category_id']}}</div>
-            <div class="label label-green">{{product['state']}}</div>
-            <div class="product-container">
-              <div class="p" (mouseover)="changeImage($event)"><img src="https://i.imgur.com/Kz2bPI0.jpg" alt="Product"></div>
-            </div>
-            <div class="image">
-              <img src="{{url}}" alt="Image">
-            </div>
-            <div class="cart-line"></div>
-            <div class="cart-item">
-              <ul>
-                <button
-                  mat-button (click)="openDialogEdit(product['name'],product['idProduct'])" style="background: #555">
-                  <i class="fa fa-pencil" ></i></button>
-                <button
-                  mat-button (click)="openDialogDelete(product['name'],product['idProduct'])"style="background: #555">
-                  <i class="fa fa-trash "></i></button>
-              </ul>
-            </div>
+        <div class="card" style="width: 18rem; margin-bottom: 5%">
+
+          <img class="card-img-top" src="https://i.imgur.com/Kz2bPI0.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{product['name']}}</h5>
+            <p class="card-text">{{product['price']}}€</p>
           </div>
-          <div class="content">
-            <a href="">{{product['name']}}</a>
-            <div class="rating">
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
+          <div class="row">
+            <div class="col-xs-12">
+              <div style="margin-bottom: 5%;" class="text-center">
+                <button style="margin-right: 2%;" class="btn btn-primary" (click)="openDialogEdit(product['name'],product['product_id'])">EDIT</button>
+                <button style="margin-left: 2%;" class="btn btn-danger" (click)="openDialogDelete(product['name'],product['product_id'])">DELETE</button>
+              </div>
             </div>
-            <p><span class="money">{{product['price']}}€</span></p>
           </div>
         </div>
       </div>

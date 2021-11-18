@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" >
   <button id="btn-abrir-popup" class="btn-abrir-popup" (click)="open()"
           style="background-color: #F0EDFF;
             border: 2px solid #CCA715;
@@ -13,34 +13,30 @@
               color: #FFC664"></i>
   </button>
 </div>
-<div class="overlay" id="overlay">
-  <div class="popup" id="popup">
+<div class="overlay" id="overlay" >
+  <div class="popup" id="popup" style="width: 50%; padding-left: 5%; padding-right: 5%; ">
     <a id="btn-cerrar-popup" class="btn-cerrar-popup" (click)="close()"><i class="fa fa-times"></i></a>
-    <h1>Post new product</h1>
-    <h4>Fill in all the fields</h4>
+    <h3>Post new product</h3>
 
-    <form action="">
+    <form id="add_item_form" action="">
       <div class="contenedor-inputs">
-        <input id = "product_name" (keyup)="onProductName($event)" type="text" placeholder="Name of the product" style="border: 2px solid #8E8CB9;">
-        <input id = "product_price" (keyup)="onProductPrice($event)" type="price" placeholder="Price(EURO)" style="
+        <input id = "product_name"  type="text" placeholder="Name of the product" style="border: 2px solid #8E8CB9;">
+        <input id = "product_price"  type="number" placeholder="Price of the product (€)" style="
           border: 2px solid #8E8CB9;">
-        <select id = "product_category" formProductName="selectProduct" (change)="onProductCat($event)" class="form-control" style="border: 2px solid #8E8CB9;margin-bottom: 20px; color: #ABA9BC;">
-          <option value="" selected disabled hidden>Select the category</option>
+        <select id = "product_category" formProductName="selectProduct" (change)="selectCategory($event)" class="form-control" style="border: 2px solid #8E8CB9;margin-bottom: 20px; color: #ABA9BC;">
+          <option value="" selected disabled hidden>Select the category of the product</option>
           <option [value]="item" *ngFor="let item of state.categories">{{item['name']}}</option>
         </select>
-        <select id = "product_state" formProductName="selectProduct" (change)="onProductState($event)" class="form-control" style="margin-bottom: 20px;border: 2px solid #8E8CB9;color: #ABA9BC;">
-          <option value="" selected disabled hidden>Select the state</option>
+        <select id = "product_state" formProductName="selectProduct" class="form-control" style="margin-bottom: 20px;border: 2px solid #8E8CB9;color: #ABA9BC;">
+          <option value="" selected disabled hidden>Select the state of the product</option>
           <option value="New" >New</option>
           <option value="Worn out">Worn out</option>
-          <option value="Deplorable">Deplorable</option>
+          <option value="Deplorable">Destroyed</option>
         </select>
-        <input id = "product_desc" type="description" (keyup)="onProductDesc($event)"  placeholder="Description" style="height:300px;border: 2px solid #8E8CB9;color: #ABA9BC;">
+        <input id = "product_desc" type="description"  placeholder="Description of the product" style="border: 2px solid #8E8CB9;color: #ABA9BC;">
+        <input placeholder="Select product image" id = "product_img" type="file" style="border: transparent; height: 70px" >
+        <button  (click)="postProduct()" class="ghost" >Post product</button>
 
-        <p for="img">Select image:</p>
-
-        <input id = "product_img" type="file" style="border: 2px solid #8E8CB9; height: 70px" (change)="onFile($event)">
-
-        <button id="btn-submit" (click)="postProduct()" class="ghost" id="signUp">Post product</button>
 
       </div>
     </form>
