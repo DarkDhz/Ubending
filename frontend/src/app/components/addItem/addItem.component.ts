@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AppComponent} from "../../app.component";
 import axios from 'axios'
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-prova2',
@@ -22,7 +23,7 @@ export class addItemComponent implements OnInit {
 
   token = "null";
 
-  constructor() {
+  constructor(private router: Router) {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
     if (currentUser != null) {
       this.token = currentUser.token;
@@ -97,6 +98,8 @@ export class addItemComponent implements OnInit {
       axios.post(path, params)
         .then((res) => {
           alert('PRODUCT ADDED')
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+            this.router.navigate(['/user-products']));
         })
         .catch((error) => {
           console.error(error)

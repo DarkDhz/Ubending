@@ -105,7 +105,7 @@ REGISTER
 
 import requests
 url = 'http://127.0.0.1:5000/register'
-myobj = {'username': 'hola', 'mail': '2test@gmail.com', 'password': '123bdhewbdehfvgfvASVCFDgvfj', 'repeat_password': '123bdhewbdehfvgfvASVCFDgvfj'}
+myobj = {'username': 'hola', 'mail': 'as2test@gmail.com', 'password': '123bdhewbdehfvgfvASVCFDgvfj', 'repeat_password': '123bdhewbdehfvgfvASVCFDgvfj'}
 x = requests.post(url, data=myobj)
 x.json()
 

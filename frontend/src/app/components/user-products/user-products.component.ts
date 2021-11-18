@@ -1,6 +1,7 @@
 import { Component, OnInit ,Inject} from '@angular/core';
 import axios from 'axios'
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Router} from "@angular/router";
 export interface DialogData {
   idProduct: Number;
   nameProduct: string;
@@ -78,10 +79,9 @@ export class UserProductsComponent implements OnInit{
 
 export class DialogContentExampleDialog {
   token = "null";
-  constructor(
-
-    public dialogRef: MatDialogRef<DialogContentExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  constructor(public dialogRef: MatDialogRef<DialogContentExampleDialog>,
+              @Inject(MAT_DIALOG_DATA) public data: DialogData,
+              private router: Router) {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
     if (currentUser != null) {
       this.token = currentUser.token;
@@ -99,6 +99,8 @@ export class DialogContentExampleDialog {
     axios.delete(path)
       .then((res) => {
         alert('PRODUCT DELETE CORRECTLY')
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+          this.router.navigate(['/user-products']));
       })
       .catch((error) => {
         console.error(error)
