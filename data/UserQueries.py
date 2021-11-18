@@ -4,7 +4,7 @@ from utils.security import hash_password, verify_password, generate_auth_token
 
 
 def _toJson(elem):
-    if elem[6] is not None:
+    if elem[6] is not None: # Decode user photo
         elem[6] = elem[6].decode('ascii')
     return {'user_id': elem[0], 'username': elem[1], 'password': elem[2],
             'admin': elem[3], 'mail': elem[4], 'location': elem[5],
