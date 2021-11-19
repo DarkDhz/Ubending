@@ -61,8 +61,12 @@ class TestUserQueries(TestCase):
     def test_update_user_profile(self):
         self.fail()
         '''data = []
-
-        self.assertEqual(updateUserProfile(0, data), 404, 'User does not exist')'''
+        
+        # First lets try to update a user that does not exist
+        self.assertEqual(updateUserProfile(0, data), 404, 'User does not exist')
+        
+        # Now lets update the data of an existing user
+        self.assertEqual(updateUserProfile())'''
 
 class TestUserRequests(TestCase):
     user = [25, 'Test2', '1234ABCD', 0, 'testmail2@gmail.com', None, None]
@@ -102,4 +106,8 @@ class TestUserRequests(TestCase):
         self.assertEqual(200, z.status_code)
 
     def test_get_account(self):
-        self.fail()
+        url = 'http://127.0.0.1:5000/userinfo'
+        myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0OTEzNywiZXhwIjoxNjM2NjQ5NzM3fQ.eyJ1c2VyX2lkIjozfQ.U4fjXix65nT_1xqVKQGVKZoh818kh0Rc1zlUSLMtLnkHOktZ4Rm13YCImedCnZNxS6lTbiI6YSdReBJcCJZ7hQ'}
+        x = requests.get(url, data=myobj)
+
+        self.assertEqual(200, x.status_code)

@@ -63,8 +63,13 @@ class UserAccount(Resource):
     def post(self):
         return 404
 
-    def delete(self, id):
-        return 404
+    def delete(self, user_id):
+        account = getAccountByID(user_id)
+        if account != 404:
+            deleteUserFromDB(user_id)
+            return {'message': "Account deleted successfully"}, 200
+        else:
+            return {'message': "Account with specified id doest not exist"}, 404
 
     def put(self):
         parser = reqparse.RequestParser()  # create parameters parser from request
