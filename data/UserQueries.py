@@ -86,18 +86,38 @@ def validateLogin(mail, password):
 
 
 def updateUserProfile(user_id, data):
-    if len(data) <= 1 or data is None:
+    if len(data) == 0 or data is None:
         return 404
 
-    cursor = db.cursor()
+    if data['password'] != '':
+        if data['repeat_password'] != '':
+            result = validatePasswordFormat(data['password'], data['repeat_password'])
+            if result != 0:
+                return result
+            else:
+                password = hash_password(data['password'])
+                __updateValue('password', password, user_id)
+        else:
+            return 5
 
-    for item in data:
-        if data[item] is not None and item != 'token':
-            query = "UPDATE Users SET " + item + " = %s WHERE user_id = %s"
-            values = (data[item], user_id)
-            cursor.execute(query, values)
+    if data['repeat_password'] != '' and data['password'] == '':
+        return 6
+
+    if data['username'] is not None:
+        __updateValue('username', data['username'], user_id)
+
+    if data['location'] is not None:
+        __updateValue('location', data['location'], user_id)
 
     db.commit()
+
+
+def __updateValue(item, value, user_id):
+    cursor = db.cursor()
+
+    query = "UPDATE Users SET " + item + " = %s WHERE user_id = %s"
+    values = (value, user_id)
+    cursor.execute(query, values)
 
 
 """

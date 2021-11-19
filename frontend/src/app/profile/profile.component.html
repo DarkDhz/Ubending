@@ -34,13 +34,13 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">Password</label>
           <div class="col-sm-10" style="display: inline-block">
-            <input [class.is-invalid]="password1!.invalid && password2!.touched" type="password" id="input_password" class="form-control">
+            <input type="password" id="input_password" class="form-control">
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label">Confirm Password</label>
           <div class="col-sm-10" style="display: inline-block">
-            <input [class.is-invalid]="password1!.invalid && password2!.touched" id="input_confirm"  type="password" class="form-control">
+            <input id="input_confirm"  type="password" class="form-control">
           </div>
         </div>
         <div class="form-group">
@@ -49,10 +49,8 @@
             <input id="input_photo" type="file" class="form-control">
           </div>
         </div>
-        <button (click)="validatePasswords()" style="margin-top: 20px" id="recoverPassword">Save Changes</button>
-        <small *ngIf="showAlertInvalid" class="text-danger">All fields are requiered</small>
-        <!--question mark(?) is a safe navigator operator-->
-        <small *ngIf="showAlertDifferentPasswords" class="text-danger">The passwords must match</small>
+        <button (click)="changeProfile()" style="margin-top: 20px" id="recoverPassword">Save Changes</button>
+        <small *ngIf="showAlertError" class="text-danger">{{ errorMessage }}</small>
 
       </div>
     </div>

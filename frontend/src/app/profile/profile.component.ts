@@ -23,8 +23,8 @@ export class ProfileComponent implements OnInit {
   photo:object;
 
   user = {username: "LLUIS", password: "123456789Aa",confirmPassword: "123456789Aa",position: "08036"}
-  showAlertDifferentPasswords: Boolean = false;
-  showAlertInvalid: Boolean = false;
+  showAlertError: Boolean = false;
+  errorMessage = ''
 
   constructor(private router: Router) {}
 
@@ -50,42 +50,62 @@ export class ProfileComponent implements OnInit {
     this.photo = document.getElementById('input_confirm')
 
     this.getUser();
-    this.updateUser();
   }
 
   getUser(){
-    const path = 'https://ubending3.herokuapp.com/user/1'
+    const path = `http://127.0.0.1:5000/api/userinfo/` + this.token
     axios.get(path)
       .then((res) => {
         // @ts-ignore
+        this.name.value = res.data.username
+        // @ts-ignore
+        let loc = res.data.location
+
+        if (loc != null) {
+          // @ts-ignore
+          this.position.value = loc
+        } else {
+          // @ts-ignore
+          this.position.value = ""
+        }
+        // @ts-ignore
+        this.password.value = ""
+        // @ts-ignore
+        this.confirmPassword.value = ""
+
       })
       .catch((error) => {
         console.error(error)
       })
-  }
-
-  updateUser(){
-    // @ts-ignore
-    this.name.value= this.user.username
-    // @ts-ignore
-    this.position.value = this.user.position
-    // @ts-ignore
-    this.password.value = this.user.password
-    // @ts-ignore
-    this.confirmPassword.value = this.user.confirmPassword
 
   }
 
   changeProfile(){
-    const path = 'https://ubending3.herokuapp.com/user/1'
-    axios.put(path,this.user)
-      .then((res) => {
+    const path = `http://127.0.0.1:5000/api/userinfo/` + this.token
+    this.showAlertError = false;
+    const params = {
         // @ts-ignore
+        username: this.name.value,
+        // @ts-ignore
+        password: this.password.value,
+        // @ts-ignore
+        repeat_password: this.confirmPassword.value,
+        // @ts-ignore
+        location: this.position.value
+      }
+
+    axios.put(path, params)
+      .then((res) => {
+        alert('USER INFO UPDATED')
+        this.router.navigate(['/home'])
       })
       .catch((error) => {
-        console.error(error)
+        this.showAlertError = true
+        this.errorMessage = error.response.data.message
       })
   }
+
+  /*
   get password1(){
     // @ts-ignore
     return this.password?.value
@@ -114,6 +134,8 @@ export class ProfileComponent implements OnInit {
 
     }
   }
+  */
+
 
 
 

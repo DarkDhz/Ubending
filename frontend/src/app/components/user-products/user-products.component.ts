@@ -39,8 +39,8 @@ export class UserProductsComponent implements OnInit{
     axios.get(path)
       .then((res) => {
         // @ts-ignore
-        this.state.products =  res.data
-        console.log(this.state.products)
+        this.state.products = res.data
+        console.log(res.data)
       })
       .catch((error) => {
         console.error(error)
@@ -96,7 +96,6 @@ export class DialogContentExampleDialog {
     this.dialogRef.close("here the result");
   }
   onYesClick(): void {
-    // TODO auto update list of products
     const path = `http://127.0.0.1:5000/myproduct/` + this.data.idProduct + "/" + this.token
     axios.delete(path)
       .then((res) => {
