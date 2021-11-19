@@ -52,7 +52,7 @@ api.add_resource(SearchEngine, '/api/search', '/api/search', methods=['POST'])
 # USER INFO RESOURCES
 api.add_resource(UserLogin, '/login', '/login/', methods=['POST'])
 api.add_resource(UserRegister, '/register', '/register/', methods=['POST'])
-api.add_resource(UserAccount, '/userinfo', '/userinfo/')
+api.add_resource(UserAccount, '/api/userinfo/<string:token>')
 
 # PRODUCTS RESOURCES
 api.add_resource(ProductResource, '/product/<int:product_id>')

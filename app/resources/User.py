@@ -46,16 +46,12 @@ class UserRegister(Resource):
 
 class UserAccount(Resource):
 
-    def get(self):
-        parser = reqparse.RequestParser()  # create parameters parser from request
+    def get(self, token):
 
-        parser.add_argument('token', type=str, required=True, help="This field cannot be left blank")
-
-        data = parser.parse_args()
-
-        user = verify_auth_token(data['token'])
+        user = verify_auth_token(token)
 
         user = getAccountByID(user)
+
         if user is None:
             return {'message': 'invalid token'}, 400
         return user, 200
@@ -66,24 +62,34 @@ class UserAccount(Resource):
     def delete(self, id):
         return 404
 
-    def put(self):
+    def put(self, token):
         parser = reqparse.RequestParser()  # create parameters parser from request
 
-        parser.add_argument('token', type=str, required=True, help="This field cannot be left blank")
         parser.add_argument('username', type=str, required=False)
         parser.add_argument('password', type=str, required=False)
+        parser.add_argument('repeat_password', type=str, required=False)
         parser.add_argument('location', type=str, required=False)
 
         data = parser.parse_args()
 
-        user = verify_auth_token(data['token'])
+        user = verify_auth_token(token)
 
         if user is None:
             return {'message': 'invalid token'}, 400
         result = updateUserProfile(user, data)
 
-        if result == 404:
-            return {'message': 'not fields to update'}, 400
+        if result == 1:
+            return {'message': 'Password must match'}, 400
+        if result == 2:
+            return {'message': 'Password must have 8 chars'}, 400
+        if result == 3:
+            return {'message': 'Password must have at least 1 number'}, 400
+        if result == 3:
+            return {'message': 'Password must have at least 1 uppercase letter'}, 400
+        if result == 5:
+            return {'message': 'Repeat password is empty'}, 400
+        if result == 6:
+            return {'message': 'Password is empty'}, 400
 
         return 201
 
