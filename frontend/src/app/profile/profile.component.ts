@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import axios from "axios";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -7,6 +8,9 @@ import axios from "axios";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+
+  token = "null";
+
   // @ts-ignore
   name:object;
   // @ts-ignore
@@ -21,10 +25,19 @@ export class ProfileComponent implements OnInit {
   user = {username: "LLUIS", password: "123456789Aa",confirmPassword: "123456789Aa",position: "08036"}
   showAlertDifferentPasswords: Boolean = false;
   showAlertInvalid: Boolean = false;
-  constructor() {}
 
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
+
+    const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+    if (currentUser != null) {
+      this.token = currentUser.token;
+    } else {
+      alert('NOT LOGGED IN')
+      this.router.navigate(['/home']);
+    }
+
     // @ts-ignore
     this.name = document.getElementById('input_name')
     // @ts-ignore
@@ -50,6 +63,7 @@ export class ProfileComponent implements OnInit {
         console.error(error)
       })
   }
+
   updateUser(){
     // @ts-ignore
     this.name.value= this.user.username
@@ -81,6 +95,7 @@ export class ProfileComponent implements OnInit {
     // @ts-ignore
     return this.confirmPassword?.value
   }
+
   validatePasswords(){// @ts-ignore
     if (this.password?.value != this.confirmPassword?.value){
       this.showAlertInvalid = false;

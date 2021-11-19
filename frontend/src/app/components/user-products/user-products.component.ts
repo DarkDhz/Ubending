@@ -18,7 +18,7 @@ export class UserProductsComponent implements OnInit{
   state = {products: []}
   token = "null";
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private router: Router) {
   }
 
   ngOnInit() {
@@ -26,7 +26,8 @@ export class UserProductsComponent implements OnInit{
     if (currentUser != null) {
       this.token = currentUser.token;
     } else {
-      //RETURN TO HOME
+      alert('NOT LOGGED IN')
+      this.router.navigate(['/home']);
     }
 
     this.getProducts()
@@ -86,7 +87,8 @@ export class DialogContentExampleDialog {
     if (currentUser != null) {
       this.token = currentUser.token;
     } else {
-      //RETURN TO HOME
+      alert('NOT LOGGED IN')
+      this.router.navigate(['/home']);
     }
   }
 
