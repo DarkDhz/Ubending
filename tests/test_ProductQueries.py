@@ -67,7 +67,9 @@ class TestProductQueries(TestCase):
         #TODO: Do item ids even exist? Like seriously
 
     def test_add_product(self):
-        self.fail()
+        data = {"name": "PC", "description": "New PC", "price": 1200, "state": "new", "image": 1, "category_id": 2}
+        values = (user_id, data['name'], data['description'], data['price'], data['state'], data['image'],data['category_id'])
+        addProduct(user_id, data)
 
     def test_delete_product(self):
         self.fail()
