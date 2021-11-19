@@ -10,7 +10,7 @@ class TestUserQueries(TestCase):
     def test__to_json(self):
         self.assertEqual(_toJson(self.user), {'user_id': 24, 'username': 'Test', 'password': '1234ABCD',
                                     'admin': 0, 'mail': 'testmail@gmail.com', 'location': None,
-                                    'userphoto': None}, 'The JSON coincide')
+                                    'userphoto': None}, 'The JSON do not match')
 
     def test_add_user_to_db(self):
         response = addUserToDB(self.user[1], self.user[4], self.user[2])
