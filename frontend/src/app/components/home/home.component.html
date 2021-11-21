@@ -9,8 +9,24 @@
       <a href="#">Products</a>
       <a href="#" (click)="onClickSignIn()" routerLink="/login-signup">Chat</a>
     </div>
-    <div class="account">
+    <div *ngIf="isLogged" class="account">
       <button (click)="onClickSignIn()" routerLink="/login-signup">Sign In</button>
+    </div>
+    <div *ngIf="!isLogged" class="nav-profile-container">
+      <div class="action">
+        <div class="profile" (click)="menuToggle()">
+          <img src="../../../assets/linear-cute-ghost-icon.jpg">
+        </div>
+        <div class="menu">
+          <h3>Username<br><span>Location</span></h3>
+          <ul>
+            <li><i class="fa fa-edit"></i><a href="#"> Edit Profile</a></li>
+            <li><i class="fa fa-list"></i><a href="#"> My Products</a></li>
+            <li><i class="fa fa-heart-o"></i><a href="#"> Wishlist</a></li>
+            <li><i class="fa fa-sign-out"></i><a href="#"> Log Out</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </nav>
   <div class="banner-content container grid">
@@ -36,5 +52,11 @@
       <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
     </svg>
   </div>
+</div>
+<div class="categories">
+  <h2 class="section__title">
+    See the categories
+  </h2>
+  <app-card-slider></app-card-slider>
 </div>
 <app-footer></app-footer>

@@ -136,6 +136,112 @@ nav{
   box-shadow: 2px 2px 12px rgba(255,255,255,0.2);
 }
 
+.nav-profile-container{
+  height: fit-content;
+  width: fit-content;
+  margin: 0 20px;
+}
+
+.action{
+  top: 20px;
+  right: 30px;
+}
+
+.action .profile{
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.action .profile img{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.action .menu{
+  position: absolute;
+  top: 90px;
+  right: 30px;
+  padding: 10px 20px;
+  background: white;
+  width: 200px;
+  box-sizing: border-box;
+  border-radius: 15px;
+  transition: .5s;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.action .menu.active{
+  visibility: visible;
+  opacity: 1;
+}
+
+.action .menu:before{
+  content: '';
+  position: absolute;
+  top: -5px;
+  right: 50px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  transform: rotate(45deg);
+}
+
+.action .menu h3{
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  padding: 20px 0;
+  font-weight: 500;
+  color: #555;
+  line-height: 1.2em;
+}
+
+.action .menu h3 span{
+  font-size: 14px;
+  color: #cecece;
+  font-weight: 400;
+}
+
+.action .menu ul li{
+  list-style: none;
+  padding: 5px 0;
+  border-top: 1px solid rgba(0,0,0,.05);
+  display: flex;
+  align-items: center;
+}
+
+.action .menu ul li i{
+  max-width: 20px;
+  margin-right: 10px;
+  opacity: .5;
+  transition: .5s;
+}
+
+.action .menu ul li:hover i{
+  opacity: 1;
+}
+
+.action .menu ul li a{
+  display: inline-block;
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  transition: .5s;
+}
+.action .menu ul li:hover a{
+  color: #959FFF;
+}
+
+
 /*--------------Greeting Message----------------*/
 
 .banner-content{
@@ -185,5 +291,16 @@ nav{
   top: 100px;
 }
 
-.banner-content .illustration-container svg{
+/*--------------Categories Section----------------*/
+.section__title{
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+  line-height: 140%;
+  text-align: center;
+  padding-bottom: 3rem;
 }
+
+
+

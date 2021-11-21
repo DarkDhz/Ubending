@@ -2,3 +2,74 @@
 @import '~font-awesome/css/font-awesome.css';
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body{
+  background-color: #F1F1F1;
+}
+.slick-track {
+  display: flex !important;
+}
+
+.slide {
+  height: 100%;
+}
+
+.slider{
+  width: 100%;
+  display: inline-flex;
+}
+
+.slick-list{
+  margin: 3px -15px;
+}
+
+.slick-slide {
+  margin: 3px 15px;
+  height: inherit !important;
+}
+
+.slick-slider {
+  width: 88%;
+  height: auto;
+  margin: auto;
+}
+
+.slick-prev:before {
+  font-size: 25px !important;
+  color: #646DCC !important;
+  background-color: #F1F1F1;
+}
+.slick-next:before {
+  font-size: 25px !important;
+  color: #646DCC !important;
+  background-color: #F1F1F1;
+}
+
+.prev-slide:hover {
+  background-position: 0px -53px;
+}
+
+.next-slide:hover {
+  background-position: -24px -53px;
+}
+
+.category-card{
+  padding: 3rem 2rem;
+  background: white;
+  border-radius: 8px;
+  outline: .1rem solid rgba(0,0,0,.1);
+  outline-offset: -1rem;
+  text-align: center;
+  box-shadow: 0 1.5rem 1rem rgba(0,0,0,.1);
+}
+
+.category-card:hover{
+  outline: .2rem solid #646DCC;
+  outline-offset: 0rem;
+}
+
+.category-card .title{
+  font-size: 1.2em;
+  font-weight: 500;
+  margin-top: 20px;
+}
