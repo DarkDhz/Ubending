@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ParticlesButtonComponent } from './components/particles-button/particles-button.component';
 import { CardSliderComponent } from './components/card-slider/card-slider.component';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { HomeProductsComponent } from './components/home-products/home-products.component';
 
 /*import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';*/
 
@@ -26,7 +27,8 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
     FooterComponent,
     routingComponents,
     ParticlesButtonComponent,
-    CardSliderComponent
+    CardSliderComponent,
+    HomeProductsComponent
     ],
   imports: [
     BrowserModule,
