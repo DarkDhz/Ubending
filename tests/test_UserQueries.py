@@ -1,6 +1,6 @@
 from unittest import TestCase
 from data.UserQueries import _toJson, addUserToDB, getAccountByID, getAccountByEmail, validatePasswordFormat, \
-    validateLogin, updateUserProfile
+    validateLogin, updateUserProfile, deleteUserFromDB
 import requests
 
 
@@ -13,9 +13,22 @@ class TestUserQueries(TestCase):
                                     'userphoto': None}, 'The JSON do not match')
 
     def test_add_user_to_db(self):
-        response = addUserToDB(self.user[1], self.user[4], self.user[2])
-        self.assertEqual(response, None, "Couldn't add user to db")
-        #TODO: Delete user
+        addUserToDB(self.user[1], self.user[4], self.user[2])
+        response = getAccountByEmail(self.user[4])
+        self.assertEqual(response['mail'], 'testmail@gmail.com', "Couldn't add user to db") # User added successfully
+        # Delete user
+        deleteUserFromDB(response['user_id'])
+
+    def test_delete_user_from_db(self):
+        # Add user to db
+        addUserToDB("deleteTest", "deleteMail@gmail.com", self.user[2])
+        response = getAccountByEmail("deleteMail@gmail.com")
+        self.assertEqual(response['mail'], "deleteMail@gmail.com") # Check that user exists
+
+        # Delete user and try to recover it
+        deleteUserFromDB(response['user_id'])
+        response2 = getAccountByEmail("deleteMail@gmail.com")
+        self.assertEqual(response2, 404) # User deleted successfully
 
     def test_get_account_by_email(self):
         # We first add a user to the db
@@ -27,15 +40,21 @@ class TestUserQueries(TestCase):
         self.assertEqual(us['mail'], _toJson(self.user)['mail'])
 
         # We now delete the user from db
-        #self.user.delete_user()
+        deleteUserFromDB(us['user_id'])
 
         # Let's try to find that user again
-        #req2 = getAccountByEmail(self.user[4])
-        #self.assertEqual(req2, None)
+        req2 = getAccountByEmail(self.user[4])
+        self.assertEqual(req2, None)
 
     def test_get_account_by_id(self):
-        us = getAccountByID(24)
-        self.assertEqual(us['user_id'], 24)
+        # Add user to db
+        addUserToDB("getIdTest", "getIdMail@gmail.com", self.user[2])
+        us = getAccountByEmail("getIdMail@gmail.com")
+        self.assertEqual(us['mail'], "getIdMail@gmail.com")  # Check that user has been added
+        # Get user by id
+        response = getAccountByID(us['user_id'])
+        self.assertEqual(us, response, 'Users do not match')
+        deleteUserFromDB(us['user_id'])
 
     def test_validate_password_format(self):
         pass1 = '1234ABCD'
@@ -59,14 +78,26 @@ class TestUserQueries(TestCase):
         self.assertTrue(validateLogin(account3[0], account3[1]), 'Login successful')
 
     def test_update_user_profile(self):
-        self.fail()
-        '''data = []
+        # Add user to db
+        addUserToDB("updateUserTest", "updateUserMail@gmail.com", self.user[2])
+        us = getAccountByEmail("updateUserMail@gmail.com")
+        self.assertEqual(us['mail'], "updateUserMail@gmail.com")  # Check that user has been added
+
+        # Create default data sets
+        data1 = {'token': us['user_id']}
+        data2 = {'token': us['user_id'], 'username': 'NewName', 'password':'newPassword1' }
         
-        # First lets try to update a user that does not exist
-        self.assertEqual(updateUserProfile(0, data), 404, 'User does not exist')
+        # First lets try to update the user with no data
+        self.assertEqual(updateUserProfile(us['user_id'], data1), 404, 'User does not exist')
         
-        # Now lets update the data of an existing user
-        self.assertEqual(updateUserProfile())'''
+        # Now lets update the user with new data
+        updateUserProfile(us['user_id'], data2)
+        us2 = getAccountByID(us['user_id'])
+        # Check that the info updated correctly
+        self.assertEqual(us2['username'], 'NewName', 'Name did not update correctly')
+        self.assertEqual(us2['password'], 'newPassword1', 'Password did not update correctly')
+        # Delete user from db
+        deleteUserFromDB(us['user_id'])
 
 class TestUserRequests(TestCase):
     user = [25, 'Test2', '1234ABCD', 0, 'testmail2@gmail.com', None, None]
