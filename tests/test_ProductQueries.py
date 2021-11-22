@@ -1,5 +1,5 @@
 from unittest import TestCase
-from data.ProductQueries import _toJson, convertState, getAllProductsOfUserByID, getProductById, getProductByIds
+from data.ProductQueries import _toJson, convertState, getAllProductsOfUserByID, getProductById, getProductByIds, addProduct, deleteProduct
 import requests
 
 
@@ -67,12 +67,34 @@ class TestProductQueries(TestCase):
         #TODO: Do item ids even exist? Like seriously
 
     def test_add_product(self):
-        data = {"name": "PC", "description": "New PC", "price": 1200, "state": "new", "image": 1, "category_id": 2}
-        values = (user_id, data['name'], data['description'], data['price'], data['state'], data['image'],data['category_id'])
-        addProduct(user_id, data)
+        user_id = 23
+        data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": "1", "category_id": 2}
+        lastID = addProduct(user_id, data)
+        print(lastID)
+
+
+        productResult = getProductById(lastID)
+        print(productResult)
+
+        self.assertEqual(data["name"], productResult["name"], "name")
+        self.assertEqual(data["description"], productResult["description"], "desc")
+        self.assertEqual(data["price"], productResult["price"], "price")
+        self.assertEqual("Brandnew", productResult["state"], "state")
+        self.assertEqual(data["image"], productResult["image"], "image")
+        self.assertEqual("Bikes", productResult["category_id"], "category_id")
+
+        deleteProduct(lastID)
 
     def test_delete_product(self):
-        self.fail()
+        user_id = 1
+        data = {"name": "PC", "description": "New PC", "price": 1200, "state": "new", "image": 1, "category_id": 2}
+        addProduct(user_id, data)
+
+        lastID = 5
+        deleteProduct(lastID)
+        product5 = getProductById(lastID)
+
+        self.assertEqual(product5, None)
 
     def test_update_product(self):
         self.fail()

@@ -81,7 +81,10 @@ def addProduct(user_id, data):
     values = (
     user_id, data['name'], data['description'], data['price'], data['state'], data['image'], data['category_id'])
     mycursor.execute(query, values)
+
     db.commit()
+
+    return mycursor.lastrowid
 
 
 def deleteProduct(product_id, owner_id):
