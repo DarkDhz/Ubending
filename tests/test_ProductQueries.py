@@ -88,10 +88,9 @@ class TestProductQueries(TestCase):
         data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": "1", "category_id": 2}
         productID = addProduct(userID, data)
 
-        deleteProduct(productID, userID)
-        productDeleted = getProductById(productID)
+        productDeleted = deleteProduct(productID, userID)
 
-        self.assertEqual(productDeleted, 404,  "Product does exist.")
+        self.assertEqual(productDeleted, None,  "Product does exist.")
 
     def test_update_product(self):
         self.fail()
