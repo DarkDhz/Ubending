@@ -1,5 +1,6 @@
 from unittest import TestCase
 from data.ProductQueries import _toJson, convertState, getAllProductsOfUserByID, getProductById, getProductByIds, addProduct, deleteProduct
+from data.UserQueries import _toJson, addUserToDB, deleteUserFromDB
 import requests
 
 
@@ -67,34 +68,30 @@ class TestProductQueries(TestCase):
         #TODO: Do item ids even exist? Like seriously
 
     def test_add_product(self):
-        user_id = 23
+        userID = addUserToDB("userPostingProduct-TESTAddProduct", "userpostingtest@gmail.com", "aaa")
         data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": "1", "category_id": 2}
-        lastID = addProduct(user_id, data)
-        print(lastID)
+        productID = addProduct(userID, data)
+        product = getProductById(productID)
 
+        self.assertEqual(data["name"], product["name"], "Not same name.")
+        self.assertEqual(data["description"], product["description"], "Not same description.")
+        self.assertEqual(data["price"], product["price"], "Not same price.")
+        self.assertEqual("Brandnew", product["state"], "Not same state.")
+        self.assertEqual(data["image"], product["image"], "Not same image.")
+        self.assertEqual("Bikes", product["category_id"], "Not same category_id.")
 
-        productResult = getProductById(lastID)
-        print(productResult)
-
-        self.assertEqual(data["name"], productResult["name"], "name")
-        self.assertEqual(data["description"], productResult["description"], "desc")
-        self.assertEqual(data["price"], productResult["price"], "price")
-        self.assertEqual("Brandnew", productResult["state"], "state")
-        self.assertEqual(data["image"], productResult["image"], "image")
-        self.assertEqual("Bikes", productResult["category_id"], "category_id")
-
-        deleteProduct(lastID)
+        deleteProduct(productID, userID)
+        deleteUserFromDB(userID)
 
     def test_delete_product(self):
-        user_id = 1
-        data = {"name": "PC", "description": "New PC", "price": 1200, "state": "new", "image": 1, "category_id": 2}
-        addProduct(user_id, data)
+        userID = addUserToDB("userDeletingProduct-TESTDeleteProduct", "userdeletingtest@gmail.com", "aaa")
+        data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": "1", "category_id": 2}
+        productID = addProduct(userID, data)
 
-        lastID = 5
-        deleteProduct(lastID)
-        product5 = getProductById(lastID)
+        deleteProduct(productID, userID)
+        productDeleted = getProductById(productID)
 
-        self.assertEqual(product5, None)
+        self.assertEqual(productDeleted, 404,  "Product does exist.")
 
     def test_update_product(self):
         self.fail()
