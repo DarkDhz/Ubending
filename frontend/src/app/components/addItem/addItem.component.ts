@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {AppComponent} from "../../app.component";
 import axios from 'axios'
 import {Router} from "@angular/router";
@@ -8,7 +8,8 @@ import {Router} from "@angular/router";
   templateUrl: './addItem.component.html',
   styleUrls: ['./addItem.component.css'],
 })
-export class addItemComponent implements OnInit {
+export class addItemComponent implements OnInit{
+
 
   category_id: number = -1;
   // @ts-ignore
