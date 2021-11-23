@@ -126,14 +126,13 @@ class ResetRequest(Resource):
 
         # define all input parameters need and their type
         parser.add_argument('mail', type=str, required=True, help="This field cannot be left blank")
-
+        # parse arguments
         data = parser.parse_args()
-
+        # check that the given email exists
         result = validateEmail(mail=data['mail'])
-
         if result == 404:
             return {'message': 'There is no account with that email. You must be registered first.'}, 404
-
+        # send reset email
         user_id = getAccountByEmail(data['mail'])
         send_reset_email(user_id, data['mail'])
         return {'token': result.decode('utf-8')}, 200

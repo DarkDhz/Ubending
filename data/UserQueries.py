@@ -153,5 +153,15 @@ myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0NTYzMiwiZXhwIjoxNjM2NjQ2M
 x = requests.put(url, data=myobj)
 x.json()
 
+RESET REQUEST
 
+import requests
+url1 = 'http://127.0.0.1:5000/register'
+myobj1 = {'username': 'David', 'mail': 'daviddelapaz5@gmail.com', 'password': '1234ABCD', 'repeat_password': '1234ABCD'}
+x = requests.post(url1, data=myobj1)
+x.json()
+url2 = 'http://127.0.0.1:5000/reset_password'
+myobj2 = {'mail': 'daviddelapaz5@gmail.com'}
+y = requests.post(url2, data=myobj2)
+y.json()
 """

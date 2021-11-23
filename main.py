@@ -33,7 +33,7 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = email_user
 app.config['MAIL_PASSWORD'] = email_pass
 api = Api(app)
-#mail = Mail(app)
+mail_svr = Mail(app)
 
 CORS(app, resources={r'/*': {'origins': '*'}})
 
