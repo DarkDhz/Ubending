@@ -20,7 +20,7 @@ def getAccountByEmail(email):
     mycursor.execute(query, values)
 
     myresult = mycursor.fetchall()
-
+    mycursor.close()
     if len(myresult) == 0:
         return 404
 
@@ -37,6 +37,7 @@ def getAccountByID(user_id):
 
     result = cursor.fetchall()
 
+    cursor.close()
     if len(result) == 0:
         return 404
 
@@ -65,6 +66,7 @@ def addUserToDB(username, email, password):
     values = (username, password, email)
     mycursor.execute(query, values)
     db.commit()
+    mycursor.close()
 
 
 def validateLogin(mail, password):
@@ -75,7 +77,7 @@ def validateLogin(mail, password):
 
     mycursor.execute(query, values)
     myresult = mycursor.fetchall()
-
+    mycursor.close()
     if len(myresult) == 0:
         return 404
 
@@ -140,6 +142,7 @@ def __updateValue(item, value, user_id):
     query = "UPDATE Users SET " + item + " = %s WHERE user_id = %s"
     values = (value, user_id)
     cursor.execute(query, values)
+    cursor.close()
 
 
 """
@@ -155,7 +158,7 @@ LOGIN
 
 import requests
 url = 'http://127.0.0.1:5000/login'
-myobj = {'mail': '2test@gmail.com', 'password': '123bdhewbdehfvgfvASVCFDgvfj'}
+myobj = {'mail': 'a2test@gmail.com', 'password': '123bdhewbdehfvgfvASVCFDgvfj'}
 x = requests.post(url, data=myobj)
 x.json()
 

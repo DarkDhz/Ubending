@@ -1,16 +1,8 @@
-DROP DATABASE IF EXISTS sql11445855;
-CREATE DATABASE sql11445855;
-USE sql11445855;
-
 DROP TABLE IF EXISTS Products;
-CREATE TABLE Products (product_id INTEGER AUTO_INCREMENT, owner_id INTEGER NOT NULL, name TINYTEXT NOT NULL, description MEDIUMTEXT, price INTEGER NOT NULL, state INTEGER NOT NULL, image LONGBLOB, category_id INTEGER NOT NULL, PRIMARY KEY (product_id));
-INSERT INTO Products (owner_id, name, price) VALUES (1, "Product1", 20);
-INSERT INTO Products (owner_id, name, price) VALUES (2, "Product2", 200);
-INSERT INTO Products (owner_id, name, price) VALUES (1, "Product3", 290);
+CREATE TABLE Products (product_id INTEGER AUTO_INCREMENT, owner_id INTEGER NOT NULL, name TINYTEXT NOT NULL, description MEDIUMTEXT, price INTEGER NOT NULL, state INTEGER NOT NULL, image TINYTEXT, category_id INTEGER NOT NULL, PRIMARY KEY (product_id));
 
 DROP TABLE IF EXISTS Users;
-CREATE TABLE Users (user_id INTEGER AUTO_INCREMENT, username TINYTEXT NOT NULL, password MEDIUMTEXT NOT NULL, admin BOOLEAN NOT NULL, mail MEDIUMTEXT NOT NULL, location MEDIUMTEXT, userphoto LONGBLOB, PRIMARY KEY (user_id));
-INSERT INTO Users (username, password, admin, mail, location) VALUES ("test", "1234", 1, "test@gmail.com", "Barcelona");
+CREATE TABLE Users (user_id INTEGER AUTO_INCREMENT, username TINYTEXT NOT NULL, password MEDIUMTEXT NOT NULL, admin BOOLEAN NOT NULL, mail MEDIUMTEXT NOT NULL, location MEDIUMTEXT, userphoto TINYTEXT, PRIMARY KEY (user_id));
 
 DROP TABLE IF EXISTS ProductsFollowing;
 CREATE TABLE ProductsFollowing (product_id INTEGER NOT NULL, user_id INTEGER NOT NULL);

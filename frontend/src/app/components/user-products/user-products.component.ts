@@ -2,9 +2,12 @@ import { Component, OnInit ,Inject} from '@angular/core';
 import axios from 'axios'
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Router} from "@angular/router";
+import {UploadService} from "../../services/upload.service";
+
 export interface DialogData {
   idProduct: Number;
   nameProduct: string;
+  image: string;
 }
 @Component({
   selector: 'app-user-products',
@@ -57,9 +60,13 @@ export class UserProductsComponent implements OnInit{
     this.url = event.target.src;
   }
 
-  openDialogDelete(nameProduct:String,idProduct:Number) {
+  loadProductImg(id: String) {
+    this.url = "https://ubending.s3.eu-west-3.amazonaws.com/Captura.PNG";
+  }
+
+  openDialogDelete(nameProduct:String, idProduct:Number, imagePath:String) {
     const dialogRef = this.dialog.open(DialogContentExampleDialog, {
-      data: {idProduct: idProduct,nameProduct: nameProduct}
+      data: {idProduct: idProduct,nameProduct: nameProduct, image: imagePath}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -82,6 +89,7 @@ export class DialogContentExampleDialog {
   token = "null";
   constructor(public dialogRef: MatDialogRef<DialogContentExampleDialog>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData,
+              private uploadService: UploadService,
               private router: Router) {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
     if (currentUser != null) {
@@ -96,9 +104,11 @@ export class DialogContentExampleDialog {
     this.dialogRef.close("here the result");
   }
   onYesClick(): void {
+    console.log("product"+this.data.idProduct+"."+this.data.image)
     const path = `http://127.0.0.1:5000/myproduct/` + this.data.idProduct + "/" + this.token
     axios.delete(path)
       .then((res) => {
+        this.uploadService.deleteFile("product"+this.data.idProduct+"."+this.data.image)
         alert('PRODUCT DELETE CORRECTLY')
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
           this.router.navigate(['/user-products']));
