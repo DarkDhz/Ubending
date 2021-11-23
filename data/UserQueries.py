@@ -1,6 +1,6 @@
 import re
 from app.database import db
-from utils.security import hash_password, verify_password, generate_auth_token
+from utils.security import hash_password, verify_password, generate_auth_token, get_reset_token
 
 
 def _toJson(elem):
@@ -85,19 +85,61 @@ def validateLogin(mail, password):
         return 400
 
 
+def validateEmail(mail):
+    mycursor = db.cursor()
+    query = "SELECT * FROM Users WHERE mail = %s"
+
+    values = (mail,)
+
+    mycursor.execute(query, values)
+    myresult = mycursor.fetchall()
+
+    if len(myresult) == 0:
+        return 404
+    return get_reset_token(myresult[0][0])
+
+
+def updatePassword(user_id, password):
+    mycursor = db.cursor()
+    query = "UPDATE Users SET password = %s WHERE user_id = %s"
+    values = (password, user_id)
+    mycursor.execute(query, values)
+    db.commit()
+
+
 def updateUserProfile(user_id, data):
-    if len(data) <= 1 or data is None:
+    if len(data) == 0 or data is None:
         return 404
 
-    cursor = db.cursor()
+    if data['password'] != '':
+        if data['repeat_password'] != '':
+            result = validatePasswordFormat(data['password'], data['repeat_password'])
+            if result != 0:
+                return result
+            else:
+                password = hash_password(data['password'])
+                __updateValue('password', password, user_id)
+        else:
+            return 5
 
-    for item in data:
-        if data[item] is not None and item != 'token':
-            query = "UPDATE Users SET " + item + " = %s WHERE user_id = %s"
-            values = (data[item], user_id)
-            cursor.execute(query, values)
+    if data['repeat_password'] != '' and data['password'] == '':
+        return 6
+
+    if data['username'] is not None:
+        __updateValue('username', data['username'], user_id)
+
+    if data['location'] is not None:
+        __updateValue('location', data['location'], user_id)
 
     db.commit()
+
+
+def __updateValue(item, value, user_id):
+    cursor = db.cursor()
+
+    query = "UPDATE Users SET " + item + " = %s WHERE user_id = %s"
+    values = (value, user_id)
+    cursor.execute(query, values)
 
 
 """
@@ -105,7 +147,7 @@ REGISTER
 
 import requests
 url = 'http://127.0.0.1:5000/register'
-myobj = {'username': 'hola', 'mail': '2test@gmail.com', 'password': '123bdhewbdehfvgfvASVCFDgvfj', 'repeat_password': '123bdhewbdehfvgfvASVCFDgvfj'}
+myobj = {'username': 'hola', 'mail': 'as2test@gmail.com', 'password': '123bdhewbdehfvgfvASVCFDgvfj', 'repeat_password': '123bdhewbdehfvgfvASVCFDgvfj'}
 x = requests.post(url, data=myobj)
 x.json()
 
@@ -131,5 +173,15 @@ myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0NTYzMiwiZXhwIjoxNjM2NjQ2M
 x = requests.put(url, data=myobj)
 x.json()
 
+RESET REQUEST
 
+import requests
+url1 = 'http://127.0.0.1:5000/register'
+myobj1 = {'username': 'David', 'mail': 'daviddelapaz5@gmail.com', 'password': '1234ABCD', 'repeat_password': '1234ABCD'}
+x = requests.post(url1, data=myobj1)
+x.json()
+url2 = 'http://127.0.0.1:5000/reset_password'
+myobj2 = {'mail': 'daviddelapaz5@gmail.com'}
+y = requests.post(url2, data=myobj2)
+y.json()
 """

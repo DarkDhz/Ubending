@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import {SearchBarComponent} from "./components/search-bar/search-bar.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { addItemComponent } from "./components/addItem/addItem.component";
 import { FooterComponent } from "./components/footer/footer.component";
 import { AppRoutingModule, routingComponents } from "./app-routing.module";
@@ -16,6 +16,7 @@ import { ParticlesButtonComponent } from './components/particles-button/particle
 import { CardSliderComponent } from './components/card-slider/card-slider.component';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { HomeProductsComponent } from './components/home-products/home-products.component';
+import { ProfileComponent } from './profile/profile.component';
 
 /*import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';*/
 
@@ -25,6 +26,7 @@ import { HomeProductsComponent } from './components/home-products/home-products.
     SearchBarComponent,
     addItemComponent,
     FooterComponent,
+    ProfileComponent,
     routingComponents,
     ParticlesButtonComponent,
     CardSliderComponent,
@@ -40,7 +42,9 @@ import { HomeProductsComponent } from './components/home-products/home-products.
     FontAwesomeModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    SlickCarouselModule
+    SlickCarouselModule,
+    FormsModule,
+    /*FontAwesomeModule*/
   ],
   providers: [],
   bootstrap: [AppComponent]

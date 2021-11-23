@@ -76,10 +76,10 @@ def getProductByIds(user_id, product_id):
 def addProduct(user_id, data):
     mycursor = db.cursor()
     print(data)
-    query = "INSERT INTO Products (owner_id, name, description, price, state, image, category_id) " \
-            "VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    query = "INSERT INTO Products (owner_id, name, description, price, state, category_id) " \
+            "VALUES (%s, %s, %s, %s, %s, %s)"
     values = (
-    user_id, data['name'], data['description'], data['price'], data['state'], data['image'], data['category_id'])
+    user_id, data['name'], data['description'], data['price'], data['state'], data['category_id'])
     mycursor.execute(query, values)
     db.commit()
 
