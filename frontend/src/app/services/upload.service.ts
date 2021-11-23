@@ -53,7 +53,7 @@ export class UploadService {
               console.log('Error deleting file: ', err);
               return false;
           }
-          console.log('File deleted');
+          console.log('File deleted', data);
           return true;
       });
   }
