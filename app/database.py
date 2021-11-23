@@ -14,6 +14,13 @@ password = "iedWsHbbSd"
 database = "sql11453270"
 
 """
+"""
+# arnau-local
+host = "localhost"
+user = "root"
+password = "1234"
+database = "ubending"
+"""
 
 db = connection.connect(
     host=host,

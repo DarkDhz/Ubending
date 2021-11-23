@@ -1,10 +1,12 @@
-from app.database import db
 from data.ProductQueries import _toJson
+from app.database import host, user, password, database
+import mysql.connector as connection
 
 __jump = 12
 
 
 def searchByCategory(category_id, start_point=0):
+    db = connection.connect(host=host, user=user, password=password, database=database)
     cursor = db.cursor()
 
     query = "SELECT * FROM Products WHERE category_id = %s LIMIT %s,%s"
@@ -12,6 +14,7 @@ def searchByCategory(category_id, start_point=0):
     cursor.execute(query, values)
 
     result = cursor.fetchall()
+    db.close()
 
     if len(result) == 0:
         return 404
@@ -23,6 +26,7 @@ def searchByCategory(category_id, start_point=0):
 
 
 def searchByName(name, start_point=0):
+    db = connection.connect(host=host, user=user, password=password, database=database)
     cursor = db.cursor()
 
     query = "SELECT * FROM Products WHERE name LIKE '%" + name + "%' LIMIT %s,%s"
@@ -30,7 +34,7 @@ def searchByName(name, start_point=0):
     cursor.execute(query, values)
 
     result = cursor.fetchall()
-
+    db.close()
     if len(result) == 0:
         return 404
 
@@ -41,6 +45,7 @@ def searchByName(name, start_point=0):
 
 
 def searchByCategoryAndName(category_id, name, start_point=0):
+    db = connection.connect(host=host, user=user, password=password, database=database)
     cursor = db.cursor()
 
     query = "SELECT * FROM Products WHERE name LIKE '%" + name + "%' and category_id = %s LIMIT %s,%s"
@@ -48,7 +53,7 @@ def searchByCategoryAndName(category_id, name, start_point=0):
     cursor.execute(query, values)
 
     result = cursor.fetchall()
-
+    db.close()
     if len(result) == 0:
         return 404
 

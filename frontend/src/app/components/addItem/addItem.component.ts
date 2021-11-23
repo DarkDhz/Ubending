@@ -42,7 +42,6 @@ export class addItemComponent implements OnInit{
 
         // @ts-ignore
         this.state.categories =  res.data
-        console.log(this.state.categories)
       })
       .catch((error) => {
         console.error(error)
@@ -62,8 +61,8 @@ export class addItemComponent implements OnInit{
   upload(filename: String) {
     const file = this.selectedFiles.item(0);
     // @ts-ignore
-    console.log(file.type)
-    this.uploadService.uploadFile(file, filename);
+    const extension = file.type.split('/').pop();
+    this.uploadService.uploadFile(file, filename + "." + extension);
   }
 
   // @ts-ignore
@@ -93,34 +92,33 @@ export class addItemComponent implements OnInit{
 
   postProduct(){
 
-    // @ts-ignore
+
     let product_name = (<HTMLInputElement>document.getElementById("product_name")).value;
     let product_price = (<HTMLInputElement>document.getElementById("product_price")).value;
 
     let product_state = (<HTMLSelectElement>document.getElementById("product_state")).selectedIndex;
     let product_desc = (<HTMLInputElement>document.getElementById("product_desc")).value;
 
-    console.log(product_name)
-
     if (!product_name || !product_price || !product_desc || product_state == -1 || this.category_id == -1 || this.selectedFiles == undefined) {
       alert("invalid params")
     } else {
       const path = `http://127.0.0.1:5000/myproduct/` + this.token
 
+      // @ts-ignore
       const params = {
         name: product_name,
         description: product_desc,
         price: product_price,
         state: product_state,
+        // @ts-ignore
+        image: this.selectedFiles.item(0).type.split('/').pop(),
         category_id: this.category_id
       }
       axios.post(path, params)
         .then((res) => {
           // @ts-ignore
-          let id = res.data.id
-          console.log("id:" + id)
-          //this.upload("product")
-          alert('PRODUCT ADDED')
+          let id = res.data.product_id
+          this.upload("product" + id)
           this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
             this.router.navigate(['/user-products']));
         })

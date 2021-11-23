@@ -2,7 +2,7 @@ import os
 
 from flask import Flask, request, send_from_directory, render_template
 from flask_restful import Api
-
+from app.database import host, user, password, database
 from app.resources.Product import *
 from app.resources.MyProducts import *
 from app.resources.User import *
@@ -13,9 +13,6 @@ from flask_cors import CORS
 from config import config
 from decouple import config as config_decouple
 
-UPLOAD_FOLDER_PRODUCTS = "/imagedata/products"
-# UPLOAD_FOLDER_PRODUCTS = "C:/Users/DarkDhz/PycharmProjects/imagedata/products"
-
 app = Flask(__name__)
 environment = config['development']
 if config_decouple('PRODUCTION', cast=bool, default=False):
@@ -25,7 +22,7 @@ app.config.from_object(environment)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 app.config['SECRET_KEY'] = secret_key
-app.config['PRODUCTS_IMAGES'] = UPLOAD_FOLDER_PRODUCTS
+
 api = Api(app)
 
 CORS(app, resources={r'/*': {'origins': '*'}})
@@ -61,8 +58,6 @@ api.add_resource(ProductResource, '/product/<int:product_id>')
 api.add_resource(MyProductResource, '/myproduct/<int:product_id>/<string:token>', '/myproduct/<string:token>')
 api.add_resource(MyProductListResource, '/myproducts/<string:token>', methods=['GET'])
 
-api.add_resource(UserProductResource, '/user/<int:user_id>/product/<int:product_id>', "/user/<int:user_id>/product")
-api.add_resource(UserProductListResource, '/user/<int:user_id>/products', methods=['GET'])
 
 if __name__ == '__main__':
     '''
@@ -75,8 +70,5 @@ if __name__ == '__main__':
     except:
         os.mkdir(directory)
     '''
-    try:
-        app.run(port=5000, debug=True)
-    finally:
-        db.close()
+    app.run(port=5000, debug=True)
 

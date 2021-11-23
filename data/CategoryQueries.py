@@ -1,3 +1,4 @@
+from app.database import host, user, password, database
 from app.database import db
 
 
@@ -12,6 +13,7 @@ def getAllCategories():
     mycursor.execute(query)
 
     myresult = mycursor.fetchall()
+    mycursor.close()
 
     if len(myresult) == 0:
         return 404
@@ -22,6 +24,7 @@ def getAllCategories():
 
     return toReturn
 
+
 def getCategoryNameByID(id):
     mycursor = db.cursor()
 
@@ -29,11 +32,13 @@ def getCategoryNameByID(id):
     mycursor.execute(query)
 
     myresult = mycursor.fetchall()
+    mycursor.close()
 
     if len(myresult) == 0:
         return 404
 
     return myresult[0][0]
+
 
 def _categoryToJSON(data):
     return {"id": data[0], "name": data[1]}
@@ -46,7 +51,7 @@ def getCategoryByID(id):
     mycursor.execute(query)
 
     myresult = mycursor.fetchall()
-
+    mycursor.close()
     if len(myresult) == 0:
         return 404
 

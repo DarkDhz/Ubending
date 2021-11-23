@@ -30,12 +30,12 @@
         <select id = "product_state" formProductName="selectProduct" class="form-control" style="margin-bottom: 20px;border: 2px solid #8E8CB9;color: #ABA9BC;">
           <option value="" selected disabled hidden>Select the state of the product</option>
           <option value="New" >New</option>
-          <option value="Worn out">Worn out</option>
+          <option value="Worn out">Used</option>
           <option value="Deplorable">Destroyed</option>
         </select>
         <input id = "product_desc" type="description"  placeholder="Description of the product" style="border: 2px solid #8E8CB9;color: #ABA9BC;">
-        <input placeholder="Select product image" id="product_img" type="file" style="border: transparent; height: 70px" >
-        <button  (click)="postProduct()" class="ghost" >Post product</button>
+        <input (change)="selectFile($event)" placeholder="Select product image" id="product_img" type="file" style="border: transparent; height: 70px" >
+        <button (click)="postProduct()" class="ghost" >Post product</button>
 
 
       </div>

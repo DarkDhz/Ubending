@@ -10,7 +10,7 @@
       <div class="col-md-3" *ngFor="let product of state.products">
         <div class="card" style="width: 18rem; margin-bottom: 5%">
 
-          <img class="card-img-top" src="loadProductImg({{product['product_id']}}" alt="Card image cap">
+          <img class="card-img-top" style="height: 15rem" src="https://ubending.s3.eu-west-3.amazonaws.com/product{{product['product_id']}}.{{ product['image'] }}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title">{{product['name']}}</h5>
             <p class="card-text">{{product['price']}}€</p>
