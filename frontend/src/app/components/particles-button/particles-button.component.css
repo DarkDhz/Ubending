@@ -1,9 +1,15 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400, 600");
+.v-align{
+  z-index: 1;
+  top: 200px;
+  left: 180px;
+  margin: 90px 0;
+}
 .hero-btn {
-  position: relative;
-  width: 200px;
+  position: absolute;
+  width: 180px;
   margin: auto;
-  height: 66px;
+  height: 55px;
 }
 .hero-btn .btn {
   background-color: #E6F4F1;
@@ -13,11 +19,11 @@
   text-transform: uppercase;
   color: #646DCC;
   display: inline-block;
-  width: 200px;
-  height: 66px;
+  width: 180px;
+  height: 55px;
   text-align: center;
   line-height: 40px;
-  font-size: 22px;
+  font-size: 18px;
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
   letter-spacing: 2px;

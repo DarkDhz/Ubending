@@ -13,6 +13,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ParticlesButtonComponent } from './components/particles-button/particles-button.component';
+import { CardSliderComponent } from './components/card-slider/card-slider.component';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { HomeProductsComponent } from './components/home-products/home-products.component';
 import { ProfileComponent } from './profile/profile.component';
 
 /*import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';*/
@@ -25,7 +28,9 @@ import { ProfileComponent } from './profile/profile.component';
     FooterComponent,
     ProfileComponent,
     routingComponents,
-    ParticlesButtonComponent
+    ParticlesButtonComponent,
+    CardSliderComponent,
+    HomeProductsComponent
     ],
   imports: [
     BrowserModule,
@@ -37,6 +42,7 @@ import { ProfileComponent } from './profile/profile.component';
     FontAwesomeModule,
     MatDialogModule,
     BrowserAnimationsModule,
+    SlickCarouselModule,
     FormsModule,
     /*FontAwesomeModule*/
   ],
