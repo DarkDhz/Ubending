@@ -85,9 +85,7 @@ export class addItemComponent implements OnInit{
   }
 
   selectCategory(event: any) {
-    //getted from event
     this.category_id = (<HTMLSelectElement>event.target).selectedIndex;
-    //getted from binding
   }
 
   postProduct(){

@@ -2,15 +2,13 @@ from data.ProductQueries import _toJson
 from app.database import host, user, password, database
 import mysql.connector as connection
 
-__jump = 12
 
-
-def searchByCategory(category_id, start_point=0):
+def searchByCategory(category_id, start_point=0, jump=12):
     db = connection.connect(host=host, user=user, password=password, database=database)
     cursor = db.cursor()
 
     query = "SELECT * FROM Products WHERE category_id = %s LIMIT %s,%s"
-    values = (category_id, start_point, __jump + start_point,)
+    values = (category_id, start_point, jump + start_point,)
     cursor.execute(query, values)
 
     result = cursor.fetchall()
@@ -25,12 +23,12 @@ def searchByCategory(category_id, start_point=0):
     return toReturn
 
 
-def searchByName(name, start_point=0):
+def searchByName(name, start_point=0, jump=12):
     db = connection.connect(host=host, user=user, password=password, database=database)
     cursor = db.cursor()
 
     query = "SELECT * FROM Products WHERE name LIKE '%" + name + "%' LIMIT %s,%s"
-    values = (start_point, __jump + start_point,)
+    values = (start_point, jump + start_point,)
     cursor.execute(query, values)
 
     result = cursor.fetchall()
@@ -44,12 +42,12 @@ def searchByName(name, start_point=0):
     return toReturn
 
 
-def searchByCategoryAndName(category_id, name, start_point=0):
+def searchByCategoryAndName(category_id, name, start_point=0, jump=12):
     db = connection.connect(host=host, user=user, password=password, database=database)
     cursor = db.cursor()
 
     query = "SELECT * FROM Products WHERE name LIKE '%" + name + "%' and category_id = %s LIMIT %s,%s"
-    values = (category_id, start_point, __jump + start_point,)
+    values = (category_id, start_point, jump + start_point,)
     cursor.execute(query, values)
 
     result = cursor.fetchall()

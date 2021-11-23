@@ -45,7 +45,7 @@ api.add_resource(CategoryResource, '/category/<int:category_id>', methods=['GET'
 
 # SEARCH ENGINE RESOURCES
 
-api.add_resource(SearchEngine, '/api/search', '/api/search', methods=['POST'])
+api.add_resource(SearchEngine, '/api/search', '/api/search/', methods=['POST'])
 
 # USER INFO RESOURCES
 api.add_resource(UserLogin, '/login', '/login/', methods=['POST'])

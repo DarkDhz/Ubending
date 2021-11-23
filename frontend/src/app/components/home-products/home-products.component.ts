@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
+import axios from "axios";
 
 @Component({
   selector: 'app-home-products',
@@ -16,9 +18,40 @@ export class HomeProductsComponent implements OnInit {
     {img: "../../../assets/product6.png", title: 'Green Plant', price: '8.99€'}
   ];
 
-  constructor() { }
+  state = {products: []}
 
-  ngOnInit(): void {
+  token = "null";
+
+  constructor(private router: Router) { }
+
+  ngOnInit() {
+    const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+    if (currentUser != null) {
+      this.token = currentUser.token;
+    } else {
+      alert('NOT LOGGED IN')
+      this.router.navigate(['/home']);
+    }
+
+    this.getProducts()
+  }
+
+  getProducts() {
+
+    const path = 'http://127.0.0.1:5000/api/search'
+    const params = {
+        name: '',
+        jump: 6
+      }
+      axios.post(path, params)
+        .then((res) => {
+          // @ts-ignore
+          this.state.products = res.data
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+
   }
 
 }

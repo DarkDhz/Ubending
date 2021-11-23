@@ -11,14 +11,13 @@
       </p>
 
       <div class="product__container grid">
-        <div div *ngFor="let product of products">
+        <div div *ngFor="let product of state.products">
           <article class="product__card">
-            <div class="product__circle"></div>
 
-            <img src="{{ product.img }}" alt="" class="product__img">
+            <img style="height: 10rem;" src="https://ubending.s3.eu-west-3.amazonaws.com/product{{ product['product_id'] }}.{{ product['image'] }}" alt="" class="product__img">
 
-            <h3 class="product__title">{{ product.title }}</h3>
-            <span class="product__price">{{ product.price }}</span>
+            <h3 class="product__title">{{product['name']}}</h3>
+            <span class="product__price">{{product['price']}}€</span>
 
             <button class="button--flex product__button">
               <i class="fa fa-commenting"></i>

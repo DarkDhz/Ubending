@@ -43,25 +43,10 @@ export class UserProductsComponent implements OnInit{
       .then((res) => {
         // @ts-ignore
         this.state.products = res.data
-        console.log(res.data)
       })
       .catch((error) => {
         console.error(error)
       })
-  }
-
-  url:string = "/images/sneaker.jpg"
-  url1:string = "../images/img2.jpg"
-  url2:string = "../images/img2.jpg"
-  url3:string = "../images/img2.jpg"
-  url4:string = "../images/img2.jpg"
-
-  changeImage(event:any){
-    this.url = event.target.src;
-  }
-
-  loadProductImg(id: String) {
-    this.url = "https://ubending.s3.eu-west-3.amazonaws.com/Captura.PNG";
   }
 
   openDialogDelete(nameProduct:String, idProduct:Number, imagePath:String) {
@@ -70,8 +55,6 @@ export class UserProductsComponent implements OnInit{
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result)
     });
   }
   openDialogEdit(nameProduct:String,idProduct:Number) {
@@ -104,7 +87,6 @@ export class DialogContentExampleDialog {
     this.dialogRef.close("here the result");
   }
   onYesClick(): void {
-    console.log("product"+this.data.idProduct+"."+this.data.image)
     const path = `http://127.0.0.1:5000/myproduct/` + this.data.idProduct + "/" + this.token
     axios.delete(path)
       .then((res) => {
