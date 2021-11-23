@@ -2,27 +2,8 @@ from flask_restful import Resource, reqparse
 from data.ProductQueries import *
 from utils.security import verify_auth_token
 
-class UserProductListResource(Resource):
-
-    def get(self, user_id):
-        result = getAllProductsOfUserByID(user_id=user_id)
-        if result == 404:
-            return {'Message': 'owner has no products or do not exist'}, 404
-        else:
-            return result, 200
-
-    def post(self, id):
-        return 404
-
-    def delete(self, id):
-        return 404
-
-    def put(self):
-        return 404
-
 
 # AUTHENTICATED
-
 class MyProductResource(Resource):
 
     def get(self, product_id, token):

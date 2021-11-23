@@ -2,8 +2,6 @@ from flask import url_for
 from passlib.apps import custom_app_context as pwd_context
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 from flask_mail import Message
-# from main import mail_svr
-import main
 
 secret_key = "ubendinglaostia1234"
 email_user = 'ubending.social@gmail.com'
@@ -52,7 +50,7 @@ def verify_reset_token(token):
     return data['user_id']
 
 
-def send_reset_email(user_id, mail):
+def send_reset_email(user_id, mail, mail_svr):
     token = get_reset_token(user_id)
     msg = Message('Password Reset Request',
                   sender='noreply@ubending.com',
@@ -62,4 +60,4 @@ def send_reset_email(user_id, mail):
 
 If you did not make this request, please ignore this email and no changes will be made.
 '''
-    main.mail_svr.send(msg)
+    mail_svr.send(msg)

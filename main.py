@@ -1,14 +1,10 @@
-import os
-
-from flask import Flask, request, send_from_directory, render_template
+from flask import Flask, render_template
 from flask_restful import Api
-from app.database import host, user, password, database
 from app.resources.Product import *
 from app.resources.MyProducts import *
 from app.resources.User import *
 from app.resources.Category import *
 from app.resources.Search import *
-from utils.security import secret_key
 from flask_cors import CORS
 from config import config
 from decouple import config as config_decouple
@@ -22,7 +18,6 @@ if config_decouple('PRODUCTION', cast=bool, default=False):
 app.config.from_object(environment)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
-app.config['SECRET_KEY'] = secret_key
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True

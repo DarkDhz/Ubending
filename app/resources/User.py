@@ -122,6 +122,7 @@ class UserLogin(Resource):
     def put(self, id):
         return {'message': "Not developed yet"}, 404
 
+
 class ResetRequest(Resource):
 
     def get(self, id):
@@ -140,7 +141,8 @@ class ResetRequest(Resource):
             return {'message': 'There is no account with that email. You must be registered first.'}, 404
         # send reset email
         user_id = getAccountByEmail(data['mail'])
-        send_reset_email(user_id, data['mail'])
+        from main import mail_svr
+        send_reset_email(user_id, data['mail'], mail_svr)
         return {'token': result.decode('utf-8')}, 200
 
     def delete(self, id):
