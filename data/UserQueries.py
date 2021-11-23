@@ -1,6 +1,6 @@
 import re
 from app.database import db
-from utils.security import hash_password, verify_password, generate_auth_token
+from utils.security import hash_password, verify_password, generate_auth_token, get_reset_token
 
 
 def _toJson(elem):
@@ -85,6 +85,28 @@ def validateLogin(mail, password):
         return 400
 
 
+def validateEmail(mail):
+    mycursor = db.cursor()
+    query = "SELECT * FROM Users WHERE mail = %s"
+
+    values = (mail,)
+
+    mycursor.execute(query, values)
+    myresult = mycursor.fetchall()
+
+    if len(myresult) == 0:
+        return 404
+    return get_reset_token(myresult[0][0])
+
+
+def updatePassword(user_id, password):
+    mycursor = db.cursor()
+    query = "UPDATE Users SET password = %s WHERE user_id = %s"
+    values = (password, user_id)
+    mycursor.execute(query, values)
+    db.commit()
+
+
 def updateUserProfile(user_id, data):
     if len(data) == 0 or data is None:
         return 404
@@ -151,5 +173,15 @@ myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0NTYzMiwiZXhwIjoxNjM2NjQ2M
 x = requests.put(url, data=myobj)
 x.json()
 
+RESET REQUEST
 
+import requests
+url1 = 'http://127.0.0.1:5000/register'
+myobj1 = {'username': 'David', 'mail': 'daviddelapaz5@gmail.com', 'password': '1234ABCD', 'repeat_password': '1234ABCD'}
+x = requests.post(url1, data=myobj1)
+x.json()
+url2 = 'http://127.0.0.1:5000/reset_password'
+myobj2 = {'mail': 'daviddelapaz5@gmail.com'}
+y = requests.post(url2, data=myobj2)
+y.json()
 """

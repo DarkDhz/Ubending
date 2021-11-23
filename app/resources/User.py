@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from utils.security import verify_auth_token
+from utils.security import verify_auth_token, verify_reset_token, send_reset_email
 from data.UserQueries import *
 
 
@@ -115,6 +115,72 @@ class UserLogin(Resource):
         if result == 400:
             return {'message': 'invalid password'}, 400
         return {'token': result.decode('ascii')}, 200
+
+    def delete(self, id):
+        return {'message': "Not developed yet"}, 404
+
+    def put(self, id):
+        return {'message': "Not developed yet"}, 404
+
+class ResetRequest(Resource):
+
+    def get(self, id):
+        return {'message': "Not developed yet"}, 404
+
+    def post(self):
+        parser = reqparse.RequestParser()  # create parameters parser from request
+
+        # define all input parameters need and their type
+        parser.add_argument('mail', type=str, required=True, help="This field cannot be left blank")
+        # parse arguments
+        data = parser.parse_args()
+        # check that the given email exists
+        result = validateEmail(mail=data['mail'])
+        if result == 404:
+            return {'message': 'There is no account with that email. You must be registered first.'}, 404
+        # send reset email
+        user_id = getAccountByEmail(data['mail'])
+        send_reset_email(user_id, data['mail'])
+        return {'token': result.decode('utf-8')}, 200
+
+    def delete(self, id):
+        return {'message': "Not developed yet"}, 404
+
+    def put(self, id):
+        return {'message': "Not developed yet"}, 404
+
+
+class ResetPassword(Resource):
+
+    def get(self, id):
+        return {'message': "Not developed yet"}, 404
+
+    def post(self):
+        parser = reqparse.RequestParser()  # create parameters parser from request
+
+        # define all input parameters need and their type
+        parser.add_argument('token', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('password', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('repeat_password', type=str, required=True, help="This field cannot be left blank")
+
+        data = parser.parse_args()
+
+        user = verify_reset_token(data['token'])
+        if user is None:
+            return {'message': "This token is invalid or has already expired"}, 400
+
+        pwCode = validatePasswordFormat(data['password'], data['repeat_password'])
+        if pwCode == 1:
+            return {"Passwords do not match."}, 400
+        elif pwCode == 2:
+            return {"Your password must be at least 8 characters long."}, 400
+        elif pwCode == 3:
+            return {"Your password must have at least 1 number"}, 400
+        elif pwCode == 4:
+            return {"Your password must have at least 1 uppercase letter."}, 400
+
+        updatePassword(user, data['password'])
+        return {'message': 'Password changed successfully'}, 200
 
     def delete(self, id):
         return {'message': "Not developed yet"}, 404
