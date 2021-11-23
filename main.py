@@ -8,7 +8,7 @@ from app.resources.MyProducts import *
 from app.resources.User import *
 from app.resources.Category import *
 from app.resources.Search import *
-from utils.security import secret_key, email_user, email_pass
+from utils.security import secret_key
 from flask_cors import CORS
 from config import config
 from decouple import config as config_decouple
@@ -23,12 +23,11 @@ app.config.from_object(environment)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 app.config['SECRET_KEY'] = secret_key
-app.config['PRODUCTS_IMAGES'] = UPLOAD_FOLDER_PRODUCTS
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = email_user
-app.config['MAIL_PASSWORD'] = email_pass
+app.config['MAIL_USERNAME'] = 'ubending.social@gmail.com'
+app.config['MAIL_PASSWORD'] = 'ubending2021'
 api = Api(app)
 mail_svr = Mail(app)
 
@@ -67,17 +66,5 @@ api.add_resource(ProductResource, '/product/<int:product_id>')
 api.add_resource(MyProductResource, '/myproduct/<int:product_id>/<string:token>', '/myproduct/<string:token>')
 api.add_resource(MyProductListResource, '/myproducts/<string:token>', methods=['GET'])
 
-
 if __name__ == '__main__':
-    '''
-    import os
-
-    directory = os.path.dirname(app.config['PRODUCTS_IMAGES'] + "/test.txt")
-
-    try:
-        os.stat(directory)
-    except:
-        os.mkdir(directory)
-    '''
     app.run(port=5000, debug=True)
-
