@@ -1,5 +1,5 @@
 from unittest import TestCase
-from data.ProductQueries import _toJson, convertState, getAllProductsOfUserByID, getProductById, getProductByIds, addProduct, deleteProduct
+from data.ProductQueries import _toJson, convertState, getAllProductsOfUserByID, getProductById, getProductByIds, addProduct, deleteProduct, updateProduct
 from data.UserQueries import _toJson, addUserToDB, deleteUserFromDB
 import requests
 
@@ -86,11 +86,31 @@ class TestProductQueries(TestCase):
     def test_delete_product(self):
         userID = addUserToDB("userDeletingProduct-TESTDeleteProduct", "userdeletingtest@gmail.com", "aaa")
         data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": "1", "category_id": 2}
-        productID = addProduct(userID, data)
 
+        productID = addProduct(userID, data)
         productDeleted = deleteProduct(productID, userID)
 
         self.assertEqual(productDeleted, None,  "Product does exist.")
 
+        deleteUserFromDB(userID)
+
     def test_update_product(self):
-        self.fail()
+        userID = addUserToDB("userUpdatingProduct-TESTUpdateProduct", "userupdatingtest@gmail.com", "aaa")
+
+        data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": "1", "category_id": 2}
+        productID = addProduct(userID, data)
+
+        newData = {"name": "Bike", "description": "Old used bike", "price": 200, "state": 1, "image": "1", "category_id": 2}
+        updateProduct(productID, userID, newData)
+
+        product = getProductById(productID)
+
+        self.assertEqual(newData["name"], product["name"], "Not same name.")
+        self.assertEqual(newData["description"], product["description"], "Not same description.")
+        self.assertEqual(newData["price"], product["price"], "Not same price.")
+        self.assertEqual("Used", product["state"], "Not same state.")
+        self.assertEqual(newData["image"], product["image"], "Not same image.")
+        self.assertEqual("Bikes", product["category_id"], "Not same category_id.")
+
+        deleteProduct(productID, userID)
+        deleteUserFromDB(userID)
