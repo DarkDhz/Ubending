@@ -3,14 +3,14 @@
 <section class="bg-color" style="margin-top: 30px">
   <div class="containers">
     <div class="title">
-      <p>My List of Seller</p>
-      <h1><span>Seller</span> Items</h1>
+      <p>My List of</p>
+      <h1>PUBLISHED <span>Products</span></h1>
     </div>
     <div class="row" style="margin-bottom: 1%;">
       <div class="col-md-3" *ngFor="let product of state.products">
         <div class="card" style="width: 18rem; margin-bottom: 5%">
 
-          <img class="card-img-top" src="https://i.imgur.com/Kz2bPI0.jpg" alt="Card image cap">
+          <img class="card-img-top" src="loadProductImg({{product['product_id']}}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title">{{product['name']}}</h5>
             <p class="card-text">{{product['price']}}€</p>

@@ -58,6 +58,10 @@ export class UserProductsComponent implements OnInit{
     this.url = event.target.src;
   }
 
+  loadProductImg(id: String) {
+    this.url = "https://ubending.s3.eu-west-3.amazonaws.com/Captura.PNG";
+  }
+
   openDialogDelete(nameProduct:String,idProduct:Number) {
     const dialogRef = this.dialog.open(DialogContentExampleDialog, {
       data: {idProduct: idProduct,nameProduct: nameProduct}

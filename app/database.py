@@ -7,3 +7,4 @@ db = connection.connect(
     database="sql11445855"
 )
 
+

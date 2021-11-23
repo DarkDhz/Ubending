@@ -133,7 +133,7 @@ LOGIN
 
 import requests
 url = 'http://127.0.0.1:5000/login'
-myobj = {'mail': '2test@gmail.com', 'password': '123bdhewbdehfvgfvASVCFDgvfj'}
+myobj = {'mail': 'a2test@gmail.com', 'password': '123bdhewbdehfvgfvASVCFDgvfj'}
 x = requests.post(url, data=myobj)
 x.json()
 

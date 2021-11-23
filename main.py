@@ -75,39 +75,8 @@ if __name__ == '__main__':
     except:
         os.mkdir(directory)
     '''
+    try:
+        app.run(port=5000, debug=True)
+    finally:
+        db.close()
 
-    app.run(port=5000, debug=True)
-
-
-def allowed_file(filename, extensions=None):
-    if extensions is None:
-        extensions = ['jpg', 'png', 'txt']
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in extensions
-
-
-# https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
-@app.route('/user/<int:user_id>/product/<int:product_id>/files', methods=['GET', 'POST', 'PUT'])
-def upload_file(user_id, product_id):
-    if request.method == 'GET':
-        try:
-            return send_from_directory(app.config["PRODUCTS_IMAGES"],
-                                       filename="user-" + str(user_id) + "-product-" + str(product_id) + ".png",
-                                       as_attachment=True), 200
-        except FileNotFoundError:
-            return {'message': 'file not found'}, 404
-    if request.method == 'POST' or request.method == 'PUT':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            return {'message': 'No selected file'}, 404
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            return {'message': 'No selected file'}, 404
-        if file and allowed_file(file.filename):
-            filename = "user-" + str(user_id) + "-product-" + str(product_id) + ".png"
-            file.save(os.path.join(app.config['PRODUCTS_IMAGES'], filename))
-
-            return {'message': 'file saved'}, 201
-        return {'message': 'invalid file extension'}, 404

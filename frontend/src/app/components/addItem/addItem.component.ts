@@ -33,7 +33,6 @@ export class addItemComponent implements OnInit{
       alert('NOT LOGGED IN')
       this.router.navigate(['/home']);
     }
-
   }
 
   ngOnInit(): void {
