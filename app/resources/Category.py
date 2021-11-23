@@ -21,6 +21,7 @@ class CategoryListResource(Resource):
 
         return {'message': "Not developed yet"}, 404
 
+
 class CategoryResource(Resource):
 
     def get(self, category_id):

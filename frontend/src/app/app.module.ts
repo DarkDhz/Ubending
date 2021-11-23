@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import {SearchBarComponent} from "./components/search-bar/search-bar.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { addItemComponent } from "./components/addItem/addItem.component";
 import { FooterComponent } from "./components/footer/footer.component";
 import { AppRoutingModule, routingComponents } from "./app-routing.module";
@@ -13,6 +13,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ParticlesButtonComponent } from './components/particles-button/particles-button.component';
+import { ProfileComponent } from './profile/profile.component';
 
 /*import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';*/
 
@@ -22,6 +23,7 @@ import { ParticlesButtonComponent } from './components/particles-button/particle
     SearchBarComponent,
     addItemComponent,
     FooterComponent,
+    ProfileComponent,
     routingComponents,
     ParticlesButtonComponent
     ],
@@ -34,7 +36,8 @@ import { ParticlesButtonComponent } from './components/particles-button/particle
     NgbDropdownModule,
     FontAwesomeModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule,
     /*FontAwesomeModule*/
   ],
   providers: [],

@@ -2,6 +2,7 @@ from flask_restful import Resource, reqparse
 from data.ProductQueries import *
 from utils.security import verify_auth_token
 
+
 # NO AUTHENTICATHED
 
 class UserProductResource(Resource):
@@ -70,11 +71,12 @@ class UserProductListResource(Resource):
     def put(self):
         return 404
 
+
 # AUTHENTICATED
 
 class MyProductResource(Resource):
 
-    def get(self, product_id):
+    def get(self, product_id, token):
 
         parser = reqparse.RequestParser()  # create parameters parser from request
 
@@ -93,9 +95,8 @@ class MyProductResource(Resource):
         else:
             return result, 200
 
-    def post(self):
+    def post(self, token):
         parser = reqparse.RequestParser()  # create parameters parser from request
-        parser.add_argument('token', type=str, required=True, help="This field cannot be left blank")
         parser.add_argument('name', type=str, required=True, help="This field cannot be left blank")
         parser.add_argument('description', type=str, required=True, help="This field cannot be left blank")
         parser.add_argument('price', type=float, required=True, help="This field cannot be left blank")
@@ -103,8 +104,7 @@ class MyProductResource(Resource):
         parser.add_argument('category_id', type=int)
 
         data = parser.parse_args()
-
-        user = verify_auth_token(data['token'])
+        user = verify_auth_token(token)
 
         if user is None:
             return {'message': 'invalid token'}, 400
@@ -115,14 +115,9 @@ class MyProductResource(Resource):
         addProduct(user, data)
         return {'message': "Product added successfully"}, 200
 
-    def delete(self, product_id):
-        parser = reqparse.RequestParser()  # create parameters parser from request
+    def delete(self, product_id, token):
 
-        parser.add_argument('token', type=str, required=True, help="This field cannot be left blank")
-
-        data = parser.parse_args()
-
-        user = verify_auth_token(data['token'])
+        user = verify_auth_token(token)
 
         if user is None:
             return {'message': 'invalid token'}, 400
@@ -134,7 +129,7 @@ class MyProductResource(Resource):
         else:
             return {'message': "Product with id [{}] doest not exist".format(product_id)}, 404
 
-    def put(self, product_id):
+    def put(self, product_id, token):
         parser = reqparse.RequestParser()  # create parameters parser from request
 
         parser.add_argument('token', type=str, required=True, help="This field cannot be left blank")
@@ -157,15 +152,8 @@ class MyProductResource(Resource):
 
 class MyProductListResource(Resource):
 
-    def get(self):
-        parser = reqparse.RequestParser()  # create parameters parser from request
-
-        parser.add_argument('token', type=str, required=True, help="This field cannot be left blank")
-
-        data = parser.parse_args()
-
-        user = verify_auth_token(data['token'])
-
+    def get(self, token):
+        user = verify_auth_token(token)
         if user is None:
             return {'message': 'invalid token'}, 400
 

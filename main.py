@@ -38,6 +38,11 @@ mail_svr = Mail(app)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 
+@app.route("/reset")
+@app.route("/recover")
+@app.route("/home")
+@app.route("/user-products")
+@app.route("/login-signup")
 @app.route('/')
 def mainPage():
     return render_template("index.html")
@@ -47,22 +52,23 @@ def mainPage():
 api.add_resource(CategoryListResource, '/categories', '/categories/', methods=['GET'])
 api.add_resource(CategoryResource, '/category/<int:category_id>', methods=['GET'])
 
+# SEARCH ENGINE RESOURCES
+
+api.add_resource(SearchEngine, '/api/search', '/api/search', methods=['POST'])
+
 # USER INFO RESOURCES
 api.add_resource(UserLogin, '/login', '/login/', methods=['POST'])
 api.add_resource(UserRegister, '/register', '/register/', methods=['POST'])
-api.add_resource(UserAccount, '/userinfo', '/userinfo/')
 api.add_resource(ResetRequest, '/reset_password', '/reset_password/', methods=['POST'])
 api.add_resource(ResetPassword, '/reset_password/<token>', '/reset_password/<token>/', methods=['POST'])
+api.add_resource(UserAccount, '/api/userinfo/<string:token>')
 
 # PRODUCTS RESOURCES
 api.add_resource(ProductResource, '/product/<int:product_id>')
 
-# SEARCH ENGINE RESOURCES
-api.add_resource(SearchEngine, '/search', '/search/', methods=['POST'])
-
 # MY PRODUCTS RESOURCES
-api.add_resource(MyProductResource, '/myproduct/<int:product_id>', '/myproduct', '/myproduct/')
-api.add_resource(MyProductListResource, '/myproducts', '/myproducts/', methods=['GET'])
+api.add_resource(MyProductResource, '/myproduct/<int:product_id>/<string:token>', '/myproduct/<string:token>')
+api.add_resource(MyProductListResource, '/myproducts/<string:token>', methods=['GET'])
 
 api.add_resource(UserProductResource, '/user/<int:user_id>/product/<int:product_id>', "/user/<int:user_id>/product")
 api.add_resource(UserProductListResource, '/user/<int:user_id>/products', methods=['GET'])
