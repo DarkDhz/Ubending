@@ -81,7 +81,10 @@ def addProduct(user_id, data):
     values = (
     user_id, data['name'], data['description'], data['price'], data['state'], data['image'], data['category_id'])
     mycursor.execute(query, values)
+
     db.commit()
+
+    return mycursor.lastrowid
 
 
 def deleteProduct(product_id, owner_id):
@@ -103,35 +106,6 @@ def updateProduct(product_id, owner_id, data):
             mycursor.execute(query, values)
 
     db.commit()
-
-
-"""
-# get a product
-url = 'http://127.0.0.1:5000/user/3/product'
-myobj = {'price': '299', 'name': 'testing', 'description': 'hola', 'state': 0}
-x = requests.post(url, data=myobj)
-
-
-url = 'http://127.0.0.1:5000/user/1/product/1'
-myobj = {'price': '299', 'name': 'testing'}
-x = requests.put(url, data=myobj)
-import requests
-url = 'http://127.0.0.1:5000/user/1/product/2/files'
-files = {'file': open('readme.txt','rb')}
-values = {'DB': 'photcat', 'OUT': 'csv', 'SHORT': 'short'}
-r = requests.put(url, files=files, data=values)
-import requests
-url = 'http://127.0.0.1:5000/user/1/product/1/files'
-x = requests.get(url)
-print(x.content)
-
-
-import requests
-url = 'http://127.0.0.1:5000/myproducts'
-myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0OTEzNywiZXhwIjoxNjM2NjQ5NzM3fQ.eyJ1c2VyX2lkIjozfQ.U4fjXix65nT_1xqVKQGVKZoh818kh0Rc1zlUSLMtLnkHOktZ4Rm13YCImedCnZNxS6lTbiI6YSdReBJcCJZ7hQ'}
-x = requests.get(url, data=myobj)
-x.json()
-"""
 
 
 
