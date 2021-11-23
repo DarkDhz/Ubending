@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -10,20 +11,20 @@ export class HomeComponent implements OnInit {
   isLogged = false;
   token = "null";
 
-  constructor() {
+  constructor(private router: Router) {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
     if (currentUser != null) {
       this.token = currentUser.token;
       this.isLogged = true;
     }
     console.log("token:" +this.token)
+    console.log(this.isLogged)
   }
 
   ngOnInit(): void {
   }
 
   onClickSignIn(){
-    this.isLogged = true
     // @ts-ignore
     this.$router.replace({path: '/', query: {}})
   }
@@ -33,4 +34,15 @@ export class HomeComponent implements OnInit {
     toggleMenu!.classList.toggle('active')
   }
 
+  resetToken() {
+    localStorage.removeItem('currentUser')
+  }
+
+  myProducts() {
+    this.router.navigate(['/user-products'])
+  }
+
+  editProfile() {
+    this.router.navigate(['/user-profile'])
+  }
 }

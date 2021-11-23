@@ -52,7 +52,7 @@ width:40px;">
               <a style=" margin-left:5px;
                 font-family: monospace;">PROFILE</a></button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-              <button ngbDropdownItem>EDIT PROFILE  </button>
+              <button ngbDropdownItem routerLink="/user-profile">EDIT PROFILE  </button>
               <button ngbDropdownItem routerLink="/user-products" >MY PRODUCTS</button>
               <button ngbDropdownItem (click)="resetToken()" routerLink="/login-signup">LOG OUT</button>
             </div>

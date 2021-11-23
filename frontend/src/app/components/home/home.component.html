@@ -9,10 +9,10 @@
       <a href="#">Products</a>
       <a href="#" (click)="onClickSignIn()" routerLink="/login-signup">Chat</a>
     </div>
-    <div *ngIf="isLogged" class="account">
+    <div *ngIf="!isLogged" class="account">
       <button (click)="onClickSignIn()" routerLink="/login-signup">Sign In</button>
     </div>
-    <div *ngIf="!isLogged" class="nav-profile-container">
+    <div *ngIf="isLogged" class="nav-profile-container">
       <div class="action">
         <div class="profile" (click)="menuToggle()">
           <img src="../../../assets/linear-cute-ghost-icon.jpg">
@@ -20,10 +20,10 @@
         <div class="menu">
           <h3>Username<br><span>Location</span></h3>
           <ul>
-            <li><i class="fa fa-edit"></i><a href="#"> Edit Profile</a></li>
-            <li><i class="fa fa-list"></i><a href="#"> My Products</a></li>
+            <li><i class="fa fa-edit"></i><a href="#" (click)="editProfile()" routerLink="/user-profile"> Edit Profile</a></li>
+            <li><i class="fa fa-list"></i><a href="#" (click)="myProducts()" routerLink="user-products"> My Products</a></li>
             <li><i class="fa fa-heart-o"></i><a href="#"> Wishlist</a></li>
-            <li><i class="fa fa-sign-out"></i><a href="#"> Log Out</a></li>
+            <li><i class="fa fa-sign-out"></i><a (click)="resetToken()"> Log Out</a></li>
           </ul>
         </div>
       </div>
