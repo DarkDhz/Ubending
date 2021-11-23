@@ -8,10 +8,11 @@ from app.resources.MyProducts import *
 from app.resources.User import *
 from app.resources.Category import *
 from app.resources.Search import *
-from utils.security import secret_key
+from utils.security import secret_key, email_user, email_pass
 from flask_cors import CORS
 from config import config
 from decouple import config as config_decouple
+from flask_mail import Mail
 
 app = Flask(__name__)
 environment = config['development']
@@ -22,8 +23,14 @@ app.config.from_object(environment)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 app.config['SECRET_KEY'] = secret_key
-
+app.config['PRODUCTS_IMAGES'] = UPLOAD_FOLDER_PRODUCTS
+app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = email_user
+app.config['MAIL_PASSWORD'] = email_pass
 api = Api(app)
+mail_svr = Mail(app)
 
 CORS(app, resources={r'/*': {'origins': '*'}})
 
@@ -49,6 +56,8 @@ api.add_resource(SearchEngine, '/api/search', '/api/search', methods=['POST'])
 # USER INFO RESOURCES
 api.add_resource(UserLogin, '/login', '/login/', methods=['POST'])
 api.add_resource(UserRegister, '/register', '/register/', methods=['POST'])
+api.add_resource(ResetRequest, '/reset_password', '/reset_password/', methods=['POST'])
+api.add_resource(ResetPassword, '/reset_password/<token>', '/reset_password/<token>/', methods=['POST'])
 api.add_resource(UserAccount, '/api/userinfo/<string:token>')
 
 # PRODUCTS RESOURCES
