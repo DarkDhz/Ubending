@@ -1,0 +1,30 @@
+<body>
+  <main class="main">
+    <section class="product section container" id="products">
+      <h2 class="section__title-center">
+        Check out our <br> products
+      </h2>
+
+      <p class="product__description">
+        Here are some selected items from our site, all are in excellent
+        conditions and at low price. Buy and enjoy them.
+      </p>
+
+      <div class="product__container grid">
+        <div *ngFor="let product of state.products">
+          <article class="product__card">
+
+            <img style="height: 10rem;" src="https://ubending.s3.eu-west-3.amazonaws.com/product{{ product['product_id'] }}.{{ product['image'] }}" alt="" class="product__img">
+
+            <h3 class="product__title">{{product['name']}}</h3>
+            <span class="product__price">{{product['price']}}€</span>
+
+            <button class="button--flex product__button">
+              <i class="fa fa-commenting"></i>
+            </button>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>

@@ -1,13 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {AppComponent} from "../../app.component";
 import axios from 'axios'
+import {Router} from "@angular/router";
+import {UploadService} from "../../services/upload.service";
 
 @Component({
   selector: 'app-prova2',
   templateUrl: './addItem.component.html',
   styleUrls: ['./addItem.component.css'],
 })
-export class addItemComponent implements OnInit {
+export class addItemComponent implements OnInit{
+
+
+  category_id: number = -1;
   // @ts-ignore
   overlay:object;
   // @ts-ignore
@@ -17,16 +22,26 @@ export class addItemComponent implements OnInit {
   // @ts-ignore
   btnCerrarPopup:object;
   state = {categories: []}
-  constructor() { }
+
+  token = "null";
+
+  constructor(private router: Router, private uploadService: UploadService) {
+    const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+    if (currentUser != null) {
+      this.token = currentUser.token;
+    } else {
+      alert('NOT LOGGED IN')
+      this.router.navigate(['/home']);
+    }
+  }
 
   ngOnInit(): void {
-    const path = 'https://ubending3.herokuapp.com/categories'
+    const path = 'http://127.0.0.1:5000/categories'
     axios.get(path)
       .then((res) => {
 
         // @ts-ignore
         this.state.categories =  res.data
-        console.log(this.state.categories)
       })
       .catch((error) => {
         console.error(error)
@@ -41,19 +56,19 @@ export class addItemComponent implements OnInit {
   // @ts-ignore
   btnCerrarPopup = document.getElementById('btn-cerrar-popup')
   // @ts-ignore
-  product_name = document.getElementById('product_name')
-  // @ts-ignore
-  product_img = document.getElementById('product_img')
-  // @ts-ignore
-  product_price = document.getElementById('product_price')
-  // @ts-ignore
-  product_desc = document.getElementById('product_desc')
-  // @ts-ignore
-  product_category = document.getElementById('product_category')
-  // @ts-ignore
-  product_state = document.getElementById('product_state')
+  selectedFiles : FileList;
 
+  upload(filename: String) {
+    const file = this.selectedFiles.item(0);
+    // @ts-ignore
+    const extension = file.type.split('/').pop();
+    this.uploadService.uploadFile(file, filename + "." + extension);
+  }
 
+  // @ts-ignore
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+  }
 
   open(){
     // @ts-ignore
@@ -61,97 +76,58 @@ export class addItemComponent implements OnInit {
     // @ts-ignore
     popup.classList.add('active');
   }
+
   close(){
     // @ts-ignore
     popup.classList.remove('active');
     // @ts-ignore
     overlay.classList.remove('active');
-
-
-
-  }
-  onProductName(event: any){
-    // @ts-ignore
-    this.product_name = (<HTMLInputElement>event.target).value
-  }
-  onProductPrice(event: any){
-    // @ts-ignore
-    this.product_price = Number((<HTMLInputElement>event.target).value)
-  }
-  onProductDesc(event: any){
-    // @ts-ignore
-    this.product_desc = (<HTMLInputElement>event.target).value
-  }
-  onProductCat(event: any){
-    // @ts-ignore
-    this.product_category = (<HTMLInputElement>event.target).value
-  }
-  onProductState(event: any){
-    // @ts-ignore
-    this.product_state = (<HTMLInputElement>event.target).value
   }
 
-  onFile(event: any){
-    // @ts-ignore
-    event.target.files[0].name
+  selectCategory(event: any) {
+    this.category_id = (<HTMLSelectElement>event.target).selectedIndex;
   }
+
   postProduct(){
-    // @ts-ignore
-    if(product_name.value.length < 3){
-      // @ts-ignore
-      product_name.style.border = "2px solid red"
-    }
-    // @ts-ignore
-    else if(!this.product_desc){
-      // @ts-ignore
-      product_name.style.border = "2px solid red"
-    }
-    // @ts-ignore
-    else if(!this.product_name || this.product_name.length < 3){
-      // @ts-ignore
-      product_name.style.border = "2px solid red"
-    }
-    // @ts-ignore
-    else if(isNaN(Number(product_price.value)) == true){
-      // @ts-ignore
-      product_price.style.border = "2px solid red"
-    }
-
-    // @ts-ignore
-    else if(!this.product_category){
-      // @ts-ignore
-      product_category.style.border = "2px solid red"
-    }
 
 
-    else{
+    let product_name = (<HTMLInputElement>document.getElementById("product_name")).value;
+    let product_price = (<HTMLInputElement>document.getElementById("product_price")).value;
+
+    let product_state = (<HTMLSelectElement>document.getElementById("product_state")).selectedIndex;
+    let product_desc = (<HTMLInputElement>document.getElementById("product_desc")).value;
+
+    if (!product_name || !product_price || !product_desc || product_state == -1 || this.category_id == -1 || this.selectedFiles == undefined) {
+      alert("invalid params")
+    } else {
+      const path = `http://127.0.0.1:5000/myproduct/` + this.token
+
       // @ts-ignore
-      console.log(this.product_name)
-
-      var params = { name:  this.product_name, price: this.product_price,
-        description: this.product_desc,category_id : this.product_category,state: 1,image : 1};
-      console.log(params)
-
-      const path = `https://ubending3.herokuapp.com/user/2/product`
+      const params = {
+        name: product_name,
+        description: product_desc,
+        price: product_price,
+        state: product_state,
+        // @ts-ignore
+        image: this.selectedFiles.item(0).type.split('/').pop(),
+        category_id: this.category_id
+      }
       axios.post(path, params)
         .then((res) => {
-          alert('SHOW UPDATE CORRECTAMENT')
+          // @ts-ignore
+          let id = res.data.product_id
+          this.upload("product" + id)
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+            this.router.navigate(['/user-products']));
         })
         .catch((error) => {
           console.error(error)
-          alert('ERROR AL AFEGIR SHOW')
+          alert('ERROR ADDING PRODUCT')
         })
-      // @ts-ignore
-      alert(product_name.value)
-      // @ts-ignore
+    }
+    // @ts-ignore
 
-      alert(product_price.value)
-      /*
-      // @ts-ignore
-      overlay.classList.remove('active');
-      // @ts-ignore
-      popup.classList.remove('active');
-*/}
+
 
 
 

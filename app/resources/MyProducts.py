@@ -43,11 +43,10 @@ class MyProductResource(Resource):
         # We cannot have a negative price.
         if data['price'] < 0:
             return {'message': "Price attribute cannot be negative."}, 409
-
         return {'product_id': addProduct(user, data)}, 200
 
+      
     def delete(self, product_id, token):
-
         user = verify_auth_token(token)
 
         if user is None:

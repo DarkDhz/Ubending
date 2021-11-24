@@ -1,6 +1,6 @@
-from app.database import db
 from data.CategoryQueries import getCategoryNameByID
-
+from app.database import host, user, password, database
+import mysql.connector as connection
 
 def convertState(value):
     if value is None:
@@ -14,7 +14,6 @@ def convertState(value):
 
 
 def _toJson(elem):
-    print(elem)
     if elem[6] is not None:
         elem[6] = elem[6].decode('ascii')
     if elem[7] is not None:
@@ -27,6 +26,7 @@ def _toJson(elem):
 
 
 def getAllProductsOfUserByID(user_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
     mycursor = db.cursor()
 
     query = "SELECT * FROM Products WHERE owner_id = %s"
@@ -34,6 +34,7 @@ def getAllProductsOfUserByID(user_id):
     mycursor.execute(query, values)
 
     myresult = mycursor.fetchall()
+    db.close()
 
     if len(myresult) == 0:
         return 404
@@ -45,6 +46,7 @@ def getAllProductsOfUserByID(user_id):
 
 
 def getProductById(product_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
     mycursor = db.cursor()
 
     query = "SELECT * FROM Products WHERE product_id = %s"
@@ -52,6 +54,7 @@ def getProductById(product_id):
     mycursor.execute(query, values)
 
     myresult = mycursor.fetchall()
+    db.close()
 
     if len(myresult) == 0:
         return 404
@@ -60,6 +63,7 @@ def getProductById(product_id):
 
 
 def getProductByIds(user_id, product_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
     mycursor = db.cursor()
 
     query = "SELECT * FROM Products WHERE product_id = %s and owner_id = %s"
@@ -67,6 +71,7 @@ def getProductByIds(user_id, product_id):
     mycursor.execute(query, values)
 
     myresult = mycursor.fetchall()
+    db.close()
 
     if len(myresult) == 0:
         return 404
@@ -75,28 +80,31 @@ def getProductByIds(user_id, product_id):
 
 
 def addProduct(user_id, data):
+    db = connection.connect(host=host, user=user, password=password, database=database)
     mycursor = db.cursor()
-    print(data)
     query = "INSERT INTO Products (owner_id, name, description, price, state, image, category_id) " \
             "VALUES (%s, %s, %s, %s, %s, %s, %s)"
     values = (
     user_id, data['name'], data['description'], data['price'], data['state'], data['image'], data['category_id'])
     mycursor.execute(query, values)
-
     db.commit()
+    db.close()
 
     return mycursor.lastrowid
 
 
 def deleteProduct(product_id, owner_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
     mycursor = db.cursor()
     query = "DELETE FROM Products WHERE product_id = %s and owner_id = %s"
     values = (product_id, owner_id)
     mycursor.execute(query, values)
     db.commit()
+    db.close()
 
 
 def updateProduct(product_id, owner_id, data):
+    db = connection.connect(host=host, user=user, password=password, database=database)
     mycursor = db.cursor()
     if len(data) <= 1 or data is None:
         return 404
@@ -107,6 +115,7 @@ def updateProduct(product_id, owner_id, data):
             mycursor.execute(query, values)
 
     db.commit()
+    db.close()
 
 
 
