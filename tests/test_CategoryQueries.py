@@ -37,4 +37,21 @@ class TestCategoryQueries(TestCase):
         self.fail()
 
     def test_get_category_by_id(self):
-        self.fail()
+        # TRY TO GET A CATEGORY FROM AN UNEXISTING CATEGORY ID
+        self.assertEqual(getCategoryNameByID(0), 404)
+
+        # TRY EVERY OTHER CATEGORY
+        allCategories = [{'id': 1, 'name': 'Cars'},
+                         {'id': 2, 'name': 'Bikes'},
+                         {'id': 3, 'name': 'Toys'},
+                         {'id': 4, 'name': 'Home'},
+                         {'id': 5, 'name': 'Sports'},
+                         {'id': 6, 'name': 'Technology'},
+                         {'id': 7, 'name': 'Videogames'},
+                         {'id': 8, 'name': 'Clothes'},
+                         {'id': 9, 'name': 'Plants'},
+                         {'id': 10, 'name': 'Books & Music'},
+                         {'id': 11, 'name': 'Cinema'},
+                         {'id': 12, 'name': 'Pet adoption'}]
+        for i in range(0,12):
+            self.assertEqual(getCategoryNameByID(i+1), allCategories[i]["name"])
