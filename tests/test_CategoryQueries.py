@@ -51,6 +51,7 @@ class TestCategoryQueries(TestCase):
             self.assertEqual(getCategoryNameByID(i+1), categoryNames[i])
 
     def test__category_to_json(self):
+        # DUPLICATE FUNCTION
         self.fail()
 
     def test_get_category_by_id(self):
