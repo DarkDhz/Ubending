@@ -23,7 +23,15 @@ class TestCategoryQueries(TestCase):
         self.assertEqual(getAllCategories(), allCategories, "Error with getAllCategories().")
 
     def test_get_category_name_by_id(self):
-        self.fail()
+        # TRY TO GET A CATEGORY FROM AN UNEXISTING CATEGORY ID
+        self.assertEqual(getCategoryNameByID(0), 404)
+
+        # TRY EVERY OTHER CATEGORY
+        categories = ["Cars", "Bikes", "Toys", "Home", "Sports",
+                      "Technology", "Videogames", "Clothes", "Plants",
+                      "Books & Music", "Cinema", "Pet adoption"]
+        for i in range(0,12):
+            self.assertEqual(getCategoryNameByID(i+1), categories[i])
 
     def test__category_to_json(self):
         self.fail()
