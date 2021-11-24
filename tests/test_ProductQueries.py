@@ -104,10 +104,10 @@ class TestProductQueries(TestCase):
     def test_update_product(self):
         userID = addUserToDB("userUpdatingProduct-TESTUpdateProduct", "userupdatingtest@gmail.com", "aaa")
 
-        data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": "1", "category_id": 2}
+        data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": None, "category_id": 2}
         productID = addProduct(userID, data)
 
-        newData = {"name": "Bike", "description": "Old used bike", "price": 200, "state": 1, "image": "1", "category_id": 2}
+        newData = {"name": "Bike", "description": "Old used bike", "price": 200, "state": 1, "image": None, "category_id": 2}
         updateProduct(productID, userID, newData)
 
         product = getProductById(productID)
