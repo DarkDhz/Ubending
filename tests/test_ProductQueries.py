@@ -18,38 +18,45 @@ class TestProductQueries(TestCase):
         self.assertEqual(convertState(2), "Destroyed")
 
     def test_get_all_products_of_user_by_id(self):
-        testProductList = [{'category_id': 'Cars',
-  'description': 'test',
-  'image': '10101',
-  'name': 'testing',
-  'owner_id': 1,
-  'price': 3,
-  'product_id': 4,
-  'state': 'Used'},
- {'category_id': 'Cars',
-  'description': 'test',
-  'image': '1',
-  'name': 'testing',
-  'owner_id': 1,
-  'price': 3,
-  'product_id': 5,
-  'state': 'Used'},
- {'category_id': 'Cars',
-  'description': 'AALALAALA',
-  'image': '1',
-  'name': 'wqrq',
-  'owner_id': 1,
-  'price': 432,
-  'product_id': 6,
-  'state': 'Used'}]
+        # CREATE TESTING USER AND THE TWO TESTING PRODUCTS
+        userID = addUserToDB("userPostingProduct-TESTAddProduct", "userpostingtest@gmail.com", "aaa")
+        data0 = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": None, "category_id": 2}
+        data1 = {"name": "testing", "description": "test", "price": 3, "state": 0, "image": None, "category_id": 2}
+        productID0 = addProduct(userID, data0)
+        productID1 = addProduct(userID, data1)
 
-        # First search items for nonexisting user
-        items = getAllProductsOfUserByID(0)
-        self.assertEqual(404, items)
+        # DEFINE PRODUCT TEST LIST
+        testProductList = [{'category_id': 'Bikes',
+                            'description': 'New PC',
+                            'image': None,
+                            'name': 'PC',
+                            'owner_id': userID,
+                            'price': 1200,
+                            'product_id': productID0,
+                            'state': 'Brandnew'},
+                           {'category_id': 'Bikes',
+                            'description': 'test',
+                            'image': None,
+                            'name': 'testing',
+                            'owner_id': userID,
+                            'price': 3,
+                            'product_id': productID1,
+                            'state': 'Brandnew'}]
 
-        # Now search products for existing user
-        items = getAllProductsOfUserByID(1)
-        self.assertEqual(testProductList, items)
+        # SEARCH ITEMS FOR NON-EXISTING USER
+        productList = getAllProductsOfUserByID(0)
+        self.assertEqual(404, productList)
+
+        # SEARCH PRODUCTS FOR EXISTING USER
+        productList = getAllProductsOfUserByID(userID)
+        self.assertEqual(testProductList, productList)
+
+        # DELETE PRODUCTS
+        deleteProduct(productID0, userID)
+        deleteProduct(productID1, userID)
+
+        # DELETE TESTING USER
+        deleteUserFromDB(userID)
 
     def test_get_product_by_id(self):
         # First search a product that does not exist
@@ -69,7 +76,7 @@ class TestProductQueries(TestCase):
 
     def test_add_product(self):
         userID = addUserToDB("userPostingProduct-TESTAddProduct", "userpostingtest@gmail.com", "aaa")
-        data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": "1", "category_id": 2}
+        data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": None, "category_id": 2}
         productID = addProduct(userID, data)
         product = getProductById(productID)
 
