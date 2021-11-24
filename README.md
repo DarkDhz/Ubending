@@ -1,2 +1,2 @@
 # UBending
-Aplicacion of the webpage Ubending
+Aplicacion of the webpage UBending
