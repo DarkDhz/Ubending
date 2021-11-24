@@ -52,7 +52,7 @@ api.add_resource(UserLogin, '/login', '/login/', methods=['POST'])
 api.add_resource(UserRegister, '/register', '/register/', methods=['POST'])
 # api.add_resource(ResetRequest, '/reset_password', '/reset_password/', methods=['POST'])
 # api.add_resource(ResetPassword, '/reset_password/<token>', '/reset_password/<token>/', methods=['POST'])
-api.add_resource(UserAccount, '/api/userinfo/<string:token>')
+api.add_resource(UserAccount, '/api/userinfo/<string:token>', '/api/useradmin/<int:user_id>')
 
 # PRODUCTS RESOURCES
 api.add_resource(ProductResource, '/product/<int:product_id>')

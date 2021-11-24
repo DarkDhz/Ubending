@@ -65,14 +65,8 @@ def addUserToDB(username, email, password):
     values = (username, password, email)
     mycursor.execute(query, values)
     db.commit()
-
     return mycursor.lastrowid
 
-def deleteUserFromDB(user_id):
-    mycursor = db.cursor()
-    query = "DELETE FROM Users WHERE user_id = " + str(user_id)
-    mycursor.execute(query)
-    db.commit()
 
 def deleteUserFromDB(user_id):
     mycursor = db.cursor()

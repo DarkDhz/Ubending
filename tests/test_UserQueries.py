@@ -1,6 +1,6 @@
 from unittest import TestCase
-from data.UserQueries import _toJson, addUserToDB, getAccountByID, getAccountByEmail, validatePasswordFormat, \
-    validateLogin, updateUserProfile, deleteUserFromDB
+from data.UserQueries import *
+from data.UserQueries import _toJson
 import requests
 
 
@@ -114,7 +114,7 @@ class TestUserRequests(TestCase):
 
     def test_register(self):
         url = 'http://127.0.0.1:5000/register'
-        myobj = {'username': 'TestAccount', 'mail': 'testmail36@gmail.com', 'password': '1234ABCD',
+        myobj = {'username': 'TestAccount', 'mail': 'testmail50@gmail.com', 'password': '1234ABCD',
                  'repeat_password': '1234ABCD'}
         x = requests.post(url, data=myobj)
         self.assertEqual(200, x.status_code)
@@ -124,11 +124,16 @@ class TestUserRequests(TestCase):
         self.assertEqual(400, y.status_code)
         self.assertEqual(y.json(), {'message': 'Email already registered.'})
         # Finally, let's delete the test user
-        user = getAccountByEmail('testmail36@gmail.com')
+        user = getAccountByEmail('testmail50@gmail.com')
         deleteUserFromDB(user['user_id'])
         # Let's try to find that user again
-        req2 = getAccountByEmail('testmail36@gmail.com')
+        req2 = getAccountByEmail('testmail50@gmail.com')
         self.assertEqual(req2, 404, 'user should be deleted')
+        '''userID = getAccountByEmail('testmail51@gmail.com')['user_id']
+        url2 = 'http://127.0.0.1:5000/api/useradmin/' + str(userID)
+        d = requests.delete(url2, data=userID)
+        self.assertEqual(200, d.status_code, 'user should be deleted')'''
+
 
     def test_login(self):
         # First lets register a new user
