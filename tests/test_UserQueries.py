@@ -35,16 +35,16 @@ class TestUserQueries(TestCase):
         '''req = addUserToDB(self.user[1], self.user[4], self.user[2])
         if req is None:
             us = getAccountByEmail(self.user[4])'''
-        addUserToDB("getMailTest", "getByMail@gmail.com", self.user[2])
-        us = getAccountByEmail("getByMail@gmail.com")
+        addUserToDB("getMailTest", "getByMail2@gmail.com", self.user[2])
+        us = getAccountByEmail("getByMail2@gmail.com")
         #self.assertEqual(req, None, "Couldn't add user to db")
-        self.assertEqual(us['mail'], "getByMail@gmail.com")
+        self.assertEqual(us['mail'], "getByMail2@gmail.com")
 
         # We now delete the user from db
         deleteUserFromDB(us['user_id'])
 
         # Let's try to find that user again
-        req2 = getAccountByEmail("getByMail@gmail.com")
+        req2 = getAccountByEmail("getByMail2@gmail.com")
         self.assertEqual(req2, 404, 'User should not exist')
 
     def test_get_account_by_id(self):
@@ -114,22 +114,20 @@ class TestUserRequests(TestCase):
 
     def test_register(self):
         url = 'http://127.0.0.1:5000/register'
-        myobj = {'username': 'TestAccount', 'mail': 'testmail35@gmail.com', 'password': '1234ABCD',
+        myobj = {'username': 'TestAccount', 'mail': 'testmail36@gmail.com', 'password': '1234ABCD',
                  'repeat_password': '1234ABCD'}
         x = requests.post(url, data=myobj)
         self.assertEqual(200, x.status_code)
         self.assertEqual(x.json(), {'message': "Account created succesfully"})
-
         # Now let's try to register an existing user
         y = requests.post(url, data=myobj)
         self.assertEqual(400, y.status_code)
         self.assertEqual(y.json(), {'message': 'Email already registered.'})
-
         # Finally, let's delete the test user
-        user = getAccountByEmail('testmail35@gmail.com')
+        user = getAccountByEmail('testmail36@gmail.com')
         deleteUserFromDB(user['user_id'])
         # Let's try to find that user again
-        req2 = getAccountByID(user['user_id'])
+        req2 = getAccountByEmail('testmail36@gmail.com')
         self.assertEqual(req2, 404, 'user should be deleted')
 
     def test_login(self):
