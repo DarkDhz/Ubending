@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "copy_static": "xcopy /s \".\/dist\/frontend\" \".\/static\" \/Y",
-    "copy_templates": "xcopy  \".\/dist\/frontend\/index.html\" \".\/templates\" /S /Q /Y /F",
+    "copy_static": "xcopy /s \".\/dist\/frontend\" \"..\/static\" \/Y",
+    "copy_templates": "xcopy  \".\/dist\/frontend\/index.html\" \"..\/templates\" /S /Q /Y /F",
     "build_check" : "ng build",
     "build": "ng build && npm run copy_static && npm run copy_templates",
     "start": "node server.js",
