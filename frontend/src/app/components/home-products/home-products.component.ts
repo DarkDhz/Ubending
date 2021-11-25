@@ -28,9 +28,6 @@ export class HomeProductsComponent implements OnInit {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
     if (currentUser != null) {
       this.token = currentUser.token;
-    } else {
-      alert('NOT LOGGED IN')
-      this.router.navigate(['/home']);
     }
 
     this.getProducts()

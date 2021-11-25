@@ -121,7 +121,7 @@ export class addItemComponent implements OnInit{
         })
         .catch((error) => {
           console.error(error)
-          alert('ERROR ADDING PRODUCT')
+          alert(error.response.data.message)
         })
     }
     // @ts-ignore

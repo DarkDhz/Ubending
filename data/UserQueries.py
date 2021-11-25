@@ -115,7 +115,7 @@ def validateEmail(mail):
 def updatePassword(user_id, password):
     mycursor = db.cursor()
     query = "UPDATE Users SET password = %s WHERE user_id = %s"
-    values = (password, user_id)
+    values = (hash_password(password), user_id['user_id'])
     mycursor.execute(query, values)
     db.commit()
 

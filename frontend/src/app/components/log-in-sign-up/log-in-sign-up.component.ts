@@ -60,7 +60,7 @@ export class LogInSignUpComponent implements OnInit {
       .catch((error) => {
         console.error(error)
         // @ts-ignore
-        alert('ERROR LOGGING USER')
+        alert(error.response.data.message)
         //alert(error.response.data.message)
       })
   }

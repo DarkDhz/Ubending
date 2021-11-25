@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
+import axios from "axios";
 
 @Component({
   selector: 'app-reset-password',
@@ -14,9 +16,12 @@ export class ResetPasswordComponent implements OnInit {
     passwordConfirm: new FormControl('', Validators.required)
   })
 
-  constructor() { }
+  token: string | null = 'null';
+
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    this.token = this.route.snapshot.paramMap.get('token');
   }
 
   get password1(){
@@ -50,8 +55,21 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onClickReset(){
-    // @ts-ignore
-    this.$router.replace({path: '/login-signup', query: {}})
+    const path = `https://ubending4.herokuapp.com/reset_password/` + this.token
+
+    const params = {
+      password: (<HTMLInputElement>document.getElementById("newPassword")).value,
+      repeat_password: (<HTMLInputElement>document.getElementById("passwordConfirm")).value
+    }
+
+    // here send email
+    axios.post(path, params).then((res) => {
+      this.router.navigate(['/login-signup']);
+      })
+      .catch((error) => {
+        console.error(error)
+        alert(error.response.data.message)
+      })
   }
 
 }

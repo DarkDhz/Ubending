@@ -56,7 +56,7 @@ def send_reset_email(user_id, mail, mail_svr):
                   sender='noreply@ubending.com',
                   recipients=[mail])
     msg.body = f'''To reset your password visit the following link:
-{url_for('resetrequest', token=token, _external=True)}
+    http://127.0.0.1:4200/reset/{token.decode('ascii')}
 
 If you did not make this request, please ignore this email and no changes will be made.
 '''

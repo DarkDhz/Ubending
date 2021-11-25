@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'user-products', component: UserProductsComponent},
   { path: 'home', component: HomeComponent},
   { path: 'recover', component: RecoverPasswordComponent},
-  { path: 'reset', component: ResetPasswordComponent},
+  { path: 'reset/:token', component: ResetPasswordComponent},
   { path: 'user-profile', component: ProfileComponent}
 ];
 
