@@ -68,10 +68,12 @@
 .card{
   transition: all .2s ease-in-out;
   border-radius: 3px;
+  border-radius: 12px;
 }
 
 .card-main{
   position: relative;
+
 
 }
 
@@ -131,13 +133,13 @@
 
 .cart-line{
   height: 2px;
-  background: #f1f1f1;
+  background: #eee;
 }
 
 .cart-item{
   text-align: center;
   line-height: 45px;
-  background: #111;
+  background: #ffffff;
   transition: all 1s ease-in-out;
   /*opacity: 0;*/
   position: relative;
@@ -260,4 +262,12 @@
   color: #888;
   font-style: italic;
   font-weight: 400;
+
+}
+::ng-deep .custom-modalbox >
+mat-dialog-container{
+  position: relative;
+  top:60px;
+  width: 650px;
+  height: auto;
 }

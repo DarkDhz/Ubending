@@ -1,0 +1,208 @@
+
+@font-face {
+  font-family: 'Montserrat', sans-serif;
+  src: url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f6f5f7;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  margin: -20px 0 50px;
+}
+
+h1 {
+  font-weight: bold;
+  color: black;
+  font-weight: 640;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+}
+
+p {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: .5px;
+  margin: 20px 0 30px;
+  color: #7E68C1;
+}
+
+span {
+  font-size: 12px;
+}
+
+a {
+  color: whitesmoke;
+  font-size: 14px;
+  text-decoration: none;
+  margin: 15px 0;
+}
+
+a:hover{
+  text-decoration: underline;
+}
+
+input,select {
+  background-color: white;
+  margin: 8px 0;
+  appearance: none;
+  width: 406px;
+  border: 1px solid rgba(255,255,255,0.4);
+  background-color: rgba(255,255,255,1);
+  border-radius: 3px;
+  font-size: 16px;
+  transition-duration: 0.25s;
+  font-weight: 300;
+  border-color: #9DA1FF;
+  margin-top: 30px;
+  box-sizing: border-box;
+
+}
+input::placeholder{
+  color: white;
+  opacity: 1;
+}
+input:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+input:focus {
+  background-color: white;
+
+}
+
+label{
+  font-weight: bold;
+  font-weight: 640;
+  font-size: 14px;
+  margin-bottom: 30px;
+  display: inline-block;
+  position: absolute;
+}
+.btn-cerrar-popup {
+  font-size: 16px;
+  line-height: 16px;
+  display: block;
+  text-align: right;
+  transition: .3s ease all;
+  color: #BBBBBB;
+}
+
+.container {
+
+  position: relative;
+  width: 600px;
+  max-width: 100%;
+  min-height: 720px;
+}
+
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+  background-color: rgba(255, 255, 255, 0.13);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow: scroll;
+}
+
+.edit-container {
+  left: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+form {
+  display: flex;
+  align-items: start;
+  justify-content: left;
+  flex-direction: column;
+  padding: 0 50px;
+  height: 100%;
+
+}
+
+.image img{
+  width: 55%;
+  height: 30%;
+  border: 2px solid white;
+  border-radius: 20%;
+}
+
+.centrar{
+  margin:auto;
+  display:block;
+}
+
+.form-group {
+  margin-top: 20px;
+  align-items: start;
+  justify-content: left;
+
+}
+
+#btn-cerrar-popup {
+  margin-right: 20px;
+
+
+}
+
+#btn-cerrar-popup:hover {
+  color: black;
+
+}
+
+
+button {
+  border-radius: 20px;
+  border: 1px solid white;
+  background-color: #7E68C1;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+}
+#input_price{width: 230px;}
+#input_desc{
+  height: 150px;
+  padding: 10px 12px 100px;
+  box-sizing: border-box;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 4px;
+  resize: none;
+  outline: none;
+  background-color: white;
+  appearance: none;
+  width: 480px;
+  background-color: rgba(255,255,255,1);
+  border-color: #9DA1FF;
+
+  font-size: 16px;
+  transition-duration: 0.25s;
+  font-weight: 300;
+  margin-top: 20px;
+}
+#input_desc:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+#input_desc:focus {
+  background-color: white;
+
+}
+
+

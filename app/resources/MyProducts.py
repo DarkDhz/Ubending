@@ -45,7 +45,7 @@ class MyProductResource(Resource):
             return {'message': "Price attribute cannot be negative."}, 409
         return {'product_id': addProduct(user, data)}, 200
 
-      
+
     def delete(self, product_id, token):
         user = verify_auth_token(token)
 
@@ -67,7 +67,7 @@ class MyProductResource(Resource):
         parser.add_argument('description', type=str)
         parser.add_argument('price', type=int)
         parser.add_argument('state', type=int)
-        parser.add_argument('category', type=int)
+        parser.add_argument('category_id', type=int)
 
         data = parser.parse_args()
 
