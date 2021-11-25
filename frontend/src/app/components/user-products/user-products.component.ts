@@ -38,7 +38,7 @@ export class UserProductsComponent implements OnInit{
 
   getProducts(){
 
-    const path = 'http://127.0.0.1:5000/myproducts/' + this.token
+    const path = 'https://ubending4.herokuapp.com/myproducts/' + this.token
     axios.get(path)
       .then((res) => {
         // @ts-ignore
@@ -87,7 +87,7 @@ export class DialogContentExampleDialog {
     this.dialogRef.close("here the result");
   }
   onYesClick(): void {
-    const path = `http://127.0.0.1:5000/myproduct/` + this.data.idProduct + "/" + this.token
+    const path = `https://ubending4.herokuapp.com/myproduct/` + this.data.idProduct + "/" + this.token
     axios.delete(path)
       .then((res) => {
         this.uploadService.deleteFile("product"+this.data.idProduct+"."+this.data.image)
