@@ -68,6 +68,8 @@ def addUserToDB(username, email, password):
     db.commit()
     mycursor.close()
 
+    return mycursor.lastrowid
+
 
 def validateLogin(mail, password):
     mycursor = db.cursor()
