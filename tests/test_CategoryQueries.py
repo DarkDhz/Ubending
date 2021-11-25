@@ -18,10 +18,10 @@ class TestCategoryQueries(TestCase):
                          {'id': 11, 'name': 'Cinema'},
                          {'id': 12, 'name': 'Pet adoption'}]
         categoryNames = ["Cars", "Bikes", "Toys", "Home", "Sports",
-                      "Technology", "Videogames", "Clothes", "Plants",
-                      "Books & Music", "Cinema", "Pet adoption"]
-        for i in range(0,12):
-            self.assertEqual(_toJson([i+1, categoryNames[i]]), allCategories[i])
+                         "Technology", "Videogames", "Clothes", "Plants",
+                         "Books & Music", "Cinema", "Pet adoption"]
+        for i in range(0, 12):
+            self.assertEqual(_toJson([i + 1, categoryNames[i]]), allCategories[i])
 
     def test_get_all_categories(self):
         allCategories = [{'id': 1, 'name': 'Cars'},
@@ -45,14 +45,14 @@ class TestCategoryQueries(TestCase):
 
         # TRY EVERY OTHER CATEGORY
         categoryNames = ["Cars", "Bikes", "Toys", "Home", "Sports",
-                      "Technology", "Videogames", "Clothes", "Plants",
-                      "Books & Music", "Cinema", "Pet adoption"]
-        for i in range(0,12):
-            self.assertEqual(getCategoryNameByID(i+1), categoryNames[i])
+                         "Technology", "Videogames", "Clothes", "Plants",
+                         "Books & Music", "Cinema", "Pet adoption"]
+        for i in range(0, 12):
+            self.assertEqual(getCategoryNameByID(i + 1), categoryNames[i])
 
     def test__category_to_json(self):
         # DUPLICATE FUNCTION
-        self.fail()
+        self.assertEqual(getCategoryByID(1), {'id': 1, 'name': 'Cars'})
 
     def test_get_category_by_id(self):
         # TRY TO GET A CATEGORY FROM AN UNEXISTING CATEGORY ID
@@ -71,5 +71,5 @@ class TestCategoryQueries(TestCase):
                          {'id': 10, 'name': 'Books & Music'},
                          {'id': 11, 'name': 'Cinema'},
                          {'id': 12, 'name': 'Pet adoption'}]
-        for i in range(0,12):
-            self.assertEqual(getCategoryNameByID(i+1), allCategories[i]["name"])
+        for i in range(0, 12):
+            self.assertEqual(getCategoryNameByID(i + 1), allCategories[i]["name"])

@@ -5,8 +5,8 @@
     </a>
     <div class="links">
       <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Products</a>
+      <a href="#homepage_sections">Sections</a>
+      <a href="#homepage_products">Products</a>
       <a href="#" (click)="onClickSignIn()" routerLink="/login-signup">Chat</a>
     </div>
     <div *ngIf="!isLogged" class="account">
@@ -15,15 +15,15 @@
     <div *ngIf="isLogged" class="nav-profile-container">
       <div class="action">
         <div class="profile" (click)="menuToggle()">
-          <img src="../../../assets/linear-cute-ghost-icon.jpg">
+          <img src="https://i.imgur.com/iwaAllL.jpg[/img]">
         </div>
         <div class="menu">
           <h3>Username<br><span>Location</span></h3>
           <ul>
             <li><i class="fa fa-edit"></i><a href="#" (click)="editProfile()" routerLink="/user-profile"> Edit Profile</a></li>
-            <li><i class="fa fa-list"></i><a href="#" (click)="myProducts()" routerLink="user-products"> My Products</a></li>
+            <li><i class="fa fa-list"></i><a href="#" (click)="myProducts()" routerLink="/user-products"> My Products</a></li>
             <li><i class="fa fa-heart-o"></i><a href="#"> Wishlist</a></li>
-            <li><i class="fa fa-sign-out"></i><a (click)="resetToken()"> Log Out</a></li>
+            <li><i class="fa fa-sign-out"></i><a (click)="resetToken()" routerLink="/login-signup"> Log Out</a></li>
           </ul>
         </div>
       </div>
@@ -54,7 +54,7 @@
   </div>
 </div>
 <div class="categories">
-  <h2 class="section__title">
+  <h2 class="section__title" id="homepage_sections">
     See the categories
   </h2>
   <app-card-slider></app-card-slider>
