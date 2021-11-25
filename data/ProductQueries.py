@@ -14,8 +14,6 @@ def convertState(value):
 
 
 def _toJson(elem):
-    if elem[6] is not None:
-        elem[6] = elem[6].decode('ascii')
     if elem[7] is not None:
         elem[7] = getCategoryNameByID(elem[7])
     if elem[5] is not None:

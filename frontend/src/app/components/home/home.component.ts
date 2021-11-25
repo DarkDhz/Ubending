@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
 
   resetToken() {
     localStorage.removeItem('currentUser')
+    this.router.navigate(['/login-signup'])
   }
 
   myProducts() {
