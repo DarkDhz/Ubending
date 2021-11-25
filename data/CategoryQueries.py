@@ -40,10 +40,6 @@ def getCategoryNameByID(id):
     return myresult[0][0]
 
 
-def _categoryToJSON(data):
-    return {"id": data[0], "name": data[1]}
-
-
 def getCategoryByID(id):
     mycursor = db.cursor()
 
@@ -55,4 +51,4 @@ def getCategoryByID(id):
     if len(myresult) == 0:
         return 404
 
-    return _categoryToJSON(myresult[0])
+    return _toJson(myresult[0])
