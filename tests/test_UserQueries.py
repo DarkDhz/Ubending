@@ -113,7 +113,7 @@ class TestUserQueries(TestCase):
         deleteUserFromDB(us['user_id'])
 
 class TestUserRequests(TestCase):
-
+    """
     def test_register(self):
         url = 'http://127.0.0.1:5000/register'
         myobj = {'username': 'TestAccount', 'mail': 'testmail50@gmail.com', 'password': '1234ABCD',
@@ -131,12 +131,14 @@ class TestUserRequests(TestCase):
         # Let's try to find that user again
         req2 = getAccountByEmail('testmail50@gmail.com')
         self.assertEqual(req2, 404, 'user should be deleted')
-        '''userID = getAccountByEmail('testmail51@gmail.com')['user_id']
+
+        userID = getAccountByEmail('testmail51@gmail.com')['user_id']
         url2 = 'http://127.0.0.1:5000/api/useradmin/' + str(userID)
         d = requests.delete(url2, data=userID)
-        self.assertEqual(200, d.status_code, 'user should be deleted')'''
+        self.assertEqual(200, d.status_code, 'user should be deleted')
+        """
 
-
+    """
     def test_login(self):
         # First lets register a new user
         url = 'http://127.0.0.1:5000/register'
@@ -171,6 +173,7 @@ class TestUserRequests(TestCase):
         # Let's try to find that user again
         req2 = getAccountByID(userID)
         self.assertEqual(req2, 404, 'user should be deleted')
+    """
 
     def test_get_account(self):
         self.assertTrue(1, 1)
