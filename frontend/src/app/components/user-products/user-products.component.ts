@@ -135,7 +135,7 @@ export class DialogEdit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,private uploadService: UploadService,
     private router: Router) {
     this.idProduct = data.idProduct;
-    const path = 'http://127.0.0.1:5000/categories'
+    const path = 'https://ubending4.herokuapp.com/categories'
     axios.get(path)
       .then((res) => {
         console.log(res.data)
