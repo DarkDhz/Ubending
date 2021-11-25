@@ -77,6 +77,8 @@ def deleteUserFromDB(user_id):
     db.commit()
     mycursor.close()
 
+    return mycursor.lastrowid
+
 
 def validateLogin(mail, password):
     mycursor = db.cursor()
