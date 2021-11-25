@@ -1,6 +1,7 @@
 from unittest import TestCase
 from data.UserQueries import *
 from data.UserQueries import _toJson
+from passlib.apps import custom_app_context as pwd_context
 import requests
 
 
@@ -90,13 +91,14 @@ class TestUserQueries(TestCase):
 
     def test_update_user_profile(self):
         # Add user to db
-        addUserToDB("updateUserTest", "updateUserMail@gmail.com", self.user[2])
-        us = getAccountByEmail("updateUserMail@gmail.com")
-        self.assertEqual(us['mail'], "updateUserMail@gmail.com")  # Check that user has been added
+        addUserToDB("updateUserTest", "updateUserMail2@gmail.com", self.user[2])
+        us = getAccountByEmail("updateUserMail2@gmail.com")
+        self.assertEqual(us['mail'], "updateUserMail2@gmail.com")  # Check that user has been added
 
         # Create default data sets
-        data1 = {'token': us['user_id']}
-        data2 = {'token': us['user_id'], 'username': 'NewName', 'password':'newPassword1' }
+        data1 = {}
+        data2 = {'token': us['user_id'], 'username': 'NewName', 'password': 'newPassword1',
+                 'repeat_password': 'newPassword1', 'location': None}
         
         # First lets try to update the user with no data
         self.assertEqual(updateUserProfile(us['user_id'], data1), 404, 'User does not exist')
@@ -106,7 +108,8 @@ class TestUserQueries(TestCase):
         us2 = getAccountByID(us['user_id'])
         # Check that the info updated correctly
         self.assertEqual(us2['username'], 'NewName', 'Name did not update correctly')
-        self.assertEqual(us2['password'], 'newPassword1', 'Password did not update correctly')
+        coded_pass = hash_password('newPassword1')
+        self.assertEqual(us2['password'], coded_pass, 'Password did not update correctly')
         # Delete user from db
         deleteUserFromDB(us['user_id'])
 
