@@ -108,8 +108,7 @@ class TestUserQueries(TestCase):
         us2 = getAccountByID(us['user_id'])
         # Check that the info updated correctly
         self.assertEqual(us2['username'], 'NewName', 'Name did not update correctly')
-        coded_pass = hash_password('newPassword1')
-        self.assertEqual(us2['password'], coded_pass, 'Password did not update correctly')
+        self.assertTrue(verify_password('newPassword1', us2['password']), 'Password did not update properly')
         # Delete user from db
         deleteUserFromDB(us['user_id'])
 
