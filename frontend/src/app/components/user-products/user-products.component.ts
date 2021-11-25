@@ -46,6 +46,7 @@ export class UserProductsComponent implements OnInit{
       .then((res) => {
         // @ts-ignore
         this.state.products = res.data
+        console.log(res.data)
       })
       .catch((error) => {
         console.error(error)
@@ -123,6 +124,7 @@ export class DialogContentExampleDialog {
 export class DialogEdit {
   category_id: Number = -1;
   state_id: Number = -1;
+  token = "null";
 
   state = {categories: []};
   params = {};
@@ -130,19 +132,28 @@ export class DialogEdit {
   selectedFiles : FileList | undefined;
   constructor(
     public dialogRef: MatDialogRef<DialogEdit>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,private uploadService: UploadService,
+    private router: Router) {
     this.idProduct = data.idProduct;
     const path = 'http://127.0.0.1:5000/categories'
     axios.get(path)
       .then((res) => {
-
+        console.log(res.data)
         // @ts-ignore
         this.state.categories =  res.data
       })
       .catch((error) => {
         console.error(error)
       })
+    const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+    if (currentUser != null) {
+      this.token = currentUser.token;
+    } else {
+      alert('NOT LOGGED IN')
+      this.router.navigate(['/home']);
+    }
     this.category_id = data.category
+    console.log(this.state.categories)
   }
 
   onNoClick(): void {
@@ -180,35 +191,34 @@ export class DialogEdit {
         category_id: this.category_id
       }
       console.log(this.params)
-      alert("PAUSA")
     } else {
       // @ts-ignore
       this.params = {
+        token: this.token,
         name: product_name,
         description: product_desc,
         price: product_price,
-        product_category: this.category_id,
-        product_state: this.state_id,
+        category_id: this.category_id,
+        state: this.state_id,
         // @ts-ignore
-        image: this.selectedFiles.item(0).type.split('/').pop(),
-        category_id: this.category_id
+        image: this.selectedFiles.item(0).type.split('/').pop()
       }
-    }
+
     console.log(this.params)
-    alert("PAUSA")
-    /*
-    const path = "https://ubending3.herokuapp.com/user/1/product/+ this.data.idProduct"
-    axios.delete(path)
+    const path = `http://127.0.0.1:5000/myproduct/` + this.data.idProduct + "/" + this.token
+    axios.put(path,this.params)
       .then((res) => {
-        alert('PRODUCT DELETE CORRECTLY')
+        this.uploadService.deleteFile("product"+this.data.idProduct+"."+this.data.image)
+        alert('PRODUCT EDIT CORRECTLY')
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+          this.router.navigate(['/user-products']));
       })
       .catch((error) => {
         console.error(error)
-        alert('ERROR AL DELETE PRODUCT')
+        alert('ERROR EDITING PRODUCT')
       })
     this.dialogRef.close();
-
-     */
+  }
   }
 }
 

@@ -33,7 +33,7 @@
     </div>
       <label class="col-sm-2 control-label" style="margin-left: 20px">Category</label>
       <div style="display: inline-block;margin-left: 20px">
-        <select id = "product_category" formProductName="selectProduct" (change)="selectCategory($event)" class="form-control" style=" width: 230px;margin-bottom: 20px; color: #ABA9BC;">
+        <select id = "product_category" formProductName="selectProduct" (change)="selectCategory($event)" class="form-control" style=" width: 230px;margin-bottom: 20px">
           <option value="" selected disabled hidden>Select the category</option>
           <option [value]="item" *ngFor="let item of state.categories">{{item['name']}}</option>
         </select>
