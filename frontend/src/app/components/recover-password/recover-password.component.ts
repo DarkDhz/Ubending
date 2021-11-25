@@ -33,8 +33,7 @@ export class RecoverPasswordComponent implements OnInit {
     this.showEmailSent = false;
     if (!this.emailUser!.errors?.required && !this.emailUser!.errors?.pattern) {
 
-      const path = `https://ubending4.herokuapp.com/reset_password`
-
+      const path = `https://ubending4.herokuapp.com/api/reset_password`
       const params = {
         mail: (<HTMLInputElement>document.getElementById("user_mail")).value
       }

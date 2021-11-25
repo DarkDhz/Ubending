@@ -55,7 +55,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onClickReset(){
-    const path = `https://ubending4.herokuapp.com/reset_password/` + this.token
+    const path = `https://ubending4.herokuapp.com/api/reset_password/` + this.token
 
     const params = {
       password: (<HTMLInputElement>document.getElementById("newPassword")).value,
