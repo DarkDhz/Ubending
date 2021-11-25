@@ -28,19 +28,30 @@ export class RecoverPasswordComponent implements OnInit {
   }
 
   validateEmail(){
+    this.showAlertInvalid = false;
+    this.showAlertRequired = false;
+    this.showEmailSent = false;
     if (!this.emailUser!.errors?.required && !this.emailUser!.errors?.pattern) {
-      this.showAlertInvalid = false;
-      this.showAlertRequired = false;
-      this.showEmailSent = true;
+
+      const path = `https://ubending4.herokuapp.com/reset_password`
+
+      const params = {
+        mail: (<HTMLInputElement>document.getElementById("user_mail")).value
+      }
+
+      // here send email
+      axios.post(path, params).then((res) => {
+        this.showEmailSent = true;
+        })
+        .catch((error) => {
+          console.error(error)
+          alert(error.response.data.message)
+        })
     } else {
       if (this.emailUser!.errors?.required ) {
-        this.showAlertInvalid = false;
-        this.showEmailSent = false;
         this.showAlertRequired = true;
 
       } else if (this.emailUser!.errors?.pattern) {
-        this.showEmailSent = false;
-        this.showAlertRequired = false;
         this.showAlertInvalid = true;
       }
     }

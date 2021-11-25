@@ -97,7 +97,7 @@ export class DialogContentExampleDialog {
       })
       .catch((error) => {
         console.error(error)
-        alert('ERROR DELETING PRODUCT')
+        alert(error.response.data.message)
       })
     this.dialogRef.close();
 

@@ -112,8 +112,7 @@ export class addItemComponent implements OnInit{
         image: this.selectedFiles.item(0).type.split('/').pop(),
         category_id: this.category_id
       }
-      axios.post(path, params)
-        .then((res) => {
+      axios.post(path, params).then((res) => {
           // @ts-ignore
           let id = res.data.product_id
           this.upload("product" + id)
@@ -122,7 +121,7 @@ export class addItemComponent implements OnInit{
         })
         .catch((error) => {
           console.error(error)
-          alert('ERROR ADDING PRODUCT')
+          alert(error.response.data.message)
         })
     }
     // @ts-ignore
