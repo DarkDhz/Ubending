@@ -10,18 +10,18 @@ import * as $ from "jquery";
 export class CardSliderComponent implements OnInit {
 
   slides = [
-    {img: "../../../assets/cars.svg", title: 'Cars'},
-    {img: "../../../assets/bikes.svg", title: 'Bikes'},
-    {img: "../../../assets/toys.svg", title: 'Toys'},
-    {img: "../../../assets/home.svg", title: 'Home'},
-    {img: "../../../assets/sports.svg", title: 'Sports'},
-    {img: "../../../assets/technology.svg", title: 'Technology'},
-    {img: "../../../assets/video_game.svg", title: 'Videogames'},
-    {img: "../../../assets/shopping.svg", title: 'Clothes'},
-    {img: "../../../assets/plants.svg", title: 'Plants'},
-    {img: "../../../assets/books_music.svg", title: 'Books & Music'},
-    {img: "../../../assets/cinema.svg", title: 'Cinema'},
-    {img: "../../../assets/pet_adoption.svg", title: 'Pet adoption'}
+    {img: "https://ubending.s3.eu-west-3.amazonaws.com/cars.svg", title: 'Cars'},
+    {img: "https://ubending.s3.eu-west-3.amazonaws.com/bikes.svg", title: 'Bikes'},
+    {img: "https://ubending.s3.eu-west-3.amazonaws.com/toys.svg", title: 'Toys'},
+    {img: "https://ubending.s3.eu-west-3.amazonaws.com/home.svg", title: 'Home'},
+    {img: "https://ubending.s3.eu-west-3.amazonaws.com/sports.svg", title: 'Sports'},
+    {img: "https://ubending.s3.eu-west-3.amazonaws.com/technology.svg", title: 'Technology'},
+    {img: "https://ubending.s3.eu-west-3.amazonaws.com/video_game.svg", title: 'Videogames'},
+    {img: "https://ubending.s3.eu-west-3.amazonaws.com/shopping.svg", title: 'Clothes'},
+    {img: "https://ubending.s3.eu-west-3.amazonaws.com/plants.svg", title: 'Plants'},
+    {img: "https://ubending.s3.eu-west-3.amazonaws.com/books_music.svg", title: 'Books & Music'},
+    {img: "https://ubending.s3.eu-west-3.amazonaws.com/cinema.svg", title: 'Cinema'},
+    {img: "https://ubending.s3.eu-west-3.amazonaws.com/pet_adoption.svg", title: 'Pet adoption'}
   ];
   slideConfig = {
     "slidesToShow": 4,

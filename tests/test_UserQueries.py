@@ -10,13 +10,13 @@ class TestUserQueries(TestCase):
 
     def test__to_json(self):
         self.assertEqual(_toJson(self.user), {'user_id': 24, 'username': 'Test', 'password': '1234ABCD',
-                                    'admin': 0, 'mail': 'testmail@gmail.com', 'location': None,
-                                    'userphoto': None}, 'The JSON do not match')
+                                              'admin': 0, 'mail': 'testmail@gmail.com', 'location': None,
+                                              'userphoto': None}, 'The JSON do not match')
 
     def test_add_user_to_db(self):
         addUserToDB(self.user[1], self.user[4], self.user[2])
         response = getAccountByEmail(self.user[4])
-        self.assertEqual(response['mail'], 'testmail@gmail.com', "Couldn't add user to db") # User added successfully
+        self.assertEqual(response['mail'], 'testmail@gmail.com', "Couldn't add user to db")  # User added successfully
         # Delete user
         deleteUserFromDB(response['user_id'])
     """
@@ -24,7 +24,7 @@ class TestUserQueries(TestCase):
         # Add user to db
         addUserToDB("deleteTest", "deleteMail@gmail.com", self.user[2])
         response = getAccountByEmail("deleteMail@gmail.com")
-        self.assertEqual(response['mail'], "deleteMail@gmail.com") # Check that user exists
+        self.assertEqual(response['mail'], "deleteMail@gmail.com")  # Check that user exists
 
         # Delete user and try to recover it
         deleteUserFromDB(response['user_id'])
@@ -39,7 +39,7 @@ class TestUserQueries(TestCase):
             us = getAccountByEmail(self.user[4])'''
         addUserToDB("getMailTest", "getByMail2@gmail.com", self.user[2])
         us = getAccountByEmail("getByMail2@gmail.com")
-        #self.assertEqual(req, None, "Couldn't add user to db")
+        # self.assertEqual(req, None, "Couldn't add user to db")
         self.assertEqual(us['mail'], "getByMail2@gmail.com")
 
         # We now delete the user from db
@@ -78,8 +78,8 @@ class TestUserQueries(TestCase):
     """
     def test_validate_login(self):
         addUserToDB("TestMail", '2test@gmail.com', '123bdhewbdehfvgfvASVCFDgvfj')
-        account1 = ['potato', 'abcd1234'] # Wrong email
-        account2 = ['2test@gmail.com', 'wrongPass'] # Wrong password
+        account1 = ['potato', 'abcd1234']  # Wrong email
+        account2 = ['2test@gmail.com', 'wrongPass']  # Wrong password
         account3 = ['2test@gmail.com', '123bdhewbdehfvgfvASVCFDgvfj']
 
         self.assertEqual(validateLogin(account1[0], account1[1]), 404, 'Email does not exist')
@@ -102,10 +102,10 @@ class TestUserQueries(TestCase):
         data1 = {}
         data2 = {'token': us['user_id'], 'username': 'NewName', 'password': 'newPassword1',
                  'repeat_password': 'newPassword1', 'location': None}
-        
+
         # First lets try to update the user with no data
         self.assertEqual(updateUserProfile(us['user_id'], data1), 404, 'User does not exist')
-        
+
         # Now lets update the user with new data
         updateUserProfile(us['user_id'], data2)
         us2 = getAccountByID(us['user_id'])
@@ -114,6 +114,7 @@ class TestUserQueries(TestCase):
         self.assertTrue(verify_password('newPassword1', us2['password']), 'Password did not update properly')
         # Delete user from db
         deleteUserFromDB(us['user_id'])
+
 
 class TestUserRequests(TestCase):
     """

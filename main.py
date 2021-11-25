@@ -50,8 +50,8 @@ api.add_resource(SearchEngine, '/api/search', '/api/search/', methods=['POST'])
 # USER INFO RESOURCES
 api.add_resource(UserLogin, '/login', '/login/', methods=['POST'])
 api.add_resource(UserRegister, '/register', '/register/', methods=['POST'])
-api.add_resource(ResetRequest, '/reset_password', '/reset_password/', methods=['POST'])
-api.add_resource(ResetPassword, '/reset_password/<token>', '/reset_password/<token>/', methods=['POST'])
+api.add_resource(ResetRequest, '/api/reset_password', '/api/reset_password/', methods=['POST'])
+api.add_resource(ResetPassword, '/api/reset_password/<string:token>', methods=['POST'])
 api.add_resource(UserAccount, '/api/userinfo/<string:token>', '/api/useradmin/<int:user_id>')
 
 # PRODUCTS RESOURCES

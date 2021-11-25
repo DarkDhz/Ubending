@@ -53,7 +53,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getUser(){
-    const path = `http://127.0.0.1:5000/api/userinfo/` + this.token
+    const path = `https://ubending4.herokuapp.com/api/userinfo/` + this.token
     axios.get(path)
       .then((res) => {
         // @ts-ignore
@@ -81,7 +81,7 @@ export class ProfileComponent implements OnInit {
   }
 
   changeProfile(){
-    const path = `http://127.0.0.1:5000/api/userinfo/` + this.token
+    const path = `https://ubending4.herokuapp.com/api/userinfo/` + this.token
     this.showAlertError = false;
     const params = {
         // @ts-ignore

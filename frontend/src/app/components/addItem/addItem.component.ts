@@ -36,7 +36,7 @@ export class addItemComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    const path = 'http://127.0.0.1:5000/categories'
+    const path = 'https://ubending4.herokuapp.com/categories'
     axios.get(path)
       .then((res) => {
 
@@ -100,7 +100,7 @@ export class addItemComponent implements OnInit{
     if (!product_name || !product_price || !product_desc || product_state == -1 || this.category_id == -1 || this.selectedFiles == undefined) {
       alert("invalid params")
     } else {
-      const path = `http://127.0.0.1:5000/myproduct/` + this.token
+      const path = `https://ubending4.herokuapp.com/myproduct/` + this.token
 
       // @ts-ignore
       const params = {
@@ -112,8 +112,7 @@ export class addItemComponent implements OnInit{
         image: this.selectedFiles.item(0).type.split('/').pop(),
         category_id: this.category_id
       }
-      axios.post(path, params)
-        .then((res) => {
+      axios.post(path, params).then((res) => {
           // @ts-ignore
           let id = res.data.product_id
           this.upload("product" + id)
@@ -122,7 +121,7 @@ export class addItemComponent implements OnInit{
         })
         .catch((error) => {
           console.error(error)
-          alert('ERROR ADDING PRODUCT')
+          alert(error.response.data.message)
         })
     }
     // @ts-ignore

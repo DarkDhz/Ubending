@@ -162,17 +162,16 @@ class ResetPassword(Resource):
     def get(self, id):
         return {'message': "Not developed yet"}, 404
 
-    def post(self):
+    def post(self, token):
         parser = reqparse.RequestParser()  # create parameters parser from request
 
         # define all input parameters need and their type
-        parser.add_argument('token', type=str, required=True, help="This field cannot be left blank")
         parser.add_argument('password', type=str, required=True, help="This field cannot be left blank")
         parser.add_argument('repeat_password', type=str, required=True, help="This field cannot be left blank")
 
         data = parser.parse_args()
 
-        user = verify_reset_token(data['token'])
+        user = verify_reset_token(token)
         if user is None:
             return {'message': "This token is invalid or has already expired"}, 400
 

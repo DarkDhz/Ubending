@@ -28,9 +28,6 @@ export class HomeProductsComponent implements OnInit {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
     if (currentUser != null) {
       this.token = currentUser.token;
-    } else {
-      alert('NOT LOGGED IN')
-      this.router.navigate(['/home']);
     }
 
     this.getProducts()
@@ -38,7 +35,7 @@ export class HomeProductsComponent implements OnInit {
 
   getProducts() {
 
-    const path = 'http://127.0.0.1:5000/api/search'
+    const path = 'https://ubending4.herokuapp.com/api/search'
     const params = {
         name: '',
         jump: 6
