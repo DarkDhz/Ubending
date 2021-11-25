@@ -23,5 +23,11 @@ class TestSearchQueries(TestCase):
         # user and product should be created for testing purposes and then deleted when deleteProduct(productID, userID) and deleteUser(userID) work fine
 
     def test_search_by_category_and_name(self):
-        self.fail()
+        # SEARCH FOR UNEXISTING PRODUCT OR A PRODUCT WITHIN A WRONG CATEGORY
+        self.assertEqual(searchByCategoryAndName(2,"SmartWatch"), 404)
+        self.assertEqual(searchByCategoryAndName(6, "Unexisting_SmartWatch"), 404)
+
+        # SEARCH FOR EXISTING PRODUCT
+        smartwatch = [{'product_id': 18, 'owner_id': 1, 'name': 'SmartWatch', 'description': 'new', 'price': 200, 'state': 'Used', 'image': 'jpeg', 'category_id': 'Technology'}]
+        self.assertEqual(searchByCategoryAndName(6,"SmartWatch"), smartwatch)
 
