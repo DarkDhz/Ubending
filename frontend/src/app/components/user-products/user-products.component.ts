@@ -63,9 +63,9 @@ export class UserProductsComponent implements OnInit{
       console.log(result)
     });
   }
-  openDialogEdit(nameProduct:String,idProduct:Number,priceProduct:Number,descProduct:String,category:Number) {
+  openDialogEdit(nameProduct:String,idProduct:Number,priceProduct:Number,descProduct:String,category:Number,imagePath:String) {
     const dialogRef = this.dialog.open(DialogEdit, {panelClass: 'custom-modalbox',
-      data: {idProduct: idProduct,nameProduct: nameProduct, priceProduct:priceProduct, descProduct:descProduct,category:category}
+      data: {idProduct: idProduct,nameProduct: nameProduct, priceProduct:priceProduct, descProduct:descProduct,category:category,image: imagePath}
     });
 
     dialogRef.afterClosed().subscribe(result => {
