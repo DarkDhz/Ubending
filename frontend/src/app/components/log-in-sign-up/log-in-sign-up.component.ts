@@ -45,7 +45,7 @@ export class LogInSignUpComponent implements OnInit {
   onClickSignIn(){
     //const path = `https://ubending4.herokuapp.com/login`
 
-    const path = `http://127.0.0.1:5000/login`
+    const path = `https://ubending4.herokuapp.com/login`
     const parameters = {
       mail: (<HTMLInputElement>document.getElementById("email_signin")).value,
       password: (<HTMLInputElement>document.getElementById("password_signin")).value
@@ -67,7 +67,7 @@ export class LogInSignUpComponent implements OnInit {
 
   onClickSignUp(){
     //const path = `https://ubending4.herokuapp.com/register`
-     const path = `http://127.0.0.1:5000/register`
+     const path = `https://ubending4.herokuapp.com/register`
     const parameters = {
       username: 'Undefined',
       mail: (<HTMLInputElement>document.getElementById("email-signup")).value,

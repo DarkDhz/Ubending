@@ -5,8 +5,8 @@
     </a>
     <div class="links">
       <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Products</a>
+      <a href="#homepage_sections">Sections</a>
+      <a href="#homepage_products">Products</a>
       <a href="#" (click)="onClickSignIn()" routerLink="/login-signup">Chat</a>
     </div>
     <div *ngIf="!isLogged" class="account">
@@ -54,7 +54,7 @@
   </div>
 </div>
 <div class="categories">
-  <h2 class="section__title">
+  <h2 class="section__title" id="homepage_sections">
     See the categories
   </h2>
   <app-card-slider></app-card-slider>

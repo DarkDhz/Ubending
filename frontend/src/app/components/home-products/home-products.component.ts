@@ -35,7 +35,7 @@ export class HomeProductsComponent implements OnInit {
 
   getProducts() {
 
-    const path = 'http://127.0.0.1:5000/api/search'
+    const path = 'https://ubending4.herokuapp.com/api/search'
     const params = {
         name: '',
         jump: 6

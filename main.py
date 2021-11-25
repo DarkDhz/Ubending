@@ -36,7 +36,7 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 @app.route("/login-signup")
 @app.route('/')
 def mainPage():
-    return render_template("index.html")
+    return render_template('index.html', static_url_path='', static_folder='dist', template_folder='dist')
 
 
 # CATEGORY INFO RESOURCES
