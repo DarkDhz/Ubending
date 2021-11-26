@@ -42,11 +42,6 @@ def mainPage():
     return render_template('index.html', static_url_path='', static_folder='dist', template_folder='dist')
 
 
-@app.route("/reset/<string:token>")
-def mainPage2(token):
-    return render_template('index.html', static_url_path='', static_folder='dist', template_folder='dist', token=token)
-
-
 # CATEGORY INFO RESOURCES
 api.add_resource(CategoryListResource, '/categories', '/categories/', methods=['GET'])
 api.add_resource(CategoryResource, '/category/<int:category_id>', methods=['GET'])
