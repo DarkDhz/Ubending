@@ -75,19 +75,13 @@ class TestUserQueries(TestCase):
 
 
     def test_validate_login(self):
-        addUserToDB("TestMail", '2test@gmail.com', '123bdhewbdehfvgfvASVCFDgvfj')
         account1 = ['potato', 'abcd1234']  # Wrong email
-        account2 = ['2test@gmail.com', 'wrongPass']  # Wrong password
-        account3 = ['2test@gmail.com', '123bdhewbdehfvgfvASVCFDgvfj']
+        account2 = ['testingreal@gmail.com', 'wrongPass']  # Wrong password
+        account3 = ['testingreal@gmail.com', '123bdhewbdehfvgfvASVCFDgvfj']
 
         self.assertEqual(validateLogin(account1[0], account1[1]), 404, 'Email does not exist')
         self.assertEqual(validateLogin(account2[0], account2[1]), 400, 'Wrong password')
         self.assertTrue(validateLogin(account3[0], account3[1]), 'Login successful')
-        # Delete account
-        us = getAccountByEmail('2test@gmail.com')
-        deleteUserFromDB(us['user_id'])
-        us2 = getAccountByEmail('2test@gmail.com')
-        self.assertEqual(us2, 404, 'User should not exist')
 
 
     def test_update_user_profile(self):

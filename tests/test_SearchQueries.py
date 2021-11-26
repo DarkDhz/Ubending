@@ -10,7 +10,7 @@ class TestSearchQueries(TestCase):
                             'image': 'jpeg', 'category_id': 'Technology'}, {'product_id': 18,
                             'owner_id': 1, 'name': 'SmartWatch', 'description': 'new',
                             'price': 200, 'state': 'Used', 'image': 'jpeg', 'category_id': 'Technology'}]
-        self.assertEqual(searchByCategory(6), technologyItems)
+        self.assertEqual(searchByCategory(6)[:2], technologyItems)
 
     def test_search_by_name(self):
         # SEARCH FOR UNEXISTING PRODUCT
