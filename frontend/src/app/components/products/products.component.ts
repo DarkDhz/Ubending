@@ -22,7 +22,57 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const search = document.getElementById("search"); //pass the id of the input of searchbar
+    const productName = document.querySelectorAll(".product-details h2"); //name of card
 
+    const btns = document.querySelectorAll('.btn');
+    const storeProducts = document.querySelectorAll<HTMLElement>('.store-product' );
+
+    search!.addEventListener("keyup", filterProducts);
+
+    function filterProducts(e:any){
+      const text = e.target.value.toLowerCase();
+      console.log(productName[0]);
+
+      productName.forEach(function(product) {
+        const item = product.firstChild!.textContent;
+        if (item!.toLowerCase().indexOf(text) != -1) {
+          product.parentElement!.parentElement!.style.display = "block"
+        } else {
+          product.parentElement!.parentElement!.style.display = "none"
+        }
+      })
+    }
+
+
+    for (let i = 0; i < btns.length; i++) {
+
+      btns[i].addEventListener('click', (e) => {
+        for(let x=0; x<btns.length; x++)
+        {
+          btns[x].classList.remove('active');
+        }
+        btns[i].classList.add('active');
+
+        e.preventDefault()
+
+        // @ts-ignore
+        const filter = e.target.dataset.filter;
+        console.log(filter);
+
+        storeProducts.forEach((product)=> {
+          if (filter === 'all'){
+            product.style.display = 'block'
+          } else {
+            if (product.classList.contains(filter)){
+              product.style.display = 'block'
+            } else {
+              product.style.display = 'none'
+            }
+          }
+        });
+      });
+    }
   }
 
   onClickSignIn(){

@@ -258,33 +258,82 @@ nav{
   text-decoration: none;
 }
 
-ul{
+.filter-box{
   margin-top: 50px;
+  margin-bottom: 200px;
 }
 
-ul li{
+.filter-box .btn{
   list-style: none;
   padding: 9px;
   float: left;
-  margin-right: 20px;
+  margin-left: 20px;
   margin-bottom: 20px;
   text-decoration: none;
   border: 2px solid #7E68C1;
   border-radius: 16px;
 }
 
-ul li a{
-  color: inherit;
-  text-decoration: none;
+.filter-box .btn:focus:active{
+  background-image: none;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
-ul li.active{
+
+.filter-box .btn.active{
+  background-image: none;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: white;
+  font-weight: 500;
   border-color: transparent;
   background: linear-gradient(90deg, rgb(110, 122, 243) 0%, rgba(133,148,255,1) 58%, rgba(149,159,255,1) 100%);
 }
-ul li.active a{
-  color: white;
+
+/*-----------------Products Cards---------------------*/
+#store-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  column-gap: 2rem;
+  row-gap: 2rem;
+  padding: 2rem 0;
+}
+
+.store-product {
+  border: 1px solid #eee;
+  border-radius: 3px;
+  max-width: 250px;
+}
+
+.product-details {
+  text-align: center;
+  padding-bottom: 1rem;
+  background-color: #eee;
+}
+
+.product-details h2 {
+  font-size: 1.2rem;
   font-weight: 500;
 }
 
-/*-----------------Products Cards---------------------*/
+.product-details p {
+  font-size: 1rem;
+  padding-bottom: 1rem;
+  font-weight: 700;
+}
+
+.product-details a {
+  font-size: 1rem;
+  text-decoration: none;
+  background-color: #7E68C1;
+  color: #fff;
+  padding: .5rem 1rem;
+  border-radius: 3px;
+}
+
+.product-details a:hover {
+  background-color: #646DCC;
+}
 
