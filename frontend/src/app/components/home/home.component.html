@@ -5,8 +5,8 @@
     </a>
     <div class="links">
       <a href="#">Home</a>
-      <a style="margin-right: 2%" href="#homepage_sections">Sections</a>
-      <a style="margin-left: 2%" href="#homepage_products">Products</a>
+      <a href="#homepage_sections">Sections</a>
+      <a style="margin-left: 2%" href="#" (click)="allProducts()" routerLink="/products">Products</a>
       <a href="#" (click)="onClickSignIn()" routerLink="/login-signup">Chat</a>
     </div>
     <div *ngIf="!isLogged" class="account">

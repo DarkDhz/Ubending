@@ -46,4 +46,8 @@ export class HomeComponent implements OnInit {
   editProfile() {
     this.router.navigate(['/user-profile'])
   }
+
+  allProducts() {
+    this.router.navigate(['/products'])
+  }
 }

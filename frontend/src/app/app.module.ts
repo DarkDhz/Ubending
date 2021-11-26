@@ -16,7 +16,7 @@ import { ParticlesButtonComponent } from './components/particles-button/particle
 import { CardSliderComponent } from './components/card-slider/card-slider.component';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { HomeProductsComponent } from './components/home-products/home-products.component';
-import { ProfileComponent } from './profile/profile.component';
+
 
 /*import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';*/
 
@@ -26,7 +26,6 @@ import { ProfileComponent } from './profile/profile.component';
     SearchBarComponent,
     addItemComponent,
     FooterComponent,
-    ProfileComponent,
     routingComponents,
     ParticlesButtonComponent,
     CardSliderComponent,
