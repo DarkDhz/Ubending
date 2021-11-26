@@ -1,83 +1,31 @@
 
-<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background: #A7A5DB" >
-  <div class="container-fluid">
-    <button type="button"style=" background-color: Transparent" (click)="onClickHome()" routerLink="/home">
-      <img src="https://ubending.s3.eu-west-3.amazonaws.com/transparent-logo.png" style="height:20px;
-width:40px;">
-    </button>
-  <div class="collapse navbar-collapse" id="navbarsExampleDefault" [ngbCollapse]="isCollapsed">
-    <!-- Left links -->
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-    <input style="margin-left: 10px" type="text" placeholder="Search">
-    <button style="margin-left: 10px">Search</button>
-    <div  id ="cont_filter"
-          style="cursor: pointer;
-                 color: #F0EDFF;
-                  margin-left: 25px">
-      <i class="fa fa-filter fa-2x"></i>
-    </div>
-    </ul>
-    <!-- Left links -->
-    <div id = "cont_liked"
-         *ngIf="isLogged"
-         style="  cursor: pointer;
-                  color: #F0EDFF;
-                  margin-left:75px;"
-    >
-      <i class="fa fa-star fa-2x"
-         disabled = "!isActive"></i>
-      <a>Liked</a>
-    </div>
-    <div id = "cont_chat"
-         *ngIf="isLogged"
-         style=" margin-left:25px;
-                 cursor: pointer;
-                 color: #F0EDFF;">
-      <i class="fa fa-comments fa-2x" ></i>
-      <a style="margin-left:5px">Chat</a>
-    </div>
-    <div id = "cont_profile"
-         *ngIf="isLogged"
-         style=" margin-left:25px;
-                 margin-right: 20px;
-                 color: #F0EDFF;
-                 border-color: #A7A5DB;
-                 cursor: pointer;"
-    >
-      <div class="row" >
-        <div class="col">
-          <div ngbDropdown class="d-inline-block" >
-            <button id="dropdownBasic1"data-bs-toggle="dropdown" ngbDropdownToggle style="color: #F0EDFF;border: 2px solid #F0EDFF">
-              <i class = "fa fa-id-badge fa2x" style="color: #F0EDFF;"></i>
-              <a style=" margin-left:5px;
-                font-family: monospace;">PROFILE</a></button>
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-              <button ngbDropdownItem routerLink="/user-profile">EDIT PROFILE  </button>
-              <button ngbDropdownItem routerLink="/user-products" >MY PRODUCTS</button>
-              <button ngbDropdownItem (click)="resetToken()" routerLink="/login-signup">LOG OUT</button>
-            </div>
-          </div>
-        </div>
+<nav>
+  <a class="logo">
+    <img src="https://i.imgur.com/isJAeX0.png" routerLink="/home">
+  </a>
+  <div class="links">
+    <a href="#">Home</a>
+    <a href="#homepage_sections">Sections</a>
+    <a href="/products">Products</a>
+    <a href="#" (click)="onClickSignIn()" routerLink="/login-signup">Chat</a>
+  </div>
+  <div *ngIf="!isLogged" class="account">
+    <button (click)="onClickSignIn()" routerLink="/login-signup">Sign In</button>
+  </div>
+  <div *ngIf="isLogged" class="nav-profile-container">
+    <div class="action">
+      <div class="profile" (click)="menuToggle()">
+        <img src="https://i.imgur.com/iwaAllL.jpg[/img]">
+      </div>
+      <div class="menu">
+        <h3>Username<br><span>Location</span></h3>
+        <ul>
+          <li><i class="fa fa-edit"></i><a href="#" (click)="editProfile()" routerLink="/user-profile"> Edit Profile</a></li>
+          <li><i class="fa fa-list"></i><a href="#" (click)="myProducts()" routerLink="/user-products"> My Products</a></li>
+          <li><i class="fa fa-heart-o"></i><a href="#"> Wishlist</a></li>
+          <li><i class="fa fa-sign-out"></i><a (click)="resetToken()" routerLink="/login-signup"> Log Out</a></li>
+        </ul>
       </div>
     </div>
-    <form class="form-inline waves-light waves-light ml-auto" mdbWavesEffect>
-      <div class="md-form my-0">
-    <div id = "param_not_logged"
-         *ngIf="!isLogged"
-         style= "float:right;
-         align-items: end;
-               align-content: flex-end;
-                 ">
-
-      <button id = "btnLogIn" routerLink="/login-signup"
-              style="float: right"
-      >LOG IN</button>
-    </div>
   </div>
-    </form>
-  </div>
-    <!-- Collapsible wrapper -->
-  </div>
-  <!-- Container wrapper -->
 </nav>
-<!-- Navbar -->

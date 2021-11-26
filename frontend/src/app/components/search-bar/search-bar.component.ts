@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-search-bar',
@@ -12,7 +13,7 @@ export class SearchBarComponent implements OnInit {
   isCollapsed = true;
   token = "null";
 
-  constructor() {
+  constructor(private router: Router) {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
     if (currentUser != null) {
       this.token = currentUser.token;
@@ -24,40 +25,27 @@ export class SearchBarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onClickSignIn(){
+    // @ts-ignore
+    this.$router.replace({path: '/', query: {}})
+  }
+
+  menuToggle(){
+    const toggleMenu = document.querySelector('.menu')
+    toggleMenu!.classList.toggle('active')
+  }
+
   resetToken() {
     localStorage.removeItem('currentUser')
+    this.router.navigate(['/login-signup'])
   }
 
-  onClickHome(){
-    // @ts-ignore
-    this.$router.replace({path: '/', query: {}})
+  myProducts() {
+    this.router.navigate(['/user-products'])
   }
 
-  onClickLogged(){
-    this.isLogged = true
-    // @ts-ignore
-    this.$router.replace({path: '/', query: {}})
-  }
-  search(){
-    alert('Implement search...')
-  }
-
-  filters(){
-    alert('Implement filters...')
-  }
-
-  liked(){
-    alert('Implement liked...')
-  }
-
-  chat(){
-    alert('Implement chat...')
-  }
-  products(){
-    alert('Implement products...')
-  }
-  profile(){
-    alert('Implement profile...')
+  editProfile() {
+    this.router.navigate(['/user-profile'])
   }
 
 
