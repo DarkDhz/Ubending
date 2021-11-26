@@ -29,11 +29,15 @@ mail_svr = Mail(app)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 
+@app.route("/user-profile")
+@app.route("/reset/:token")
+@app.route("/reset/")
 @app.route("/reset")
 @app.route("/recover")
 @app.route("/home")
 @app.route("/user-products")
 @app.route("/login-signup")
+@app.route("/products")
 @app.route('/')
 def mainPage():
     return render_template('index.html', static_url_path='', static_folder='dist', template_folder='dist')
