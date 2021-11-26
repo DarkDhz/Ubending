@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.css']
 })
-export class HomeComponent implements OnInit {
+export class ProductsComponent implements OnInit {
 
   isLogged = false;
   token = "null";
@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
   onClickSignIn(){
@@ -47,7 +48,4 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/user-profile'])
   }
 
-  allProducts() {
-    this.router.navigate(['/products'])
-  }
 }

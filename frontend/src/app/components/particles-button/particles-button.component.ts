@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from "jquery";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-particles-button',
@@ -8,7 +9,7 @@ import * as $ from "jquery";
 })
 export class ParticlesButtonComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     $('.hero-btn').click(function(){
@@ -19,6 +20,11 @@ export class ParticlesButtonComponent implements OnInit {
         }, 2000);
       }
     });
+  }
+
+  allProducts() {
+    let my_router= this.router
+    setTimeout(function () {my_router.navigate(['/products']);}, 2000)
   }
 
 }

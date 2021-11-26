@@ -7,6 +7,7 @@ import {HomeComponent} from "./components/home/home.component";
 import {RecoverPasswordComponent} from "./components/recover-password/recover-password.component";
 import {ResetPasswordComponent} from "./components/reset-password/reset-password.component";
 import { ProfileComponent } from './profile/profile.component';
+import { ProductsComponent } from './components/products/products.component';
 
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'recover', component: RecoverPasswordComponent},
   { path: 'reset/:token', component: ResetPasswordComponent},
-  { path: 'user-profile', component: ProfileComponent}
+  { path: 'user-profile', component: ProfileComponent},
+  { path: 'products', component: ProductsComponent}
 ];
 
 @NgModule({
@@ -28,5 +30,6 @@ const routes: Routes = [
   ]
 })
 export class AppRoutingModule { }
-export  const routingComponents = [LogInSignUpComponent,UserProductsComponent,
-                                    HomeComponent, RecoverPasswordComponent, ResetPasswordComponent]
+export  const routingComponents = [LogInSignUpComponent,UserProductsComponent, HomeComponent,
+                                    RecoverPasswordComponent, ResetPasswordComponent, ProductsComponent,
+                                    ProfileComponent]
