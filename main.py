@@ -43,7 +43,7 @@ def mainPage():
 
 
 @app.route("/reset/<string:token>")
-def mainPage(token):
+def mainPage2(token):
     return render_template('index.html', static_url_path='', static_folder='dist', template_folder='dist', token=token)
 
 

@@ -131,18 +131,11 @@ class TestUserRequests(TestCase):
 
 
     def test_login(self):
-        # First lets register a new user
-        url = 'http://127.0.0.1:5000/register'
-        myobj = {'username': 'TestLogin', 'mail': 'logintest@gmail.com', 'password': '12345ABCDE',
-                 'repeat_password': '12345ABCDE'}
-        a = requests.post(url, data=myobj)
-        self.assertEqual(200, a.status_code, 'user already exists')
-        self.assertEqual(a.json(), {'message': "Account created succesfully"})
 
         url = 'http://127.0.0.1:5000/login'
         myobj1 = {'mail': 'potato_mail', 'password': '123bdhewbdehfvgfvASVCFDgvfj'}
-        myobj2 = {'mail': 'logintest@gmail.com', 'password': 'abcd1234'}
-        myobj3 = {'mail': 'logintest@gmail.com', 'password': '12345ABCDE'}
+        myobj2 = {'mail': 'testingreal@gmail.com', 'password': 'abcd1234'}
+        myobj3 = {'mail': 'testingreal@gmail.com', 'password': '123bdhewbdehfvgfvASVCFDgvfj'}
         x = requests.post(url, data=myobj1)
         y = requests.post(url, data=myobj2)
         z = requests.post(url, data=myobj3)
@@ -158,18 +151,6 @@ class TestUserRequests(TestCase):
         # Successful login
         self.assertEqual(200, z.status_code)
 
-        # Finally, delete the user
-        userID = getAccountByEmail('logintest@gmail.com')['user_id']
-        deleteUserFromDB(userID)
-        # Let's try to find that user again
-        req2 = getAccountByID(userID)
-        self.assertEqual(req2, 404, 'user should be deleted')'''
+    '''
 
 
-    def test_get_account(self):
-        self.assertTrue(1, 1)
-        '''url = 'http://127.0.0.1:5000/userinfo'
-        myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0OTEzNywiZXhwIjoxNjM2NjQ5NzM3fQ.eyJ1c2VyX2lkIjozfQ.U4fjXix65nT_1xqVKQGVKZoh818kh0Rc1zlUSLMtLnkHOktZ4Rm13YCImedCnZNxS6lTbiI6YSdReBJcCJZ7hQ'}
-        x = requests.get(url, data=myobj)
-
-        self.assertEqual(200, x.status_code)'''
