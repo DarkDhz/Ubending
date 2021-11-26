@@ -180,17 +180,6 @@ export class DialogEdit {
     let product_desc = (<HTMLInputElement>document.getElementById("input_desc")).value;
     if (!product_name || !product_price || !product_desc || this.category_id == -1 || this.selectedFiles == undefined) {
       alert("invalid params")
-      this.params = {
-        name: product_name,
-        description: product_desc,
-        price: product_price,
-        product_category: this.category_id,
-        product_state: this.state_id,
-        // @ts-ignore
-        image: this.selectedFiles.item(0).type.split('/').pop(),
-        category_id: this.category_id
-      }
-      console.log(this.params)
     } else {
       // @ts-ignore
       this.params = {
@@ -205,17 +194,17 @@ export class DialogEdit {
       }
 
     console.log(this.params)
-    const path = `http://127.0.0.1:5000/myproduct/` + this.data.idProduct + "/" + this.token
+    const path = `https://ubending4.herokuapp.com/myproduct/` + this.data.idProduct + "/" + this.token
     axios.put(path,this.params)
       .then((res) => {
-        this.uploadService.deleteFile("product"+this.data.idProduct+"."+this.data.image)
+        //this.uploadService.deleteFile("product"+this.data.idProduct+"."+this.data.image)
         alert('PRODUCT EDIT CORRECTLY')
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
           this.router.navigate(['/user-products']));
       })
       .catch((error) => {
         console.error(error)
-        alert('ERROR EDITING PRODUCT')
+        alert(error.response.data.message)
       })
     this.dialogRef.close();
   }
