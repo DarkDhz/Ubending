@@ -107,7 +107,7 @@ export class addItemComponent implements OnInit{
         name: product_name,
         description: product_desc,
         price: product_price,
-        state: product_state,
+        state: product_state-1,
         // @ts-ignore
         image: this.selectedFiles.item(0).type.split('/').pop(),
         category_id: this.category_id
