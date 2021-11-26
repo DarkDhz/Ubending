@@ -1,17 +1,17 @@
 <nav>
   <a class="logo">
-    <img src="https://i.imgur.com/isJAeX0.png">
+    <img src="https://i.imgur.com/isJAeX0.png" routerLink="/home">
   </a>
   <div class="links">
     <a href="#">Home</a>
     <a href="#homepage_sections">Sections</a>
-    <a href="#homepage_products">Products</a>
+    <a>Products</a>
     <a href="#" (click)="onClickSignIn()" routerLink="/login-signup">Chat</a>
   </div>
-  <div *ngIf="isLogged" class="account">
+  <div *ngIf="!isLogged" class="account">
     <button (click)="onClickSignIn()" routerLink="/login-signup">Sign In</button>
   </div>
-  <div *ngIf="!isLogged" class="nav-profile-container">
+  <div *ngIf="isLogged" class="nav-profile-container">
     <div class="action">
       <div class="profile" (click)="menuToggle()">
         <img src="https://i.imgur.com/iwaAllL.jpg[/img]">
@@ -39,116 +39,30 @@
   </div>
   <div class="filter-box">
     <a class="btn active" data-filter="all">All</a>
-    <a class="btn" data-filter="cars">Cars</a>
-    <a class="btn" data-filter="bikes">Bikes</a>
-    <a class="btn" data-filter="home">Home</a>
-    <a class="btn" data-filter="toys">Toys</a>
-    <a class="btn" data-filter="sports">Sports</a>
-    <a class="btn" data-filter="technology">Technology</a>
-    <a class="btn" data-filter="videogames">Videogames</a>
-    <a class="btn" data-filter="clothes">Clothes</a>
-    <a class="btn" data-filter="plants">Plants</a>
-    <a class="btn" data-filter="books">Books & Music</a>
-    <a class="btn" data-filter="cinema">Cinema</a>
-    <a class="btn" data-filter="pet">Pet adoption</a>
+    <a class="btn" data-filter="Cars">Cars</a>
+    <a class="btn" data-filter="Bikes">Bikes</a>
+    <a class="btn" data-filter="Home">Home</a>
+    <a class="btn" data-filter="Toys">Toys</a>
+    <a class="btn" data-filter="Sports">Sports</a>
+    <a class="btn" data-filter="Technology">Technology</a>
+    <a class="btn" data-filter="Videogames">Videogames</a>
+    <a class="btn" data-filter="Clothes">Clothes</a>
+    <a class="btn" data-filter="Plants">Plants</a>
+    <a class="btn" data-filter="Books">Books & Music</a>
+    <a class="btn" data-filter="Cinema">Cinema</a>
+    <a class="btn" data-filter="Pet adoption">Pet adoption</a>
   </div>
 </div>
 <div class="slide-container">
-  <section class="container" id="store-products">
-    <div class="store-product cars">
-      <img src="./images/1.png" alt="">
-      <div class="product-details">
-        <h2>Range Rover Evoque</h2>
-        <p>$29.99</p>
-        <a href="#">Add to Cart</a>
-      </div>
-    </div>
-    <div class="store-product bikes">
-      <img src="./images/2.png" alt="">
-      <div class="product-details">
-        <h2>Bici montaña</h2>
-        <p>$29.99</p>
-        <a href="#">Add to Cart</a>
-      </div>
-    </div>
-    <div class="store-product home">
-      <img src="./images/13.png" alt="">
-      <div class="product-details">
-        <h2>Alfombra</h2>
-        <p>$29.99</p>
-        <a href="#">Add to Cart</a>
-      </div>
-    </div>
-    <div class="store-product home">
-      <img src="./images/3.png" alt="">
-      <div class="product-details">
-        <h2>Cortinas</h2>
-        <p>$29.99</p>
-        <a href="#">Add to Cart</a>
-      </div>
-    </div>
-    <div class="store-product clothes">
-      <img src="./images/4.png" alt="">
-      <div class="product-details">
-        <h2>Camisa azul</h2>
-        <p>$29.99</p>
-        <a href="#">Add to Cart</a>
-      </div>
-    </div>
-    <div class="store-product pet">
-      <img src="./images/5.png" alt="">
-      <div class="product-details">
-        <h2>Gatito blanco</h2>
-        <p>$29.99</p>
-        <a href="#">Add to Cart</a>
-      </div>
-    </div>
-    <div class="store-product pet">
-      <img src="./images/6.png" alt="">
-      <div class="product-details">
-        <h2>Gatito negro</h2>
-        <p>$29.99</p>
-        <a href="#">Add to Cart</a>
-      </div>
-    </div>
-    <div class="store-product sports">
-      <img src="./images/7.png" alt="">
-      <div class="product-details">
-        <h2>Raqueta de padel</h2>
-        <p>$29.99</p>
-        <a href="#">Add to Cart</a>
-      </div>
-    </div>
-    <div class="store-product technology">
-      <img src="./images/8.png" alt="">
-      <div class="product-details">
-        <h2>Iphone 13</h2>
-        <p>$29.99</p>
-        <a href="#">Add to Cart</a>
-      </div>
-    </div>
-    <div class="store-product technology">
-      <img src="./images/9.png" alt="">
-      <div class="product-details">
-        <h2>Iphone XS</h2>
-        <p>$589.99</p>
-        <a href="#">Add to Cart</a>
-      </div>
-    </div>
-    <div class="store-product plants">
-      <img src="./images/10.png" alt="">
-      <div class="product-details">
-        <h2>Lavanda</h2>
-        <p>$29.99</p>
-        <a href="#">Add to Cart</a>
-      </div>
-    </div>
-    <div class="store-product videogames">
-      <img src="./images/11.png" alt="">
-      <div class="product-details">
-        <h2>Animal Crossing NH</h2>
-        <p>$29.99</p>
-        <a href="#">Add to Cart</a>
+  <section class="row store-products" >
+    <div class="col-md-3" *ngFor="let product of state.products">
+      <div class="card product_card {{ product['category_id'] }}" style="width: 18rem; margin-bottom: 5%; margin-left: 20%; margin-right: 20%">
+        <img class="card-img-top" style="height: 15rem" src="https://ubending.s3.eu-west-3.amazonaws.com/product{{ product['product_id'] }}.{{ product['image'] }}" alt="">
+        <div class="card-body">
+          <h5 class="product_name card-title">{{product['name']}}</h5>
+          <p class="card-text">{{product['price']}}€<br>{{product['state']}}</p>
+          <button class="btn" style="background-color: #646DCC; color: white">Send Message</button>
+        </div>
       </div>
     </div>
   </section>

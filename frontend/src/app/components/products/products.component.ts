@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import axios from "axios";
 
 @Component({
   selector: 'app-products',
@@ -10,6 +11,7 @@ export class ProductsComponent implements OnInit {
 
   isLogged = false;
   token = "null";
+  state = {products: []}
 
   constructor(private router: Router) {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
@@ -17,33 +19,33 @@ export class ProductsComponent implements OnInit {
       this.token = currentUser.token;
       this.isLogged = true;
     }
-    console.log("token:" +this.token)
-    console.log(this.isLogged)
+
   }
 
   ngOnInit(): void {
-    const search = document.getElementById("search"); //pass the id of the input of searchbar
-    const productName = document.querySelectorAll(".product-details h2"); //name of card
+    this.getProducts()
 
+    const search = document.getElementById("search"); //pass the id of the input of searchbar
+    const products = document.getElementsByClassName("product_name")
     const btns = document.querySelectorAll('.btn');
-    const storeProducts = document.querySelectorAll<HTMLElement>('.store-product' );
+    const storeProducts = document.getElementsByClassName("product_card")
 
     search!.addEventListener("keyup", filterProducts);
 
     function filterProducts(e:any){
       const text = e.target.value.toLowerCase();
-      console.log(productName[0]);
-
-      productName.forEach(function(product) {
-        const item = product.firstChild!.textContent;
+      for (let i = 0; i < products.length; i++) {
+        // @ts-ignore
+        const item = products.item(i).firstChild!.textContent;
         if (item!.toLowerCase().indexOf(text) != -1) {
-          product.parentElement!.parentElement!.style.display = "block"
+          // @ts-ignore
+          products.item(i).parentElement!.parentElement!.style.display = "block"
         } else {
-          product.parentElement!.parentElement!.style.display = "none"
+          // @ts-ignore
+          products.item(i).parentElement!.parentElement!.style.display = "none"
         }
-      })
+      }
     }
-
 
     for (let i = 0; i < btns.length; i++) {
 
@@ -58,21 +60,49 @@ export class ProductsComponent implements OnInit {
 
         // @ts-ignore
         const filter = e.target.dataset.filter;
-        console.log(filter);
 
-        storeProducts.forEach((product)=> {
+        for (let x = 0; x < storeProducts.length; x++) {
+          // @ts-ignore
+          console.log(storeProducts.item(x).classList)
           if (filter === 'all'){
-            product.style.display = 'block'
+            // @ts-ignore
+            storeProducts.item(x).style.display = 'block'
           } else {
-            if (product.classList.contains(filter)){
-              product.style.display = 'block'
+            // @ts-ignore
+            if (storeProducts.item(x).classList.contains(filter)){
+              // @ts-ignore
+              storeProducts.item(x).style.display = 'block'
             } else {
-              product.style.display = 'none'
+              // @ts-ignore
+              storeProducts.item(x).style.display = 'none'
             }
           }
-        });
+
+        }
+
       });
     }
+  }
+  loadPorducts(name: String) {
+
+  }
+  getProducts(){
+
+    const path = 'https://ubending4.herokuapp.com/api/search'
+    const params = {
+      name: '',
+      from: 0,
+      jump: 20
+    }
+    axios.post(path, params)
+      .then((res) => {
+        // @ts-ignore
+        this.state.products = res.data
+        console.log(res.data)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
 
   onClickSignIn(){
