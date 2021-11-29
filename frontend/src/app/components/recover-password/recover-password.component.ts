@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios'
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {environment} from "../../enviroment";
 
 @Component({
   selector: 'app-recover-password',
@@ -33,7 +34,7 @@ export class RecoverPasswordComponent implements OnInit {
     this.showEmailSent = false;
     if (!this.emailUser!.errors?.required && !this.emailUser!.errors?.pattern) {
 
-      const path = `https://ubending4.herokuapp.com/api/reset_password`
+      const path = environment.path + `/api/reset_password`
       const params = {
         mail: (<HTMLInputElement>document.getElementById("user_mail")).value
       }

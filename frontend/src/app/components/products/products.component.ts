@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import axios from "axios";
+import {environment} from "../../enviroment";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UploadService} from "../../services/upload.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -97,7 +98,7 @@ export class ProductsComponent implements OnInit {
   }
   getProducts(){
 
-    const path = 'https://ubending4.herokuapp.com/api/search'
+    const path = environment.path + '/api/search'
     const params = {
       name: '',
       from: 0,
