@@ -16,7 +16,8 @@ import { ParticlesButtonComponent } from './components/particles-button/particle
 import { CardSliderComponent } from './components/card-slider/card-slider.component';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { HomeProductsComponent } from './components/home-products/home-products.component';
-
+import {DialogEdit} from "./components/user-products/user-products.component";
+import {Payment} from "./components/products/products.component";
 
 /*import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';*/
 
@@ -29,7 +30,9 @@ import { HomeProductsComponent } from './components/home-products/home-products.
     routingComponents,
     ParticlesButtonComponent,
     CardSliderComponent,
-    HomeProductsComponent
+    HomeProductsComponent,
+    DialogEdit,
+    Payment
     ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import { HomeProductsComponent } from './components/home-products/home-products.
     MatDialogModule,
     BrowserAnimationsModule,
     SlickCarouselModule,
-    FormsModule,
+    FormsModule
+
     /*FontAwesomeModule*/
   ],
   providers: [],
