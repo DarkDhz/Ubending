@@ -1,7 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import axios from "axios";
-
+import {environment} from "../../enviroment";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {UploadService} from "../../services/upload.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+export interface DialogData {
+  idProduct: Number;
+  nameProduct: string;
+  priceProduct: string;
+  descProduct: string;
+  image: string;
+}
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -13,7 +23,7 @@ export class ProductsComponent implements OnInit {
   token = "null";
   state = {products: []}
 
-  constructor(private router: Router) {
+  constructor(public dialog: MatDialog,private router: Router) {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
     if (currentUser != null) {
       this.token = currentUser.token;
@@ -88,7 +98,7 @@ export class ProductsComponent implements OnInit {
   }
   getProducts(){
 
-    const path = 'https://ubending4.herokuapp.com/api/search'
+    const path = environment.path + '/api/search'
     const params = {
       name: '',
       from: 0,
@@ -127,5 +137,185 @@ export class ProductsComponent implements OnInit {
   editProfile() {
     this.router.navigate(['/user-profile'])
   }
+  openDialogPayment(idProduct:Number,nameProduct:String,descProduct:String,priceProduct:Number,imagePath:String) {
+    const dialogRef = this.dialog.open(Payment, {panelClass: 'custom-modalbox',
+      data: {idProduct: idProduct,nameProduct: nameProduct,priceProduct:priceProduct, descProduct:descProduct,image: imagePath}});
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+}
+
+@Component({
+  selector: 'payment',
+  templateUrl: 'payment.html',
+  styleUrls: ['payment.css']
+})
+export class Payment {
+  userEmail = new FormGroup({
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
+  ,
+      name: new FormControl('', [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z]{2,10} [a-zA-Z ]{2,100}$")]),
+
+      cardNumber: new FormControl('', [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z0-9]{16,16}$")]),
+      date: new FormControl('', [
+        Validators.required,
+        Validators.pattern("^[0-12]+/+[0-30]{2,2}$")]),
+      CVV: new FormControl('', [
+        Validators.required,
+        Validators.pattern("^[0-9]{3,3}$")]),
+      postalCode: new FormControl('', [
+        Validators.required,
+        Validators.pattern("^[0-9]{5,5}$")]),
+      direction: new FormControl('', [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z]{2,100}$")])
+    }
+
+    );
+  showAlertInvalidEmail = false;
+  showAlertInvalidName = false;
+  showAlertInvalidCard = false;
+  showAlertInvalidDate = false;
+  showAlertInvalidCVV = false;
+  showAlertInvalidPostalCode = false;
+  showAlertInvalidDirection= false;
+  showAlertRequired = false;
+  constructor(
+    public dialogRef: MatDialogRef<Payment>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,private uploadService: UploadService,
+    private router: Router) {
+
+  }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+  get emailUser(){
+      return this.userEmail.get('email')
+  }
+  get cardUser(){
+    return this.userEmail.get('cardNumber')
+  }
+  get nameUser(){
+    return this.userEmail.get('name')
+  }
+  get dateUser(){
+    return this.userEmail.get('date')
+  }
+  get CVVNumber(){
+    return this.userEmail.get('CVV')
+  }
+  get postalCode(){
+    return this.userEmail.get('postalCode')
+  }
+  get direction(){
+    return this.userEmail.get('direction')
+  }
+  buyProduct(){
+    if(this.emailUser!.errors?.required || this.nameUser!.errors?.required || this.emailUser!.errors?.pattern || this.dateUser!.errors?.required || this.CVVNumber!.errors?.required || this.direction!.errors?.required ){
+      this.showAlertRequired = true;
+      this.showAlertInvalidEmail = false;
+      this.showAlertInvalidName = false;
+      this.showAlertInvalidCard = false;
+      this.showAlertInvalidCVV = false;
+      this.showAlertInvalidPostalCode = false;
+      this.showAlertInvalidDirection= false;
+      this.showAlertInvalidDate = false;
+
+    }
+    else if (this.emailUser!.errors?.pattern) {
+      this.showAlertRequired = false;
+      this.showAlertInvalidEmail = true;
+      this.showAlertInvalidName = false;
+      this.showAlertInvalidCard = false;
+      this.showAlertInvalidCVV = false;
+      this.showAlertInvalidPostalCode = false;
+      this.showAlertInvalidDirection= false;
+      this.showAlertInvalidDate = false;
+
+    }
+
+    else if (this.nameUser!.errors?.pattern) {
+      this.showAlertRequired = false;
+      this.showAlertInvalidEmail = false;
+      this.showAlertInvalidName = true;
+      this.showAlertInvalidCard = false;
+      this.showAlertInvalidCVV = false;
+      this.showAlertInvalidPostalCode = false;
+      this.showAlertInvalidDirection= false;
+      this.showAlertInvalidDate = false;
+
+
+    }
+    else if(this.dateUser!.errors?.pattern){
+      this.showAlertRequired = false;
+      this.showAlertInvalidName = false;
+      this.showAlertInvalidEmail = false;
+      this.showAlertInvalidCard = false;
+      this.showAlertInvalidCVV = false;
+      this.showAlertInvalidPostalCode = false;
+      this.showAlertInvalidDirection= true;
+
+    }
+    else if(this.cardUser!.errors?.pattern){
+      this.showAlertRequired = false;
+      this.showAlertInvalidName = false;
+      this.showAlertInvalidEmail = false;
+      this.showAlertInvalidCard = true;
+      this.showAlertInvalidCVV = false;
+      this.showAlertInvalidPostalCode = false;
+      this.showAlertInvalidDirection= false;
+      this.showAlertInvalidDate = false;
+
+
+    }
+    else if(this.CVVNumber!.errors?.pattern){
+      this.showAlertRequired = false;
+      this.showAlertInvalidName = false;
+      this.showAlertInvalidEmail = false;
+      this.showAlertInvalidCard = false;
+      this.showAlertInvalidCVV = true;
+      this.showAlertInvalidPostalCode = false;
+      this.showAlertInvalidDirection= false;
+      this.showAlertInvalidDate = false;
+
+
+    }
+    else if(this.postalCode!.errors?.pattern){
+      this.showAlertRequired = false;
+      this.showAlertInvalidName = false;
+      this.showAlertInvalidEmail = false;
+      this.showAlertInvalidCard = false;
+      this.showAlertInvalidCVV = false;
+      this.showAlertInvalidPostalCode = true;
+      this.showAlertInvalidDirection= false;
+      this.showAlertInvalidDate = false;
+
+    }
+    else if(this.direction!.errors?.pattern){
+      this.showAlertRequired = false;
+      this.showAlertInvalidName = false;
+      this.showAlertInvalidEmail = false;
+      this.showAlertInvalidCard = false;
+      this.showAlertInvalidCVV = false;
+      this.showAlertInvalidPostalCode = false;
+      this.showAlertInvalidDirection= true;
+      this.showAlertInvalidDate = false;
+    }
+    else{
+      alert("ALL RIGHT")
+      this.dialogRef.close();
+
+    }
+  }
+
 
 }
