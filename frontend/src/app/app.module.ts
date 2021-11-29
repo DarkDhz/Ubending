@@ -45,7 +45,8 @@ import {UserProductsComponent, DialogEdit} from "./components/user-products/user
     MatDialogModule,
     BrowserAnimationsModule,
     SlickCarouselModule,
-    FormsModule,
+    FormsModule
+
     /*FontAwesomeModule*/
   ],
   providers: [],
