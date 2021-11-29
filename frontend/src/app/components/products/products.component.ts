@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import axios from "axios";
+import {environment} from "../../enviroment";
 
 @Component({
   selector: 'app-products',
@@ -88,7 +89,7 @@ export class ProductsComponent implements OnInit {
   }
   getProducts(){
 
-    const path = 'https://ubending4.herokuapp.com/api/search'
+    const path = environment.path + '/api/search'
     const params = {
       name: '',
       from: 0,

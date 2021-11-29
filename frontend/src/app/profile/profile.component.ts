@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import axios from "axios";
 import {Router} from "@angular/router";
+import {environment} from "../enviroment";
 
 @Component({
   selector: 'app-profile',
@@ -53,7 +54,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getUser(){
-    const path = `https://ubending4.herokuapp.com/api/userinfo/` + this.token
+    const path = environment.path + `/api/userinfo/` + this.token
     axios.get(path)
       .then((res) => {
         // @ts-ignore
@@ -81,7 +82,7 @@ export class ProfileComponent implements OnInit {
   }
 
   changeProfile(){
-    const path = `https://ubending4.herokuapp.com/api/userinfo/` + this.token
+    const path = environment.path + `/api/userinfo/` + this.token
     this.showAlertError = false;
     const params = {
         // @ts-ignore
