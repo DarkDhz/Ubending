@@ -5,6 +5,7 @@ import {environment} from "../../enviroment";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UploadService} from "../../services/upload.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+
 export interface DialogData {
   idProduct: Number;
   nameProduct: string;
@@ -96,6 +97,7 @@ export class ProductsComponent implements OnInit {
   loadPorducts(name: String) {
 
   }
+
   getProducts(){
 
     const path = environment.path + '/api/search'
@@ -153,6 +155,7 @@ export class ProductsComponent implements OnInit {
   templateUrl: 'payment.html',
   styleUrls: ['payment.css']
 })
+
 export class Payment {
   userEmail = new FormGroup({
     email: new FormControl('', [
@@ -219,98 +222,34 @@ export class Payment {
   get direction(){
     return this.userEmail.get('direction')
   }
+
   buyProduct(){
-    if(this.emailUser!.errors?.required || this.nameUser!.errors?.required || this.emailUser!.errors?.pattern || this.dateUser!.errors?.required || this.CVVNumber!.errors?.required || this.direction!.errors?.required ){
+    this.showAlertRequired = false;
+    this.showAlertInvalidName = false;
+    this.showAlertInvalidEmail = false;
+    this.showAlertInvalidCard = false;
+    this.showAlertInvalidCVV = false;
+    this.showAlertInvalidPostalCode = false;
+    this.showAlertInvalidDirection= false;
+    this.showAlertInvalidDate = false;
+
+    if (this.emailUser!.errors?.required || this.nameUser!.errors?.required || this.emailUser!.errors?.pattern || this.dateUser!.errors?.required || this.CVVNumber!.errors?.required || this.direction!.errors?.required ){
       this.showAlertRequired = true;
-      this.showAlertInvalidEmail = false;
-      this.showAlertInvalidName = false;
-      this.showAlertInvalidCard = false;
-      this.showAlertInvalidCVV = false;
-      this.showAlertInvalidPostalCode = false;
-      this.showAlertInvalidDirection= false;
-      this.showAlertInvalidDate = false;
-
-    }
-    else if (this.emailUser!.errors?.pattern) {
-      this.showAlertRequired = false;
+    } else if (this.emailUser!.errors?.pattern) {
       this.showAlertInvalidEmail = true;
-      this.showAlertInvalidName = false;
-      this.showAlertInvalidCard = false;
-      this.showAlertInvalidCVV = false;
-      this.showAlertInvalidPostalCode = false;
-      this.showAlertInvalidDirection= false;
-      this.showAlertInvalidDate = false;
-
-    }
-
-    else if (this.nameUser!.errors?.pattern) {
-      this.showAlertRequired = false;
-      this.showAlertInvalidEmail = false;
+    } else if (this.nameUser!.errors?.pattern) {
       this.showAlertInvalidName = true;
-      this.showAlertInvalidCard = false;
-      this.showAlertInvalidCVV = false;
-      this.showAlertInvalidPostalCode = false;
-      this.showAlertInvalidDirection= false;
-      this.showAlertInvalidDate = false;
-
-
-    }
-    else if(this.dateUser!.errors?.pattern){
-      this.showAlertRequired = false;
-      this.showAlertInvalidName = false;
-      this.showAlertInvalidEmail = false;
-      this.showAlertInvalidCard = false;
-      this.showAlertInvalidCVV = false;
-      this.showAlertInvalidPostalCode = false;
+    } else if(this.dateUser!.errors?.pattern){
       this.showAlertInvalidDirection= true;
-
-    }
-    else if(this.cardUser!.errors?.pattern){
-      this.showAlertRequired = false;
-      this.showAlertInvalidName = false;
-      this.showAlertInvalidEmail = false;
+    } else if(this.cardUser!.errors?.pattern){
       this.showAlertInvalidCard = true;
-      this.showAlertInvalidCVV = false;
-      this.showAlertInvalidPostalCode = false;
-      this.showAlertInvalidDirection= false;
-      this.showAlertInvalidDate = false;
-
-
-    }
-    else if(this.CVVNumber!.errors?.pattern){
-      this.showAlertRequired = false;
-      this.showAlertInvalidName = false;
-      this.showAlertInvalidEmail = false;
-      this.showAlertInvalidCard = false;
+    } else if(this.CVVNumber!.errors?.pattern){
       this.showAlertInvalidCVV = true;
-      this.showAlertInvalidPostalCode = false;
-      this.showAlertInvalidDirection= false;
-      this.showAlertInvalidDate = false;
-
-
-    }
-    else if(this.postalCode!.errors?.pattern){
-      this.showAlertRequired = false;
-      this.showAlertInvalidName = false;
-      this.showAlertInvalidEmail = false;
-      this.showAlertInvalidCard = false;
-      this.showAlertInvalidCVV = false;
+    } else if(this.postalCode!.errors?.pattern){
       this.showAlertInvalidPostalCode = true;
-      this.showAlertInvalidDirection= false;
-      this.showAlertInvalidDate = false;
-
-    }
-    else if(this.direction!.errors?.pattern){
-      this.showAlertRequired = false;
-      this.showAlertInvalidName = false;
-      this.showAlertInvalidEmail = false;
-      this.showAlertInvalidCard = false;
-      this.showAlertInvalidCVV = false;
-      this.showAlertInvalidPostalCode = false;
+    } else if(this.direction!.errors?.pattern){
       this.showAlertInvalidDirection= true;
-      this.showAlertInvalidDate = false;
-    }
-    else{
+    } else{
       alert("ALL RIGHT")
       this.dialogRef.close();
 
