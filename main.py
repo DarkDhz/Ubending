@@ -64,5 +64,9 @@ api.add_resource(ProductResource, '/product/<int:product_id>')
 api.add_resource(MyProductResource, '/myproduct/<int:product_id>/<string:token>', '/myproduct/<string:token>')
 api.add_resource(MyProductListResource, '/myproducts/<string:token>', methods=['GET'])
 
+# BUY PRODUCT RESOURCE
+
+api.add_resource(BuyProduct, '/api/buy/<int:product_id>/<string:token>', methods='POST')
+
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

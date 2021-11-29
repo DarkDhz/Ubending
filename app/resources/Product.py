@@ -3,6 +3,28 @@ from flask_restful import Resource, reqparse
 
 import lock
 from data.ProductQueries import getProductById
+from utils.security import verify_auth_token
+
+
+class BuyProduct(Resource):
+
+    def get(self):
+        return 404
+
+    def post(self, product_id, token):
+
+        user = verify_auth_token(token)
+
+        if user is None:
+            return {'message': 'invalid token'}, 400
+
+        setBuyed(product_id)
+
+    def delete(self):
+        return 404
+
+    def put(self):
+        return 404
 
 
 class ProductResource(Resource):
