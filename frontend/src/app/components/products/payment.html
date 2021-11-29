@@ -27,7 +27,7 @@
         <p class="fw-bold">Payment Details</p>
         <p class="dis mb-3">Complete your purchase by providing your payment details</p>
       </div>
-      <form [formGroup]="userEmail" action="#">
+      <form action="#">
         <div class="mb-3">
           <p class="dis fw-bold mb-2">Email address</p>
             <input [class.is-invalid]="emailUser!.invalid && emailUser!.touched" id="userEmail" class="form-control" formControlName="email" type="email" placeholder="email">
@@ -50,13 +50,13 @@
             <option value="3">Italy</option>
           </select>
             <div class="d-flex"> <input [class.is-invalid]="postalCode!.invalid && postalCode!.touched" formControlName="postalCode" id="input_postalcode"  maxlength=5 class="form-control zip" type="text" placeholder="Postal Code"> <input  [class.is-invalid]="direction!.invalid && direction!.touched" formControlName="direction" class="form-control state" type="text" id="input_direction" placeholder="Directions"> </div>
-              <div class="d-flex align-items-center justify-content-between mb-2">
-                <p class="fw-bold">Total</p>
-                <p class="fw-bold"><span class="fas fa-dollar-sign"></span>{{ data['priceProduct'] }}</p>
-              </div>
-              <div class="btn btn-primary mt-2"(click)="buyProduct()">Pay<span class="fas fa-dollar-sign px-1"></span>16.80 </div>
-              <div class="btn btn-primary mt-2" (click)="onNoClick()" style="background-color: red">Cancel<span class="fas fa-dollar-sign px-1"></span></div>
-          </div>
+            <div style="margin-bottom: 5%; margin-top: 15%" class="d-flex align-items-center justify-content-between mb-2">
+              <p class="fw-bold">Total</p>
+              <p class="fw-bold"><span class="fas fa-dollar-sign"></span>{{ data['priceProduct'] }}€</p>
+            </div>
+            <div class="btn btn-primary mt-2"(click)="buyProduct()">Buy now<span class="fas fa-dollar-sign px-1"></span></div>
+            <div class="btn btn-primary mt-2" (click)="onNoClick()" style="background-color: red">Cancel<span class="fas fa-dollar-sign px-1"></span></div>
+            </div>
         </div>
       </form>
     </div>
