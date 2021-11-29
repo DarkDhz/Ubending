@@ -2,7 +2,35 @@ import werkzeug
 from flask_restful import Resource, reqparse
 
 import lock
-from data.ProductQueries import getProductById
+from data.ProductQueries import getProductById, setBuyed
+from utils.security import verify_auth_token
+
+
+class BuyProduct(Resource):
+
+    def get(self):
+        return 404
+
+    def post(self, product_id, token):
+
+        user = verify_auth_token(token)
+
+        if user is None:
+            return {'message': 'invalid token'}, 400
+
+        result = setBuyed(user_id=user, product_id=product_id)
+
+        if result == 200:
+            return {"message": "Product buy success"}, 200
+        elif result == 400:
+            return {"message": "You can't buy your own product or product already bought"}, 400
+        return {"message": "Error buying product"}, 400
+
+    def delete(self):
+        return 404
+
+    def put(self):
+        return 404
 
 
 class ProductResource(Resource):
