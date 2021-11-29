@@ -177,7 +177,7 @@ export class Payment {
         Validators.pattern("^[0-9]{5,5}$")]),
       direction: new FormControl('', [
         Validators.required,
-        Validators.pattern("^[a-zA-Z]{2,100}$")])
+        Validators.pattern("^[a-zA-Z0-9]{2,100}$")])
     }
 
     );
@@ -220,7 +220,7 @@ export class Payment {
     return this.userEmail.get('direction')
   }
   buyProduct(){
-    if(this.emailUser!.errors?.required || this.nameUser!.errors?.required || this.emailUser!.errors?.pattern || this.dateUser!.errors?.required || this.CVVNumber!.errors?.required || this.direction!.errors?.required ){
+    if(this.emailUser!.errors?.required || this.nameUser!.errors?.required || this.dateUser!.errors?.required || this.CVVNumber!.errors?.required || this.direction!.errors?.required ){
       this.showAlertRequired = true;
       this.showAlertInvalidEmail = false;
       this.showAlertInvalidName = false;
