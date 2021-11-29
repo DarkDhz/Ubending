@@ -9,7 +9,8 @@ export interface DialogData {
   nameProduct: string;
   priceProduct: string;
   descProduct: string;
-  category: Number;
+  stateProduct: number;
+  category: number;
   image: string;
 }
 @Component({
@@ -63,9 +64,9 @@ export class UserProductsComponent implements OnInit{
       console.log(result)
     });
   }
-  openDialogEdit(nameProduct:String,idProduct:Number,priceProduct:Number,descProduct:String,category:Number,imagePath:String) {
+  openDialogEdit(nameProduct:String,idProduct:Number,stateProduct: number,priceProduct:Number,descProduct:String,category:Number,imagePath:String) {
     const dialogRef = this.dialog.open(DialogEdit, {panelClass: 'custom-modalbox',
-      data: {idProduct: idProduct,nameProduct: nameProduct, priceProduct:priceProduct, descProduct:descProduct,category:category,image: imagePath}
+      data: {idProduct: idProduct,nameProduct: nameProduct,stateProduct : stateProduct, priceProduct:priceProduct, descProduct:descProduct,category:category,image: imagePath}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -125,6 +126,7 @@ export class DialogEdit {
   category_id: Number = -1;
   state_id: Number = -1;
   token = "null";
+  states = ["New","Worn out","Destroyed"];
 
   state = {categories: []};
   params = {};
@@ -201,12 +203,11 @@ export class DialogEdit {
         alert('PRODUCT EDIT CORRECTLY')
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
           this.router.navigate(['/user-products']));
+        this.dialogRef.close();
       })
       .catch((error) => {
-        console.error(error)
         alert(error.response.data.message)
       })
-    this.dialogRef.close();
   }
   }
 }

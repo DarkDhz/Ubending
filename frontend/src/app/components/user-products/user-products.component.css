@@ -269,5 +269,7 @@ mat-dialog-container{
   position: relative;
   top:60px;
   width: 50rem;
+  overflow: scroll;
+
   height: auto;
 }
