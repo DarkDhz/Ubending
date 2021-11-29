@@ -27,7 +27,7 @@
         <p class="fw-bold">Payment Details</p>
         <p class="dis mb-3">Complete your purchase by providing your payment details</p>
       </div>
-      <form action="#">
+      <form [formGroup]="userEmail" action="#">
         <div class="mb-3">
           <p class="dis fw-bold mb-2">Email address</p>
             <input [class.is-invalid]="emailUser!.invalid && emailUser!.touched" id="userEmail" class="form-control" formControlName="email" type="email" placeholder="email">
