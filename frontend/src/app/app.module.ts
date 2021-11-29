@@ -17,6 +17,7 @@ import { CardSliderComponent } from './components/card-slider/card-slider.compon
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { HomeProductsComponent } from './components/home-products/home-products.component';
 import {UserProductsComponent, DialogEdit} from "./components/user-products/user-products.component";
+import {Payment} from "./components/products/products.component";
 
 
 /*import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';*/
@@ -32,7 +33,8 @@ import {UserProductsComponent, DialogEdit} from "./components/user-products/user
     CardSliderComponent,
     HomeProductsComponent,
     UserProductsComponent,
-    DialogEdit
+    DialogEdit,
+    Payment
     ],
   imports: [
     BrowserModule,

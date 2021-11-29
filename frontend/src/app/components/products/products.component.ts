@@ -94,6 +94,7 @@ export class ProductsComponent implements OnInit {
       });
     }
   }
+
   loadPorducts(name: String) {
 
   }
@@ -184,6 +185,7 @@ export class Payment {
     }
 
     );
+
   showAlertInvalidEmail = false;
   showAlertInvalidName = false;
   showAlertInvalidCard = false;
@@ -192,10 +194,21 @@ export class Payment {
   showAlertInvalidPostalCode = false;
   showAlertInvalidDirection= false;
   showAlertRequired = false;
+
+  token = "null";
   constructor(
     public dialogRef: MatDialogRef<Payment>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,private uploadService: UploadService,
     private router: Router) {
+
+      const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+      if (currentUser != null) {
+        this.token = currentUser.token;
+      } else {
+        alert('NOT LOGGED IN')
+        this.router.navigate(['/home']);
+      }
+
 
   }
   onNoClick(): void {
@@ -250,9 +263,16 @@ export class Payment {
     } else if(this.direction!.errors?.pattern){
       this.showAlertInvalidDirection= true;
     } else{
-      alert("ALL RIGHT")
-      this.dialogRef.close();
+      const path = environment.path + `/api/buy/` + this.data.idProduct + "/" + this.token
 
+      axios.post(path)
+        .then((res) => {
+          this.dialogRef.close();
+        })
+        .catch((error) => {
+          alert(error.response.data.message)
+        })
+      this.dialogRef.close();
     }
   }
 
