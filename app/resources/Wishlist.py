@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from utils.security import verify_auth_token
-from data.ProductQueries import getFollowingProductsList, unfollowProduct, getFollowingProduct
+from data.ProductQueries import getFollowingProductsList, unfollowProduct, getFollowingProduct, followProduct
 
 
 class WishlistResource(Resource):
@@ -17,8 +17,16 @@ class WishlistResource(Resource):
         else:
             return result, 200
 
-    def post(self, id):
-        return {'message': "Not developed yet"}, 404
+    def post(self, token, product_id):
+        user = verify_auth_token(token)
+        if user is None:
+            return {'message': 'invalid token'}, 400
+
+        isBeingFollowed = getFollowingProduct(user, product_id)
+        if isBeingFollowed:
+            return {'message': "Product with id [{}] is already on the list".format(product_id)}, 400
+        followProduct(product_id, user)
+        return {'message': "Product with id [{}] added to wishlist".format(product_id)}, 200
 
     def delete(self, product_id, token):
         user = verify_auth_token(token)
@@ -26,7 +34,7 @@ class WishlistResource(Resource):
         if user is None:
             return {'message': 'invalid token'}, 400
 
-        isBeingFollowed = getFollowingProduct(user_id=user, product_id=product_id)
+        isBeingFollowed = getFollowingProduct(user, product_id)
         if isBeingFollowed:
             unfollowProduct(product_id, user)
             return {'message': "Product with id [{}] removed from wishlist".format(product_id)}, 200
