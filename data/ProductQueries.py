@@ -43,6 +43,27 @@ def getAllProductsOfUserByID(user_id):
     return toReturn
 
 
+def getFollowingProducts(user_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+
+    query = "SELECT * FROM ProductsFollowing WHERE user_id = %s"
+    values = (user_id,)
+    mycursor.execute(query, values)
+
+    myresult = mycursor.fetchall()
+    db.close()
+
+    if len(myresult) == 0:
+        return 404
+
+    toReturn = list()
+    for elem in myresult:
+        item = getProductById(elem['product_id'])
+        toReturn.append(_toJson(list(item)))
+    return toReturn
+
+
 def getProductById(product_id):
     db = connection.connect(host=host, user=user, password=password, database=database)
     mycursor = db.cursor()
