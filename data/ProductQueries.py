@@ -43,7 +43,7 @@ def getAllProductsOfUserByID(user_id):
     return toReturn
 
 
-def getFollowingProducts(user_id):
+def getFollowingProductsList(user_id):
     db = connection.connect(host=host, user=user, password=password, database=database)
     mycursor = db.cursor()
 
@@ -62,6 +62,34 @@ def getFollowingProducts(user_id):
         item = getProductById(elem['product_id'])
         toReturn.append(_toJson(list(item)))
     return toReturn
+
+
+def unfollowProduct(product_id, user_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+    query = "DELETE FROM ProductsFollowing WHERE product_id = %s and user_id = %s"
+    values = (product_id, user_id)
+    mycursor.execute(query, values)
+    db.commit()
+    db.close()
+
+
+def getFollowingProduct(user_id, product_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+
+    query = "SELECT * FROM ProductsFollowing WHERE product_id = %s and owner_id = %s"
+    values = (product_id, user_id,)
+    mycursor.execute(query, values)
+
+    myresult = mycursor.fetchall()
+    db.close()
+
+    if len(myresult) == 0:
+        return False
+
+    #return _toJson(list(myresult[0]))
+    return True
 
 
 def getProductById(product_id):
