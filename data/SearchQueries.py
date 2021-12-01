@@ -7,7 +7,7 @@ def searchByCategory(category_id, start_point=0, jump=12):
     db = connection.connect(host=host, user=user, password=password, database=database)
     cursor = db.cursor()
 
-    query = "SELECT * FROM Products WHERE category_id = %s LIMIT %s,%s"
+    query = "SELECT * FROM Products WHERE category_id = %s and buyed = 0 LIMIT %s,%s"
     values = (category_id, start_point, jump + start_point,)
     cursor.execute(query, values)
 
@@ -27,7 +27,7 @@ def searchByName(name, start_point=0, jump=12):
     db = connection.connect(host=host, user=user, password=password, database=database)
     cursor = db.cursor()
 
-    query = "SELECT * FROM Products WHERE name LIKE '%" + name + "%' LIMIT %s,%s"
+    query = "SELECT * FROM Products WHERE name LIKE '%" + name + "%' and buyed = 0 LIMIT %s,%s"
     values = (start_point, jump + start_point,)
     cursor.execute(query, values)
 
@@ -46,7 +46,7 @@ def searchByCategoryAndName(category_id, name, start_point=0, jump=12):
     db = connection.connect(host=host, user=user, password=password, database=database)
     cursor = db.cursor()
 
-    query = "SELECT * FROM Products WHERE name LIKE '%" + name + "%' and category_id = %s LIMIT %s,%s"
+    query = "SELECT * FROM Products WHERE name LIKE '%" + name + "%' and category_id = %s and buyed = 0 LIMIT %s,%s"
     values = (category_id, start_point, jump + start_point,)
     cursor.execute(query, values)
 
