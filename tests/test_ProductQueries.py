@@ -1,5 +1,6 @@
 from unittest import TestCase
-from data.ProductQueries import _toJson, convertState, getAllProductsOfUserByID, getProductById, getProductByIds, addProduct, deleteProduct, updateProduct
+from data.ProductQueries import _toJson, convertState, getAllProductsOfUserByID, getProductById, getProductByIds, \
+    addProduct, deleteProduct, updateProduct
 from data.UserQueries import *
 import requests
 
@@ -9,8 +10,8 @@ class TestProductQueries(TestCase):
 
     def test__to_json(self):
         self.assertEqual(_toJson(self.product), {'product_id': 33, 'owner_id': 1, 'name': 'potato',
-            'description': 'a really nice potato', 'price': 5.0, 'state': 'Used',
-            'image': None, 'category_id': None}, 'The JSON do not match')
+                                                 'description': 'a really nice potato', 'price': 5.0, 'state': 'Used',
+                                                 'image': None, 'category_id': None}, 'The JSON do not match')
 
     def test_convert_state(self):
         self.assertEqual(convertState(0), "Brandnew")
@@ -64,7 +65,7 @@ class TestProductQueries(TestCase):
         self.assertEqual(404, item)
 
         # Now search for 1st product
-        #TODO: Look for an item id that exists
+        # TODO: Look for an item id that exists
 
     def test_get_product_by_ids(self):
         # First search a product from a user that does not exist
@@ -72,7 +73,7 @@ class TestProductQueries(TestCase):
         self.assertEqual(404, item)
 
         # Now search product for existing user
-        #TODO: Do item ids even exist? Like seriously
+        # TODO: Do item ids even exist? Like seriously
 
     def test_add_product(self):
         userID = addUserToDB("userPostingProduct-TESTAddProduct", "userpostingtest@gmail.com", "aaa")
@@ -97,7 +98,7 @@ class TestProductQueries(TestCase):
         productID = addProduct(userID, data)
         productDeleted = deleteProduct(productID, userID)
 
-        self.assertEqual(productDeleted, None,  "Product does exist.")
+        self.assertEqual(productDeleted, None, "Product does exist.")
 
         deleteUserFromDB(userID)
 
@@ -107,7 +108,8 @@ class TestProductQueries(TestCase):
         data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": None, "category_id": 2}
         productID = addProduct(userID, data)
 
-        newData = {"name": "Bike", "description": "Old used bike", "price": 200, "state": 1, "image": None, "category_id": 2}
+        newData = {"name": "Bike", "description": "Old used bike", "price": 200, "state": 1, "image": None,
+                   "category_id": 2}
         updateProduct(productID, userID, newData)
 
         product = getProductById(productID)
@@ -121,6 +123,7 @@ class TestProductQueries(TestCase):
 
         deleteProduct(productID, userID)
         deleteUserFromDB(userID)
+
 
 """
 class TestProductRequests(TestCase):
@@ -157,14 +160,6 @@ class TestProductRequests(TestCase):
         self.assertEqual(404, x.status_code, "Product does exist.")
 """
 
-
-
-
-
-
-
-
-
 """
 # get a product
 url = 'http://127.0.0.1:5000/user/3/product'
@@ -192,3 +187,15 @@ myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0OTEzNywiZXhwIjoxNjM2NjQ5N
 x = requests.get(url, data=myobj)
 x.json()
 """
+class TestWhishlist(TestCase):
+    def test_get_following_products_list(self):
+        self.fail()
+
+    def test_follow_product(self):
+        self.fail()
+
+    def test_unfollow_product(self):
+        self.fail()
+
+    def test_get_following_product(self):
+        self.fail()

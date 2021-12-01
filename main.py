@@ -5,7 +5,9 @@ from app.resources.MyProducts import *
 from app.resources.User import *
 from app.resources.Category import *
 from app.resources.Search import *
+from app.resources.Wishlist import *
 from flask_cors import CORS
+
 from config import config
 from decouple import config as config_decouple
 from flask_mail import Mail
@@ -63,6 +65,9 @@ api.add_resource(ProductResource, '/product/<int:product_id>')
 # MY PRODUCTS RESOURCES
 api.add_resource(MyProductResource, '/myproduct/<int:product_id>/<string:token>', '/myproduct/<string:token>')
 api.add_resource(MyProductListResource, '/myproducts/<string:token>', methods=['GET'])
+
+# WISHLIST RESOURCES
+api.add_resource(WishlistResource, 'wishlist/<string:token>')
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
