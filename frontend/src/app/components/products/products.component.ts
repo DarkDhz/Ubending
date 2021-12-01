@@ -268,6 +268,8 @@ export class Payment {
       axios.post(path)
         .then((res) => {
           this.dialogRef.close();
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+            this.router.navigate(['/products']));
         })
         .catch((error) => {
           alert(error.response.data.message)
