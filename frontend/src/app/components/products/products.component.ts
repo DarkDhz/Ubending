@@ -101,7 +101,7 @@ export class ProductsComponent implements OnInit {
 
   getProducts(){
 
-    const path = environment.path + '/api/search'
+    const path = environment.path + '/api/search/' + this.token
     const params = {
       name: '',
       from: 0,
