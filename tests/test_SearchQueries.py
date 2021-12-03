@@ -34,6 +34,6 @@ class TestSearchQueries(TestCase):
 
         # SEARCH FOR EXISTING PRODUCT
         smartwatch = [
-            {'product_id': 18, 'owner_id': 1, 'name': 'SmartWatch', 'description': 'new', 'price': 200, 'state': 'Used',
+            {'product_id': 18, 'owner_id': 1, 'name': 'SmartWatch', 'description': 'asdasd', 'price': 2000, 'state': 'Destroyed',
              'image': 'jpeg', 'category_id': 'Technology'}]
         self.assertEqual(searchByCategoryAndName(6, "SmartWatch"), smartwatch)
