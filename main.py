@@ -67,7 +67,7 @@ api.add_resource(MyProductResource, '/myproduct/<int:product_id>/<string:token>'
 api.add_resource(MyProductListResource, '/myproducts/<string:token>', methods=['GET'])
 
 # WISHLIST RESOURCES
-api.add_resource(WishlistResource, 'wishlist/<string:token>')
+api.add_resource(WishlistResource, '/wishlist/<string:token>')
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
