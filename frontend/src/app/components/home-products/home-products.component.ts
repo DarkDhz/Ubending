@@ -36,7 +36,7 @@ export class HomeProductsComponent implements OnInit {
 
   getProducts() {
 
-    const path = environment.path + '/api/search'
+    const path = environment.path + '/api/search/' + "null"
     const params = {
         name: '',
         jump: 6
