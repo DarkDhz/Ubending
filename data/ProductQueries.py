@@ -133,3 +133,22 @@ def updateProduct(product_id, owner_id, data):
 
     db.commit()
     db.close()
+
+
+def addRating(buyer_id, product_id, value):
+    product_info = getProductById(product_id)
+    if product_info == 404:
+        return 404
+
+    product_owner = product_id['owner_id']
+
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+
+    query = "INSERT INTO Ratings (product_id, user_id, buyer_id, rating) VALUES (%s, %s, %s, %s)"
+    values = (product_id, product_owner, buyer_id, value)
+    mycursor.execute(query, values)
+
+    db.commit()
+    mycursor.close()
+    db.close()

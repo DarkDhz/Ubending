@@ -2,7 +2,7 @@ import werkzeug
 from flask_restful import Resource, reqparse
 
 import lock
-from data.ProductQueries import getProductById, setBuyed
+from data.ProductQueries import getProductById, setBuyed, addRating
 from utils.security import verify_auth_token
 
 
@@ -69,3 +69,31 @@ class ProductListResource(Resource):
     def put(self, id):
         with lock.lock:
             return {'message': "Not developed yet"}, 404
+
+
+class RateProductResource(Resource):
+
+    def post(self, token, product_id):
+        user = verify_auth_token(token)
+
+        if user is None:
+            return {'message': 'invalid token'}, 400
+
+        parser = reqparse.RequestParser()  # create parameters parser from request
+
+        parser.add_argument('rating', type=int)
+
+        data = parser.parse_args()
+
+        result = addRating(buyer_id=user, product_id=product_id, value=data['rating'])
+
+        if result == 404:
+            return {'message': 'error adding valoration'}, 500
+
+        return {'message': "Rating added"}, 201
+
+
+class RatingsProductResource(Resource):
+
+    def get(self, user_id):
+        return {'message': "Not developed yet"}, 404
