@@ -6,7 +6,7 @@ on:
     branches: [ dev, master ]
 jobs:
   build-frontend:
-    name: build and test Frontend
+    name: build and test Frontendd
     runs-on: ubuntu-latest
 
     strategy:
