@@ -62,6 +62,8 @@ class UserAccount(Resource):
         parser.add_argument('password', type=str, required=False)
         parser.add_argument('repeat_password', type=str, required=False)
         parser.add_argument('location', type=str, required=False)
+        parser.add_argument('userphoto', type=str, required=False)
+
 
         data = parser.parse_args()
 
