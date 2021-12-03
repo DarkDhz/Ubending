@@ -2,7 +2,7 @@ import werkzeug
 from flask_restful import Resource, reqparse
 
 import lock
-from data.ProductQueries import getProductById, setBuyed, addRating
+from data.ProductQueries import getProductById, setBuyed, addRating, getMean
 from utils.security import verify_auth_token
 
 
@@ -96,4 +96,6 @@ class RateProductResource(Resource):
 class RatingsProductResource(Resource):
 
     def get(self, user_id):
-        return {'message': "Not developed yet"}, 404
+        meanValue = getMean(user_id=user_id)
+
+        return {'value': meanValue}, 200

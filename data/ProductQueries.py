@@ -1,6 +1,7 @@
 from data.CategoryQueries import getCategoryNameByID
 from app.database import host, user, password, database
 import mysql.connector as connection
+import numpy as np
 
 
 def convertState(value):
@@ -136,11 +137,14 @@ def updateProduct(product_id, owner_id, data):
 
 
 def addRating(buyer_id, product_id, value):
+    if value < 0 or value > 5:
+        return 404
+
     product_info = getProductById(product_id)
     if product_info == 404:
         return 404
 
-    product_owner = product_id['owner_id']
+    product_owner = product_info['owner_id']
 
     db = connection.connect(host=host, user=user, password=password, database=database)
     mycursor = db.cursor()
@@ -152,3 +156,40 @@ def addRating(buyer_id, product_id, value):
     db.commit()
     mycursor.close()
     db.close()
+
+
+def getMean(user_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+
+    query = "SELECT rating FROM Ratings WHERE user_id = %s"
+    values = (user_id,)
+    mycursor.execute(query, values)
+    result = mycursor.fetchall()
+    values = list()
+    for element in result:
+        values.append(element[0])
+
+    mycursor.close()
+    db.close()
+
+    return np.mean(values)
+
+
+'''
+# add a rating
+
+import requests
+product = 14
+token = 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzODU0OTk2NywiZXhwIjoxNjQ0NTQ5OTY3fQ.eyJ1c2VyX2lkIjo5OTN9.W6pDLw17hIoJb3R5krD9lsOy2wZsjeI9PTy4SVsmkdNEFCYDcVxvUVLRDsJW16Dxo7gv2eO4jPNB_dEHK53cEQ'
+url = 'http://127.0.0.1:5000/api/rate/' + str(product) + "/" + token
+myobj = {'rating': 3}
+x = requests.post(url, data=myobj)
+
+# get ratings
+
+import requests
+user = 1
+url = 'http://127.0.0.1:5000/api/ratings/' + str(user)
+x = requests.get(url)
+'''
