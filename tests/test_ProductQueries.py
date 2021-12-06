@@ -1,6 +1,7 @@
 from unittest import TestCase
 from data.ProductQueries import _toJson, convertState, getAllProductsOfUserByID, getProductById, getProductByIds, \
-    addProduct, deleteProduct, updateProduct
+    addProduct, deleteProduct, updateProduct, followProduct, unfollowProduct, getFollowingProduct, \
+    getFollowingProductsList
 from data.UserQueries import *
 import requests
 
@@ -188,14 +189,57 @@ x = requests.get(url, data=myobj)
 x.json()
 """
 class TestWhishlist(TestCase):
-    def test_get_following_products_list(self):
-        self.fail()
+    # GET TESTING USER
+    userID = getAccountByEmail('testingreal@gmail.com')['user_id']
+    data1 = {"name": "PC1", "description": "New PC", "price": 1200, "state": 0, "image": "1", "category_id": 2}
+    data2 = {"name": "PC2", "description": "Old PC", "price": 600, "state": 2, "image": "10", "category_id": 2}
+    data3 = {"name": "PC3", "description": "Average PC", "price": 900, "state": 1, "image": "101", "category_id": 2}
 
-    def test_follow_product(self):
+    def test_get_following_products_list(self):
+        # Add some products to user whishlist
+        p1 = addProduct(self.userID, self.data1)
+        p2 = addProduct(self.userID, self.data2)
+        p3 = addProduct(self.userID, self.data3)
+
+        followProduct(p1, self.userID)
+        followProduct(p2, self.userID)
+        followProduct(p3, self.userID)
+
+        # Get product list
+        result = getFollowingProductsList(self.userID)
+        print(result)
+
+        # Delete products
+        deleteProduct(p1, self.userID)
+        deleteProduct(p2, self.userID)
+        deleteProduct(p3, self.userID)
+
         self.fail()
+'''
+    def test_follow_product(self):
+        result = followProduct(self.p1, self.userID)
+        self.assertEqual(0, result, "selected product doesn't exist")
+        #deleteProduct(self.p1, self.userID)
 
     def test_unfollow_product(self):
-        self.fail()
+        #self.fail()
+        result = unfollowProduct(self.p2, self.userID)
+        self.assertEqual(0, result, "unfollow product")
+        # Check that product isn't being followed anymore
+        obj = getFollowingProduct(self.userID, self.p1)
+        self.assertFalse(obj)
 
     def test_get_following_product(self):
-        self.fail()
+        # Follow a product
+        result = followProduct(self.p2, self.userID)
+        self.assertEqual(0, result, "selected product doesn't exist")
+
+        # Get product
+        myobj = getFollowingProduct(self.userID, self.p2)
+        self.assertTrue(myobj)
+
+        # Remove product
+        unfollowProduct(self.p2, self.userID)
+'''
+
+
