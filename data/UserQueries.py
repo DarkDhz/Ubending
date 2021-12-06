@@ -136,13 +136,15 @@ def updateUserProfile(user_id, data):
     if data['repeat_password'] != '' and data['password'] == '':
         return 6
 
-    if data['username'] is not None or data['username'] != '' :
+    if data['username'] is not None and data['username'] != '':
         __updateValue('username', data['username'], user_id)
 
-    if data['location'] is not None or data['location'] != '':
+    if data['location'] is not None and data['location'] != '':
         __updateValue('location', data['location'], user_id)
 
-    if data['userphoto'] is not None or data['userphoto'] != '':
+    if data['userphoto'] is not None and data['userphoto'] != '':
+        print("phoyo")
+        print(data['userphoto'])
         __updateValue('userphoto', data['userphoto'], user_id)
 
     db.commit()
