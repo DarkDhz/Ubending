@@ -96,7 +96,6 @@ def deleteProduct(product_id, owner_id):
     query = "DELETE FROM Products WHERE product_id = %s and owner_id = %s"
     values = (product_id, owner_id)
     mycursor.execute(query, values)
-    db.commit()
     # Delete products from whishlist
     query2 = "DELETE FROM ProductsFollowing WHERE product_id = %s"
     values2 = (product_id,)
@@ -136,11 +135,8 @@ def getFollowingProductsList(user_id):
 
     toReturn = list()
     for elem in myresult:
-        print(elem)
-        print(elem[0])
         item = getProductById(elem[0])
-        print(item)
-        toReturn.append(_toJson(list(item)))
+        toReturn.append(item)
     return toReturn
 
 

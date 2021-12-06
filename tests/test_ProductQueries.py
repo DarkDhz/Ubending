@@ -207,39 +207,45 @@ class TestWhishlist(TestCase):
 
         # Get product list
         result = getFollowingProductsList(self.userID)
-        print(result)
 
         # Delete products
         deleteProduct(p1, self.userID)
         deleteProduct(p2, self.userID)
         deleteProduct(p3, self.userID)
 
-        self.fail()
-'''
+        expectedList = [{'product_id': p1, 'owner_id': self.userID, 'name': 'PC1', 'description': 'New PC', 'price': 1200, 'state': 'Brandnew', 'image': '1', 'category_id': 'Bikes'}, {'product_id': p2, 'owner_id': self.userID, 'name': 'PC2', 'description': 'Old PC', 'price': 600, 'state': 'Destroyed', 'image': '10', 'category_id': 'Bikes'}, {'product_id': p3, 'owner_id': self.userID, 'name': 'PC3', 'description': 'Average PC', 'price': 900, 'state': 'Used', 'image': '101', 'category_id': 'Bikes'}]
+
+        self.assertEqual(result, expectedList, "results do not match")
+
     def test_follow_product(self):
-        result = followProduct(self.p1, self.userID)
+        p1 = addProduct(self.userID, self.data1)
+        result = followProduct(p1, self.userID)
+        deleteProduct(p1, self.userID)
         self.assertEqual(0, result, "selected product doesn't exist")
-        #deleteProduct(self.p1, self.userID)
 
     def test_unfollow_product(self):
-        #self.fail()
-        result = unfollowProduct(self.p2, self.userID)
+        # First follow a product
+        p2 = addProduct(self.userID, self.data2)
+        followProduct(p2, self.userID)
+        obj1 = getFollowingProduct(self.userID, p2)
+        self.assertTrue(obj1)
+        # Now unfollow product
+        result = unfollowProduct(p2, self.userID)
         self.assertEqual(0, result, "unfollow product")
         # Check that product isn't being followed anymore
-        obj = getFollowingProduct(self.userID, self.p1)
-        self.assertFalse(obj)
+        obj2 = getFollowingProduct(self.userID, p2)
+        self.assertFalse(obj2)
+        deleteProduct(p2, self.userID)
 
     def test_get_following_product(self):
         # Follow a product
-        result = followProduct(self.p2, self.userID)
+        p3 = addProduct(self.userID, self.data3)
+        result = followProduct(p3, self.userID)
         self.assertEqual(0, result, "selected product doesn't exist")
 
         # Get product
-        myobj = getFollowingProduct(self.userID, self.p2)
+        myobj = getFollowingProduct(self.userID, p3)
         self.assertTrue(myobj)
 
         # Remove product
-        unfollowProduct(self.p2, self.userID)
-'''
-
-
+        deleteProduct(p3, self.userID)
