@@ -188,6 +188,10 @@ myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0OTEzNywiZXhwIjoxNjM2NjQ5N
 x = requests.get(url, data=myobj)
 x.json()
 """
+
+from data.SearchQueries import *
+
+
 class TestWhishlist(TestCase):
     # GET TESTING USER
     userID = getAccountByEmail('testingreal@gmail.com')['user_id']
@@ -196,10 +200,11 @@ class TestWhishlist(TestCase):
     data3 = {"name": "PC3", "description": "Average PC", "price": 900, "state": 1, "image": "101", "category_id": 2}
 
     def test_get_following_products_list(self):
-        # Add some products to user whishlist
-        p1 = addProduct(self.userID, self.data1)
-        p2 = addProduct(self.userID, self.data2)
-        p3 = addProduct(self.userID, self.data3)
+        # Get some products to user whishlist
+        products = searchByName('')[:3]
+        p1 = products[0]['product_id']
+        p2 = products[1]['product_id']
+        p3 = products[2]['product_id']
 
         followProduct(p1, self.userID)
         followProduct(p2, self.userID)
@@ -208,44 +213,34 @@ class TestWhishlist(TestCase):
         # Get product list
         result = getFollowingProductsList(self.userID)
 
-        # Delete products
-        deleteProduct(p1, self.userID)
-        deleteProduct(p2, self.userID)
-        deleteProduct(p3, self.userID)
+        self.assertEqual(result, products, "results do not match")
 
-        expectedList = [{'product_id': p1, 'owner_id': self.userID, 'name': 'PC1', 'description': 'New PC', 'price': 1200, 'state': 'Brandnew', 'image': '1', 'category_id': 'Bikes'}, {'product_id': p2, 'owner_id': self.userID, 'name': 'PC2', 'description': 'Old PC', 'price': 600, 'state': 'Destroyed', 'image': '10', 'category_id': 'Bikes'}, {'product_id': p3, 'owner_id': self.userID, 'name': 'PC3', 'description': 'Average PC', 'price': 900, 'state': 'Used', 'image': '101', 'category_id': 'Bikes'}]
+        # unfollow the products
+        unfollowProduct(p1, self.userID)
+        unfollowProduct(p2, self.userID)
+        unfollowProduct(p3, self.userID)
 
-        self.assertEqual(result, expectedList, "results do not match")
+    def test_follow_and_unfollow_product(self):
+        products = searchByName('')[0]
+        p1 = products['product_id']
 
-    def test_follow_product(self):
-        p1 = addProduct(self.userID, self.data1)
         result = followProduct(p1, self.userID)
-        deleteProduct(p1, self.userID)
-        self.assertEqual(0, result, "selected product doesn't exist")
 
-    def test_unfollow_product(self):
-        # First follow a product
-        p2 = addProduct(self.userID, self.data2)
-        followProduct(p2, self.userID)
-        obj1 = getFollowingProduct(self.userID, p2)
-        self.assertTrue(obj1)
-        # Now unfollow product
-        result = unfollowProduct(p2, self.userID)
-        self.assertEqual(0, result, "unfollow product")
-        # Check that product isn't being followed anymore
-        obj2 = getFollowingProduct(self.userID, p2)
-        self.assertFalse(obj2)
-        deleteProduct(p2, self.userID)
+        unfollowProduct(p1, self.userID)
+
+        self.assertEqual(0, result, "selected product doesn't exist")
 
     def test_get_following_product(self):
         # Follow a product
-        p3 = addProduct(self.userID, self.data3)
-        result = followProduct(p3, self.userID)
+        products = searchByName('')[0]
+        p1 = products['product_id']
+
+        result = followProduct(p1, self.userID)
         self.assertEqual(0, result, "selected product doesn't exist")
 
         # Get product
-        myobj = getFollowingProduct(self.userID, p3)
+        myobj = getFollowingProduct(self.userID, p1)
         self.assertTrue(myobj)
 
         # Remove product
-        deleteProduct(p3, self.userID)
+        unfollowProduct(p1, self.userID)
