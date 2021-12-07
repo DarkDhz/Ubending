@@ -242,8 +242,7 @@ def getFollowingProduct(user_id, product_id):
         return False
     return True
   
-  
-  '''
+'''
 # add a rating
 
 import requests
