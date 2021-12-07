@@ -106,7 +106,6 @@ def addProduct(user_id, data):
     mycursor.execute(query, values)
     db.commit()
     db.close()
-
     return mycursor.lastrowid
 
 
@@ -116,6 +115,10 @@ def deleteProduct(product_id, owner_id):
     query = "DELETE FROM Products WHERE product_id = %s and owner_id = %s"
     values = (product_id, owner_id)
     mycursor.execute(query, values)
+    # Delete products from whishlist
+    query2 = "DELETE FROM ProductsFollowing WHERE product_id = %s"
+    values2 = (product_id,)
+    mycursor.execute(query2, values2)
     db.commit()
     db.close()
 
@@ -133,3 +136,66 @@ def updateProduct(product_id, owner_id, data):
 
     db.commit()
     db.close()
+
+
+def getFollowingProductsList(user_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+
+    query = "SELECT * FROM ProductsFollowing WHERE user_id = %s"
+    values = (user_id,)
+    mycursor.execute(query, values)
+
+    myresult = mycursor.fetchall()
+    db.close()
+
+    if len(myresult) == 0:
+        return 404
+
+    toReturn = list()
+    for elem in myresult:
+        item = getProductById(elem[0])
+        toReturn.append(item)
+    return toReturn
+
+
+def followProduct(product_id, user_id):
+    product_info = getProductById(product_id)
+    if product_info == 404:
+        return 404
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+    query = "INSERT INTO ProductsFollowing (product_id, user_id) " \
+            "VALUES (%s, %s)"
+    values = (product_id, user_id)
+    mycursor.execute(query, values)
+    db.commit()
+    db.close()
+    return 0
+
+
+def unfollowProduct(product_id, user_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+    query = "DELETE FROM ProductsFollowing WHERE product_id = %s and user_id = %s"
+    values = (product_id, user_id)
+    mycursor.execute(query, values)
+    db.commit()
+    db.close()
+    return 0
+
+
+def getFollowingProduct(user_id, product_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+
+    query = "SELECT * FROM ProductsFollowing WHERE product_id = %s and user_id = %s"
+    values = (product_id, user_id,)
+    mycursor.execute(query, values)
+
+    myresult = mycursor.fetchall()
+    db.close()
+
+    if len(myresult) == 0:
+        return False
+    return True
