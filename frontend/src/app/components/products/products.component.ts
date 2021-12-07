@@ -95,8 +95,8 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  loadPorducts(name: String) {
-
+  loginRequiered() {
+    this.router.navigate(['/login-signup']);
   }
 
   getProducts(){
