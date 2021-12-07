@@ -73,6 +73,9 @@ api.add_resource(WishlistResource, '/wishlist/<string:token>')
 # BUY PRODUCT RESOURCE
 api.add_resource(BuyProduct, '/api/buy/<int:product_id>/<string:token>', methods=['POST'])
 
+# RATE ENDPOINT
+api.add_resource(RatingsProductResource, '/api/ratings/<int:user_id>', methods=['GET'])
+api.add_resource(RateProductResource, '/api/rate/<int:product_id>/<string:token>', methods=['POST'])
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
