@@ -9,9 +9,10 @@ class TestProductQueries(TestCase):
     product = [33, 1, 'potato', 'a really nice potato', 5.0, 1, None, None]
 
     def test__to_json(self):
-        self.assertEqual(_toJson(self.product), {'product_id': 33, 'owner_id': 1, 'name': 'potato',
-                                                 'description': 'a really nice potato', 'price': 5.0, 'state': 'Used',
-                                                 'image': None, 'category_id': None}, 'The JSON do not match')
+        self.assertEqual(productToJson(self.product), {'product_id': 33, 'owner_id': 1, 'name': 'potato',
+                                                       'description': 'a really nice potato', 'price': 5.0,
+                                                       'state': 'Used',
+                                                       'image': None, 'category_id': None}, 'The JSON do not match')
 
     def test_convert_state(self):
         self.assertEqual(convertState(0), "Brandnew")
@@ -255,3 +256,60 @@ myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0OTEzNywiZXhwIjoxNjM2NjQ5N
 x = requests.get(url, data=myobj)
 x.json()
 """
+
+from data.SearchQueries import *
+
+
+class TestWhishlist(TestCase):
+    # GET TESTING USER
+    userID = getAccountByEmail('testingreal@gmail.com')['user_id']
+
+    def test_get_following_products_list(self):
+        # Get some products to user whishlist
+        products = searchByName('')[:3]
+        p1 = products[0]['product_id']
+        p2 = products[1]['product_id']
+        p3 = products[2]['product_id']
+
+        followProduct(p1, self.userID)
+        followProduct(p2, self.userID)
+        followProduct(p3, self.userID)
+
+        # Get product list
+        result = getFollowingProductsList(self.userID)
+
+        # unfollow the products
+        unfollowProduct(p1, self.userID)
+        unfollowProduct(p2, self.userID)
+        unfollowProduct(p3, self.userID)
+
+        self.assertEqual(result, products, "results do not match")
+
+    def test_follow_and_unfollow_product(self):
+        products = searchByName('')[0]
+        p1 = products['product_id']
+
+        result = followProduct(p1, self.userID)
+
+        unfollowProduct(p1, self.userID)
+
+        self.assertEqual(0, result, "selected product doesn't exist")
+
+    def test_get_following_product(self):
+        # Follow a product
+        products = searchByName('')[0]
+        p1 = products['product_id']
+
+        result = followProduct(p1, self.userID)
+
+        self.assertEqual(0, result, "selected product doesn't exist")
+
+        # Get product
+        myobj = getFollowingProduct(self.userID, p1)
+
+        # Remove product
+        unfollowProduct(p1, self.userID)
+
+        self.assertTrue(myobj)
+
+

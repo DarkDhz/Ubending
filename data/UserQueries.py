@@ -4,8 +4,6 @@ from utils.security import hash_password, verify_password, generate_auth_token, 
 
 
 def _toJson(elem):
-    if elem[6] is not None: # Decode user photo
-        elem[6] = elem[6].decode('ascii')
     return {'user_id': elem[0], 'username': elem[1], 'password': elem[2],
             'admin': elem[3], 'mail': elem[4], 'location': elem[5],
             'userphoto': elem[6]}
@@ -138,11 +136,16 @@ def updateUserProfile(user_id, data):
     if data['repeat_password'] != '' and data['password'] == '':
         return 6
 
-    if data['username'] is not None:
+    if data['username'] is not None and data['username'] != '':
         __updateValue('username', data['username'], user_id)
 
-    if data['location'] is not None:
+    if data['location'] is not None and data['location'] != '':
         __updateValue('location', data['location'], user_id)
+
+    if data['userphoto'] is not None and data['userphoto'] != '':
+        print("phoyo")
+        print(data['userphoto'])
+        __updateValue('userphoto', data['userphoto'], user_id)
 
     db.commit()
 

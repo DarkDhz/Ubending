@@ -1,4 +1,4 @@
-from data.ProductQueries import _toJson
+from data.ProductQueries import productToJson
 from app.database import host, user, password, database
 import mysql.connector as connection
 
@@ -24,7 +24,7 @@ def searchByCategory(category_id, start_point=0, jump=12, token=None):
 
     toReturn = list()
     for elem in result:
-        toReturn.append(_toJson(list(elem)))
+        toReturn.append(productToJson(list(elem)))
     return toReturn
 
 
@@ -48,7 +48,7 @@ def searchByName(name, start_point=0, jump=12, token=None):
 
     toReturn = list()
     for elem in result:
-        toReturn.append(_toJson(list(elem)))
+        toReturn.append(productToJson(list(elem)))
     return toReturn
 
 
@@ -72,7 +72,7 @@ def searchByCategoryAndName(category_id, name, start_point=0, jump=12, token=Non
 
     toReturn = list()
     for elem in result:
-        toReturn.append(_toJson(list(elem)))
+        toReturn.append(productToJson(list(elem)))
     return toReturn
 
 
