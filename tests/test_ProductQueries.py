@@ -219,9 +219,6 @@ from data.SearchQueries import *
 class TestWhishlist(TestCase):
     # GET TESTING USER
     userID = getAccountByEmail('testingreal@gmail.com')['user_id']
-    data1 = {"name": "PC1", "description": "New PC", "price": 1200, "state": 0, "image": "1", "category_id": 2}
-    data2 = {"name": "PC2", "description": "Old PC", "price": 600, "state": 2, "image": "10", "category_id": 2}
-    data3 = {"name": "PC3", "description": "Average PC", "price": 900, "state": 1, "image": "101", "category_id": 2}
 
     def test_get_following_products_list(self):
         # Get some products to user whishlist
@@ -265,7 +262,10 @@ class TestWhishlist(TestCase):
 
         # Get product
         myobj = getFollowingProduct(self.userID, p1)
-        self.assertTrue(myobj)
 
         # Remove product
         unfollowProduct(p1, self.userID)
+
+        self.assertTrue(myobj)
+
+
