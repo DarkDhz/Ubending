@@ -156,6 +156,7 @@ def addRating(buyer_id, product_id, value):
     db.commit()
     mycursor.close()
     db.close()
+    return 201
 
 
 def getMean(user_id):

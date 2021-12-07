@@ -1,8 +1,8 @@
 from unittest import TestCase
-from data.ProductQueries import _toJson, convertState, getAllProductsOfUserByID, getProductById, getProductByIds, \
-    addProduct, deleteProduct, updateProduct, setBuyed
+from data.ProductQueries import *
 from data.UserQueries import *
-import requests
+from data.SearchQueries import *
+from data.TestQueries import *
 
 
 class TestProductQueries(TestCase):
@@ -97,9 +97,6 @@ class TestProductQueries(TestCase):
         item = getProductByIds(0, 1)
         self.assertEqual(404, item)
 
-        # Now search product for existing user
-        # TODO: Do item ids even exist? Like seriously
-
     def test_add_product(self):
         userID = addUserToDB("userPostingProduct-TESTAddProduct", "userpostingtest@gmail.com", "aaa")
         data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": None, "category_id": 2}
@@ -149,6 +146,52 @@ class TestProductQueries(TestCase):
         deleteProduct(productID, userID)
         deleteUserFromDB(userID)
 
+
+class TestRateQueries(TestCase):
+
+    def test_rate_product(self):
+        # get the buyer
+        buyer = getAccountByEmail("testingreal@gmail.com")['user_id']
+
+        # get a random product
+        product = searchByName('')[0]['product_id']
+
+        # add invalid rating value
+        result = addRating(buyer, product, 6)
+        self.assertEqual(result, 404, "invalid rating")
+
+        # rate an invalid product
+        result = addRating(buyer, -1, 2)
+        self.assertEqual(result, 404, "invalid product")
+
+        # rate a valid product
+        result = addRating(buyer, product, 5)
+
+        # remove the added ratings
+        removeRatings(buyer)
+
+        self.assertEqual(result, 201, "invalid rating")
+
+    def test_get_mean_rating_product(self):
+        # get the buyer
+        buyer = getAccountByEmail("testingreal@gmail.com")['user_id']
+
+        # get a random product
+        product = searchByName('')[:2]
+        p1 = product[0]['product_id']
+        p2 = product[1]['product_id']
+
+        # rate the products
+        addRating(buyer, p1, 5)
+        addRating(buyer, p2, 4)
+
+        # get mean
+        mean = getMean(product[0]['owner_id'])
+
+        # remove the added ratings
+        removeRatings(buyer)
+
+        self.assertEqual(mean, 4.5, "invalid mean")
 
 """
 class TestProductRequests(TestCase):
