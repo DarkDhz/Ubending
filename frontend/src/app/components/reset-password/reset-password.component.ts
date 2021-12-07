@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import axios from "axios";
+import {environment} from "../../enviroment";
 
 @Component({
   selector: 'app-reset-password',
@@ -55,7 +56,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onClickReset(){
-    const path = `https://ubending4.herokuapp.com/api/reset_password/` + this.token
+    const path = environment.path + `/api/reset_password/` + this.token
 
     const params = {
       password: (<HTMLInputElement>document.getElementById("newPassword")).value,

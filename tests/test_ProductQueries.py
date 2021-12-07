@@ -1,7 +1,5 @@
 from unittest import TestCase
-from data.ProductQueries import _toJson, convertState, getAllProductsOfUserByID, getProductById, getProductByIds, \
-    addProduct, deleteProduct, updateProduct, followProduct, unfollowProduct, getFollowingProduct, \
-    getFollowingProductsList
+from data.ProductQueries import *
 from data.UserQueries import *
 import requests
 
@@ -67,6 +65,31 @@ class TestProductQueries(TestCase):
 
         # Now search for 1st product
         # TODO: Look for an item id that exists
+
+    def test_buy_product(self):
+        # get the buyer and the seller ids
+        seller = getAccountByEmail('testingseller@gmail.com')['user_id']
+        buyer = getAccountByEmail('testingreal@gmail.com')['user_id']
+
+        # seller adds a product
+        productData = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": None,
+                       "category_id": 2}
+        testProduct = addProduct(seller, productData)
+
+        # seller tries to buy it's product
+        response = setBuyed(user_id=seller, product_id=testProduct)
+        self.assertEqual(response, 400)
+
+        # now user tries to buy the product
+        response = setBuyed(user_id=buyer, product_id=testProduct)
+        self.assertEqual(response, 200)
+
+        # user tries to buy the product that is already bought
+        response = setBuyed(user_id=buyer, product_id=testProduct)
+        self.assertEqual(response, 400)
+
+        # finally delete the test product
+        deleteProduct(testProduct, seller)
 
     def test_get_product_by_ids(self):
         # First search a product from a user that does not exist

@@ -2,6 +2,7 @@ from data.CategoryQueries import getCategoryNameByID
 from app.database import host, user, password, database
 import mysql.connector as connection
 
+
 def convertState(value):
     if value is None:
         return "Brandnew"
@@ -21,6 +22,24 @@ def _toJson(elem):
     return {'product_id': elem[0], 'owner_id': elem[1], 'name': elem[2],
             'description': elem[3], 'price': elem[4], 'state': elem[5],
             'image': elem[6], 'category_id': elem[7]}
+
+
+def setBuyed(user_id, product_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+
+    query = "UPDATE Products SET buyed = 1, buyer_id = %s WHERE product_id = %s AND owner_id != %s"
+    values = (user_id, product_id, user_id)
+    mycursor.execute(query, values)
+
+    if mycursor.rowcount == 0:
+        return 400
+
+    db.commit()
+    mycursor.close()
+    db.close()
+
+    return 200
 
 
 def getAllProductsOfUserByID(user_id):
@@ -83,7 +102,7 @@ def addProduct(user_id, data):
     query = "INSERT INTO Products (owner_id, name, description, price, state, image, category_id) " \
             "VALUES (%s, %s, %s, %s, %s, %s, %s)"
     values = (
-    user_id, data['name'], data['description'], data['price'], data['state'], data['image'], data['category_id'])
+        user_id, data['name'], data['description'], data['price'], data['state'], data['image'], data['category_id'])
     mycursor.execute(query, values)
     db.commit()
     db.close()
@@ -180,4 +199,3 @@ def getFollowingProduct(user_id, product_id):
     if len(myresult) == 0:
         return False
     return True
-

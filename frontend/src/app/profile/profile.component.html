@@ -14,7 +14,12 @@
   <div class="container" id="container">
     <div class="form-container reset-profile">
       <div class="panel-body" style="margin-left: 20px;margin-top: 20px">
-        <img src="https://ubending.s3.eu-west-3.amazonaws.com/profile_default.png" style="  margin-left: auto;
+        <img *ngIf="!show" src="https://ubending.s3.eu-west-3.amazonaws.com/profile_default.png" style="  margin-left: auto;
+        display: block;
+        margin-right: auto;
+        width: 50%;height:100px;
+        width:100px;">
+        <img *ngIf="show" src="https://ubending.s3.eu-west-3.amazonaws.com/user{{user_id}}.{{image_end}}" style="  margin-left: auto;
         display: block;
         margin-right: auto;
         width: 50%;height:100px;
@@ -46,7 +51,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">Photo</label>
           <div class="col-sm-10" style="display: inline-block">
-            <input id="input_photo" type="file" class="form-control">
+            <input id="input_photo" (change)="selectFile($event)" type="file" class="form-control">
           </div>
         </div>
         <button (click)="changeProfile()" style="margin-top: 20px" id="recoverPassword">Save Changes</button>

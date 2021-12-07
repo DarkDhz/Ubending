@@ -5,9 +5,6 @@ from data.UserQueries import *
 
 class UserRegister(Resource):
 
-    def get(self):
-        return 404
-
     def post(self):
 
         parser = reqparse.RequestParser()  # create parameters parser from request
@@ -37,12 +34,6 @@ class UserRegister(Resource):
 
         return {'message': "Account created succesfully"}, 200
 
-    def delete(self, id):
-        return 404
-
-    def put(self):
-        return 404
-
 
 class UserAccount(Resource):
 
@@ -55,9 +46,6 @@ class UserAccount(Resource):
         if user is None:
             return {'message': 'invalid token'}, 400
         return user, 200
-
-    def post(self):
-        return 404
 
     def delete(self, user_id):
         account = getAccountByID(user_id)
@@ -74,6 +62,8 @@ class UserAccount(Resource):
         parser.add_argument('password', type=str, required=False)
         parser.add_argument('repeat_password', type=str, required=False)
         parser.add_argument('location', type=str, required=False)
+        parser.add_argument('userphoto', type=str, required=False)
+
 
         data = parser.parse_args()
 
@@ -101,9 +91,6 @@ class UserAccount(Resource):
 
 class UserLogin(Resource):
 
-    def get(self, id):
-        return {'message': "Not developed yet"}, 404
-
     def post(self):
         parser = reqparse.RequestParser()  # create parameters parser from request
 
@@ -121,17 +108,9 @@ class UserLogin(Resource):
             return {'message': 'invalid password'}, 400
         return {'token': result.decode('ascii')}, 200
 
-    def delete(self, id):
-        return {'message': "Not developed yet"}, 404
-
-    def put(self, id):
-        return {'message': "Not developed yet"}, 404
 
 
 class ResetRequest(Resource):
-
-    def get(self, id):
-        return {'message': "Not developed yet"}, 404
 
     def post(self):
         parser = reqparse.RequestParser()  # create parameters parser from request
@@ -150,17 +129,8 @@ class ResetRequest(Resource):
         send_reset_email(user_id, data['mail'], mail_svr)
         return {'token': result.decode('utf-8')}, 200
 
-    def delete(self, id):
-        return {'message': "Not developed yet"}, 404
-
-    def put(self, id):
-        return {'message': "Not developed yet"}, 404
-
 
 class ResetPassword(Resource):
-
-    def get(self, id):
-        return {'message': "Not developed yet"}, 404
 
     def post(self, token):
         parser = reqparse.RequestParser()  # create parameters parser from request
@@ -187,9 +157,3 @@ class ResetPassword(Resource):
 
         updatePassword(user, data['password'])
         return {'message': 'Password changed successfully'}, 200
-
-    def delete(self, id):
-        return {'message': "Not developed yet"}, 404
-
-    def put(self, id):
-        return {'message': "Not developed yet"}, 404

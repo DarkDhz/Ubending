@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import axios from "axios";
+import {environment} from "../../enviroment";
 
 @Component({
   selector: 'app-log-in-sign-up',
@@ -43,9 +44,8 @@ export class LogInSignUpComponent implements OnInit {
   }
 
   onClickSignIn(){
-    //const path = `https://ubending4.herokuapp.com/login`
 
-    const path = `https://ubending4.herokuapp.com/login`
+    const path = environment.path + `/login`
     const parameters = {
       mail: (<HTMLInputElement>document.getElementById("email_signin")).value,
       password: (<HTMLInputElement>document.getElementById("password_signin")).value
@@ -66,8 +66,7 @@ export class LogInSignUpComponent implements OnInit {
   }
 
   onClickSignUp(){
-    //const path = `https://ubending4.herokuapp.com/register`
-     const path = `https://ubending4.herokuapp.com/register`
+     const path = environment.path + `/register`
     const parameters = {
       username: 'Undefined',
       mail: (<HTMLInputElement>document.getElementById("email-signup")).value,

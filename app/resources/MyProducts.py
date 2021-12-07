@@ -60,21 +60,24 @@ class MyProductResource(Resource):
             return {'message': "Product with id [{}] doest not exist".format(product_id)}, 404
 
     def put(self, product_id, token):
+
         parser = reqparse.RequestParser()  # create parameters parser from request
 
-        parser.add_argument('token', type=str, required=True, help="This field cannot be left blank")
         parser.add_argument('name', type=str)
         parser.add_argument('description', type=str)
         parser.add_argument('price', type=int)
         parser.add_argument('state', type=int)
         parser.add_argument('category_id', type=int)
+        parser.add_argument('image', type=str)
 
         data = parser.parse_args()
 
-        user = verify_auth_token(data['token'])
+        print(data)
+        user = verify_auth_token(token)
 
         if user is None:
             return {'message': 'invalid token'}, 400
+        print(user)
 
         updateProduct(owner_id=user, product_id=product_id, data=data)
         return 201
@@ -94,11 +97,3 @@ class MyProductListResource(Resource):
         else:
             return result, 200
 
-    def post(self, id):
-        return 404
-
-    def delete(self, id):
-        return 404
-
-    def put(self):
-        return 404
