@@ -9,8 +9,9 @@ class TestProductQueries(TestCase):
 
     def test__to_json(self):
         self.assertEqual(productToJson(self.product), {'product_id': 33, 'owner_id': 1, 'name': 'potato',
-                                                 'description': 'a really nice potato', 'price': 5.0, 'state': 'Used',
-                                                 'image': None, 'category_id': None}, 'The JSON do not match')
+                                                       'description': 'a really nice potato', 'price': 5.0,
+                                                       'state': 'Used',
+                                                       'image': None, 'category_id': None}, 'The JSON do not match')
 
     def test_convert_state(self):
         self.assertEqual(convertState(0), "Brandnew")
@@ -236,12 +237,12 @@ class TestWhishlist(TestCase):
         # Get product list
         result = getFollowingProductsList(self.userID)
 
-        self.assertEqual(result, products, "results do not match")
-
         # unfollow the products
         unfollowProduct(p1, self.userID)
         unfollowProduct(p2, self.userID)
         unfollowProduct(p3, self.userID)
+
+        self.assertEqual(result, products, "results do not match")
 
     def test_follow_and_unfollow_product(self):
         products = searchByName('')[0]
@@ -259,6 +260,7 @@ class TestWhishlist(TestCase):
         p1 = products['product_id']
 
         result = followProduct(p1, self.userID)
+
         self.assertEqual(0, result, "selected product doesn't exist")
 
         # Get product

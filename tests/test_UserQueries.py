@@ -32,31 +32,29 @@ class TestUserQueries(TestCase):
         self.assertEqual(response2, 404)  # User deleted successfully
 
     def test_get_account_by_email(self):
-        # We first add a user to the db
-        addUserToDB("getMailTest", "getByMail2@gmail.com", self.user[2])
-        us = getAccountByEmail("getByMail2@gmail.com")
-        # self.assertEqual(req, None, "Couldn't add user to db")
-        self.assertEqual(us['mail'], "getByMail2@gmail.com")
+        # get a random user
+        us = getAccountByEmail("testingreal@gmail.com")
 
-        # We now delete the user from db
-        deleteUserFromDB(us['user_id'])
+        # assert user exist
+        self.assertEqual(us['mail'], "testingreal@gmail.com")
 
-        # Let's try to find that user again
-        req2 = getAccountByEmail("getByMail2@gmail.com")
+        # Let's try to find a user that doesn't exist
+        req2 = getAccountByEmail("false-user")
         self.assertEqual(req2, 404, 'User should not exist')
 
     def test_get_account_by_id(self):
-        # Add user to db
-        addUserToDB("getIdTest", "getIdMail@gmail.com", self.user[2])
-        us = getAccountByEmail("getIdMail@gmail.com")
-        self.assertEqual(us['mail'], "getIdMail@gmail.com")  # Check that user has been added
+        # get a random user
+        us = getAccountByEmail("testingreal@gmail.com")
+
+        self.assertEqual(us['mail'], "testingreal@gmail.com")  # Check that user has been added
+
         # Get user by id
         response = getAccountByID(us['user_id'])
-        self.assertEqual(us, response, 'Users do not match')
-        deleteUserFromDB(us['user_id'])
 
-        # Let's try to find that user again
-        req2 = getAccountByID(us['user_id'])
+        self.assertEqual(us, response, 'Users do not match')
+
+        # Let's try to find an invalid user
+        req2 = getAccountByID(-1)
         self.assertEqual(req2, 404, 'user should be deleted')
 
     def test_validate_password_format(self):
