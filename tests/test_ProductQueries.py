@@ -8,7 +8,7 @@ class TestProductQueries(TestCase):
     product = [33, 1, 'potato', 'a really nice potato', 5.0, 1, None, None]
 
     def test__to_json(self):
-        self.assertEqual(_toJson(self.product), {'product_id': 33, 'owner_id': 1, 'name': 'potato',
+        self.assertEqual(productToJson(self.product), {'product_id': 33, 'owner_id': 1, 'name': 'potato',
                                                  'description': 'a really nice potato', 'price': 5.0, 'state': 'Used',
                                                  'image': None, 'category_id': None}, 'The JSON do not match')
 

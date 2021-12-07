@@ -14,7 +14,7 @@ def convertState(value):
         return "Destroyed"
 
 
-def _toJson(elem):
+def productToJson(elem):
     if elem[7] is not None:
         elem[7] = getCategoryNameByID(elem[7])
     if elem[5] is not None:
@@ -58,7 +58,7 @@ def getAllProductsOfUserByID(user_id):
 
     toReturn = list()
     for elem in myresult:
-        toReturn.append(_toJson(list(elem)))
+        toReturn.append(productToJson(list(elem)))
     return toReturn
 
 
@@ -76,7 +76,7 @@ def getProductById(product_id):
     if len(myresult) == 0:
         return 404
 
-    return _toJson(list(myresult[0]))
+    return productToJson(list(myresult[0]))
 
 
 def getProductByIds(user_id, product_id):
@@ -93,7 +93,7 @@ def getProductByIds(user_id, product_id):
     if len(myresult) == 0:
         return 404
 
-    return _toJson(list(myresult[0]))
+    return productToJson(list(myresult[0]))
 
 
 def addProduct(user_id, data):
