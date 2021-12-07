@@ -20,7 +20,6 @@ class TestUserQueries(TestCase):
         # Delete user
         deleteUserFromDB(response['user_id'])
 
-
     def test_delete_user_from_db(self):
         # Add user to db
         addUserToDB("deleteTest", "deleteMail@gmail.com", self.user[2])
@@ -30,7 +29,7 @@ class TestUserQueries(TestCase):
         # Delete user and try to recover it
         deleteUserFromDB(response['user_id'])
         response2 = getAccountByEmail("deleteMail@gmail.com")
-        self.assertEqual(response2, 404) # User deleted successfully
+        self.assertEqual(response2, 404)  # User deleted successfully
 
     def test_get_account_by_email(self):
         # We first add a user to the db
@@ -45,7 +44,6 @@ class TestUserQueries(TestCase):
         # Let's try to find that user again
         req2 = getAccountByEmail("getByMail2@gmail.com")
         self.assertEqual(req2, 404, 'User should not exist')
-
 
     def test_get_account_by_id(self):
         # Add user to db
@@ -73,7 +71,6 @@ class TestUserQueries(TestCase):
         self.assertEqual(validatePasswordFormat(pass4, pass4), 4, 'Checking for numbers')
         self.assertEqual(validatePasswordFormat(pass1, pass1), 0, 'Password must check all requirements')
 
-
     def test_validate_login(self):
         account1 = ['potato', 'abcd1234']  # Wrong email
         account2 = ['testingreal@gmail.com', 'wrongPass']  # Wrong password
@@ -82,8 +79,6 @@ class TestUserQueries(TestCase):
         self.assertEqual(validateLogin(account1[0], account1[1]), 404, 'Email does not exist')
         self.assertEqual(validateLogin(account2[0], account2[1]), 400, 'Wrong password')
         self.assertTrue(validateLogin(account3[0], account3[1]), 'Login successful')
-
-
 
     '''
     def test_update_user_profile(self):
@@ -109,6 +104,7 @@ class TestUserQueries(TestCase):
         # Delete user from db
         deleteUserFromDB(us['user_id'])
     '''
+
 
 class TestUserRequests(TestCase):
     '''
@@ -154,5 +150,3 @@ class TestUserRequests(TestCase):
         self.assertEqual(200, z.status_code)
 
     '''
-
-
