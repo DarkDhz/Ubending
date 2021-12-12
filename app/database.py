@@ -7,7 +7,7 @@ password = "Xny8nFtYVz"
 database = "sql11445855"
 
 """
-# db-aux
+# vps
 host = "sql11.freesqldatabase.com"
 user = "sql11453270"
 password = "iedWsHbbSd"
