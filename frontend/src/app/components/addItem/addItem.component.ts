@@ -3,6 +3,7 @@ import {AppComponent} from "../../app.component";
 import axios from 'axios'
 import {Router} from "@angular/router";
 import {UploadService} from "../../services/upload.service";
+import {environment} from "../../enviroment";
 
 @Component({
   selector: 'app-prova2',
@@ -36,7 +37,7 @@ export class addItemComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    const path = 'https://ubending4.herokuapp.com/categories'
+    const path = environment.path + '/categories'
     axios.get(path)
       .then((res) => {
 
@@ -100,7 +101,7 @@ export class addItemComponent implements OnInit{
     if (!product_name || !product_price || !product_desc || product_state == -1 || this.category_id == -1 || this.selectedFiles == undefined) {
       alert("invalid params")
     } else {
-      const path = `https://ubending4.herokuapp.com/myproduct/` + this.token
+      const path = environment.path + `/myproduct/` + this.token
 
       // @ts-ignore
       const params = {

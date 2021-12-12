@@ -97,11 +97,3 @@ class MyProductListResource(Resource):
         else:
             return result, 200
 
-    def post(self, id):
-        return 404
-
-    def delete(self, id):
-        return 404
-
-    def put(self):
-        return 404

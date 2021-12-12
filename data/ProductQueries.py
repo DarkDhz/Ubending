@@ -1,6 +1,7 @@
 from data.CategoryQueries import getCategoryNameByID
 from app.database import host, user, password, database
 import mysql.connector as connection
+import numpy as np
 
 
 def convertState(value):
@@ -14,7 +15,7 @@ def convertState(value):
         return "Destroyed"
 
 
-def _toJson(elem):
+def productToJson(elem):
     if elem[7] is not None:
         elem[7] = getCategoryNameByID(elem[7])
     if elem[5] is not None:
@@ -58,7 +59,7 @@ def getAllProductsOfUserByID(user_id):
 
     toReturn = list()
     for elem in myresult:
-        toReturn.append(_toJson(list(elem)))
+        toReturn.append(productToJson(list(elem)))
     return toReturn
 
 
@@ -76,7 +77,7 @@ def getProductById(product_id):
     if len(myresult) == 0:
         return 404
 
-    return _toJson(list(myresult[0]))
+    return productToJson(list(myresult[0]))
 
 
 def getProductByIds(user_id, product_id):
@@ -93,7 +94,7 @@ def getProductByIds(user_id, product_id):
     if len(myresult) == 0:
         return 404
 
-    return _toJson(list(myresult[0]))
+    return productToJson(list(myresult[0]))
 
 
 def addProduct(user_id, data):
@@ -106,7 +107,6 @@ def addProduct(user_id, data):
     mycursor.execute(query, values)
     db.commit()
     db.close()
-
     return mycursor.lastrowid
 
 
@@ -116,6 +116,10 @@ def deleteProduct(product_id, owner_id):
     query = "DELETE FROM Products WHERE product_id = %s and owner_id = %s"
     values = (product_id, owner_id)
     mycursor.execute(query, values)
+    # Delete products from whishlist
+    query2 = "DELETE FROM ProductsFollowing WHERE product_id = %s"
+    values2 = (product_id,)
+    mycursor.execute(query2, values2)
     db.commit()
     db.close()
 
@@ -133,3 +137,125 @@ def updateProduct(product_id, owner_id, data):
 
     db.commit()
     db.close()
+
+
+def addRating(buyer_id, product_id, value):
+    if value < 0 or value > 5:
+        return 404
+
+    product_info = getProductById(product_id)
+    if product_info == 404:
+        return 404
+
+    product_owner = product_info['owner_id']
+
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+
+    query = "INSERT INTO Ratings (product_id, user_id, buyer_id, rating) VALUES (%s, %s, %s, %s)"
+    values = (product_id, product_owner, buyer_id, value)
+    mycursor.execute(query, values)
+
+    db.commit()
+    mycursor.close()
+    db.close()
+    return 201
+
+
+def getMean(user_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+
+    query = "SELECT rating FROM Ratings WHERE user_id = %s"
+    values = (user_id,)
+    mycursor.execute(query, values)
+    result = mycursor.fetchall()
+    values = list()
+    for element in result:
+        values.append(element[0])
+
+    mycursor.close()
+    db.close()
+
+    return np.mean(values)
+
+
+def getFollowingProductsList(user_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+
+    query = "SELECT * FROM ProductsFollowing WHERE user_id = %s"
+    values = (user_id,)
+    mycursor.execute(query, values)
+
+    myresult = mycursor.fetchall()
+    db.close()
+
+    if len(myresult) == 0:
+        return 404
+
+    toReturn = list()
+    for elem in myresult:
+        item = getProductById(elem[0])
+        toReturn.append(item)
+    return toReturn
+
+
+def followProduct(product_id, user_id):
+    product_info = getProductById(product_id)
+    if product_info == 404:
+        return 404
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+    query = "INSERT INTO ProductsFollowing (product_id, user_id) " \
+            "VALUES (%s, %s)"
+    values = (product_id, user_id)
+    mycursor.execute(query, values)
+    db.commit()
+    db.close()
+    return 0
+
+
+def unfollowProduct(product_id, user_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+    query = "DELETE FROM ProductsFollowing WHERE product_id = %s and user_id = %s"
+    values = (product_id, user_id)
+    mycursor.execute(query, values)
+    db.commit()
+    db.close()
+    return 0
+
+
+def getFollowingProduct(user_id, product_id):
+    db = connection.connect(host=host, user=user, password=password, database=database)
+    mycursor = db.cursor()
+
+    query = "SELECT * FROM ProductsFollowing WHERE product_id = %s and user_id = %s"
+    values = (product_id, user_id,)
+    mycursor.execute(query, values)
+
+    myresult = mycursor.fetchall()
+    db.close()
+
+    if len(myresult) == 0:
+        return False
+    return True
+  
+'''
+# add a rating
+
+import requests
+product = 14
+token = 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzODU0OTk2NywiZXhwIjoxNjQ0NTQ5OTY3fQ.eyJ1c2VyX2lkIjo5OTN9.W6pDLw17hIoJb3R5krD9lsOy2wZsjeI9PTy4SVsmkdNEFCYDcVxvUVLRDsJW16Dxo7gv2eO4jPNB_dEHK53cEQ'
+url = 'http://127.0.0.1:5000/api/rate/' + str(product) + "/" + token
+myobj = {'rating': 3}
+x = requests.post(url, data=myobj)
+
+# get ratings
+
+import requests
+user = 1
+url = 'http://127.0.0.1:5000/api/ratings/' + str(user)
+x = requests.get(url)
+'''

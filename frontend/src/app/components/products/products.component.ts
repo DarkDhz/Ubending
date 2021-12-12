@@ -102,13 +102,13 @@ export class ProductsComponent implements OnInit {
     like!.classList.toggle('press');
   }
 
-  loadProducts(name: String) {
-
+  loginRequiered() {
+    this.router.navigate(['/login-signup']);
   }
 
   getProducts(){
 
-    const path = environment.path + '/api/search'
+    const path = environment.path + '/api/search/' + this.token
     const params = {
       name: '',
       from: 0,
