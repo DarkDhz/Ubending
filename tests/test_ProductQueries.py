@@ -276,12 +276,13 @@ class TestWhishlist(TestCase):
         followProduct(p3, self.userID)
 
         # Get product list
-        result = getFollowingProductsList(self.userID)
-
-        # unfollow the products
-        unfollowProduct(p1, self.userID)
-        unfollowProduct(p2, self.userID)
-        unfollowProduct(p3, self.userID)
+        try:
+            result = getFollowingProductsList(self.userID)
+        finally:
+            # unfollow the products
+            unfollowProduct(p1, self.userID)
+            unfollowProduct(p2, self.userID)
+            unfollowProduct(p3, self.userID)
 
         self.assertEqual(result, products, "results do not match")
 
