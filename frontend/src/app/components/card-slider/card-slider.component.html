@@ -5,7 +5,7 @@
                     (breakpoint)="breakpoint($event)"
                     (afterChange)="afterChange($event)"
                     (beforeChange)="beforeChange($event)">
-  <div ngxSlickItem *ngFor="let slide of slides" class="slide" (click)="redirectCategory(slide.id)">
+  <div ngxSlickItem *ngFor="let slide of slides" class="slide" (click)="redirectCategory(slide.id)" style="cursor: pointer">
     <div class="category-card">
       <img src="{{ slide.img }}" alt="" width="100%">
       <div class="title">{{ slide.title }}</div>
