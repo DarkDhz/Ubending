@@ -1,0 +1,23 @@
+<body>
+<section class="grid">
+  <article class="card" *ngFor="let num of [1,2,3,4,5,6,7]">
+    <span style="--i:0"></span>
+    <span style="--i:1"></span>
+    <span style="--i:2"></span>
+    <span style="--i:3"></span>
+    <div [id]="'liketext-' + num" class="like-text">Wishlisted!</div>
+    <div class="glass">
+      <div class="like-ctn">
+        <i [id]="'heart-' + num" class="heart-class" (click)="wishlistAnimation(num)"></i>
+      </div>
+      <div class="img-product">
+        <img id="img" src="https://i.imgur.com/iwaAllL.jpg[/img]">
+      </div>
+      <div class="content-box">
+        <h2>Product Name<br><i>25€</i><br></h2>
+        <a class="buy-btn">Buy Now</a>
+      </div>
+    </div>
+  </article>
+</section>
+</body>
