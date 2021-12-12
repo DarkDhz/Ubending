@@ -22,7 +22,6 @@ password = "1234"
 database = "ubending"
 """
 
-
 db = connection.connect(
     host=host,
     user=user,
