@@ -147,13 +147,19 @@ export class ProductsComponent implements OnInit {
   editProfile() {
     this.router.navigate(['/user-profile'])
   }
+
   openDialogPayment(idProduct:Number,nameProduct:String,descProduct:String,priceProduct:Number,imagePath:String) {
-    const dialogRef = this.dialog.open(Payment, {panelClass: 'custom-modalbox',
+    if (this.isLogged) {
+      const dialogRef = this.dialog.open(Payment, {panelClass: 'custom-modalbox',
       data: {idProduct: idProduct,nameProduct: nameProduct,priceProduct:priceProduct, descProduct:descProduct,image: imagePath}});
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    } else {
+      this.router.navigate(['/login-signup'])
+    }
+
   }
 
 }
