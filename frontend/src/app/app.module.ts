@@ -18,6 +18,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { HomeProductsComponent } from './components/home-products/home-products.component';
 import {UserProductsComponent, DialogEdit} from "./components/user-products/user-products.component";
 import {Payment} from "./components/products/products.component";
+import { WishlistComponent } from './components/wishlist/wishlist.component';
 
 
 /*import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';*/
@@ -34,7 +35,8 @@ import {Payment} from "./components/products/products.component";
     HomeProductsComponent,
     UserProductsComponent,
     DialogEdit,
-    Payment
+    Payment,
+    WishlistComponent
     ],
   imports: [
     BrowserModule,
