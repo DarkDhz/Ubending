@@ -23,6 +23,9 @@ export class ProductsComponent implements OnInit {
   isLogged = false;
   token = "null";
   state = {products: []}
+  category = 0
+  params = {}
+  name = ''
 
   constructor(public dialog: MatDialog,private router: Router) {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
@@ -34,65 +37,53 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getProducts()
-
     const search = document.getElementById("search"); //pass the id of the input of searchbar
+    try{
+      this.category = JSON.parse(<string>localStorage.getItem('category'));
+    }
+    catch (error){
+    }
+    try{
+      this.name = JSON.parse(<string>localStorage.getItem('nameSearch'));
+      localStorage.setItem('nameSearch', JSON.stringify(''));
+      // @ts-ignore
+      search.value = this.name
+    }
+    catch (error){
+    }
+    console.log(this.category)
+    this.getProducts(this.category)
+
     const products = document.getElementsByClassName("product_name")
     const btns = document.querySelectorAll('.btn');
     const storeProducts = document.getElementsByClassName("product_card")
+    console.log(btns)
+    // @ts-ignore
+    if(btns[1].innerText == "All"){
+      btns[this.category + 1].classList.add('active');
+    }
+    else{
+      btns[this.category].classList.add('active');
 
-    search!.addEventListener("keyup", filterProducts);
-
-    function filterProducts(e:any){
-      const text = e.target.value.toLowerCase();
-      for (let i = 0; i < products.length; i++) {
-        // @ts-ignore
-        const item = products.item(i).firstChild!.textContent;
-        if (item!.toLowerCase().indexOf(text) != -1) {
-          // @ts-ignore
-          products.item(i).parentElement!.parentElement!.style.display = "block"
-        } else {
-          // @ts-ignore
-          products.item(i).parentElement!.parentElement!.style.display = "none"
-        }
-      }
     }
 
     for (let i = 0; i < btns.length; i++) {
 
       btns[i].addEventListener('click', (e) => {
-        for(let x=0; x<btns.length; x++)
-        {
-          btns[x].classList.remove('active');
-        }
-        btns[i].classList.add('active');
-
-        e.preventDefault()
-
         // @ts-ignore
-        const filter = e.target.dataset.filter;
-
-        for (let x = 0; x < storeProducts.length; x++) {
-          // @ts-ignore
-          console.log(storeProducts.item(x).classList)
-          if (filter === 'all'){
-            // @ts-ignore
-            storeProducts.item(x).style.display = 'block'
-          } else {
-            // @ts-ignore
-            if (storeProducts.item(x).classList.contains(filter)){
-              // @ts-ignore
-              storeProducts.item(x).style.display = 'block'
-            } else {
-              // @ts-ignore
-              storeProducts.item(x).style.display = 'none'
-            }
-          }
+        if(btns[1].innerText == "All"){
+          localStorage.setItem('category', JSON.stringify(i-1));
+        }
+        else{
+          localStorage.setItem('category', JSON.stringify(i));
 
         }
+        window.location.reload();
 
       });
     }
+
+
   }
 
   wishlistAnimation(num: number) {
@@ -105,16 +96,35 @@ export class ProductsComponent implements OnInit {
   loginRequiered() {
     this.router.navigate(['/login-signup']);
   }
+  searchByName(){
+    const search = document.getElementById("search"); //pass the id of the input of searchbar
+    // @ts-ignore
+    localStorage.setItem('nameSearch', JSON.stringify(search.value));
+    window.location.reload();
 
-  getProducts(){
+
+  }
+
+  getProducts(category:number){
 
     const path = environment.path + '/api/search/' + this.token
-    const params = {
-      name: '',
-      from: 0,
-      jump: 20
+    if(this.category == 0){
+      this.params = {
+        name: this.name,
+        from: 0,
+        jump: 20
+      }
     }
-    axios.post(path, params)
+    else{
+      this.params = {
+        name: this.name,
+        from: 0,
+        jump: 20,
+        category: category
+      }
+    }
+
+    axios.post(path, this.params)
       .then((res) => {
         // @ts-ignore
         this.state.products = res.data
