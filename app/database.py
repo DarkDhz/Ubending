@@ -1,6 +1,6 @@
 import mysql.connector as connection
 
-
+"""
 host = "sql11.freesqldatabase.com"
 user = "sql11445855"
 password = "Xny8nFtYVz"
@@ -8,12 +8,12 @@ database = "sql11445855"
 
 """
 # vps
-host = "sql11.freesqldatabase.com"
-user = "sql11453270"
-password = "iedWsHbbSd"
-database = "sql11453270"
+host = "54.36.191.29"
+user = "root"
+password = "ubending"
+database = "Ubending"
 
-"""
+
 """
 # arnau-local
 host = "localhost"

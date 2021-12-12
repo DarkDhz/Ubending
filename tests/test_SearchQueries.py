@@ -6,24 +6,18 @@ from data.ProductQueries import *
 
 class TestSearchQueries(TestCase):
     def test_search_by_category(self):
-        technologyItems = [{'product_id': 17, 'owner_id': 1, 'name': 'Auriculares',
-                            'description': 'not des', 'price': 70, 'state': 'Destroyed',
-                            'image': 'jpeg', 'category_id': 'Technology'}, {'product_id': 18,
-                                                                            'owner_id': 1, 'name': 'SmartWatch',
-                                                                            'description': 'asdasd',
-                                                                            'price': 2000, 'state': 'Destroyed',
-                                                                            'image': 'jpeg',
-                                                                            'category_id': 'Technology'}]
-        self.assertEqual(searchByCategory(6)[:2], technologyItems)
+        technologyItems = {'category_id': 'Technology', 'description': 'Lo vendo porque no lo uso', 'image': 'jpeg',
+                           'name': 'Reloj', 'owner_id': 3, 'price': 200, 'product_id': 1, 'state': 'Brandnew'}
+        self.assertEqual(searchByCategory(6)[0], technologyItems)
 
     def test_search_by_name(self):
         # SEARCH FOR UNEXISTING PRODUCT
         self.assertEqual(searchByName("UnexistingProduct_FBJKSFHBJBFJKBJFBGKJBSFGBMSJKFHJKGSD"), 404)
 
         # SEARCH FOR EXISTING PRODUCT
-        smartwatch = [{'product_id': 18, 'owner_id': 1, 'name': 'SmartWatch', 'description': 'asdasd', 'price': 2000,
-                       'state': 'Destroyed', 'image': 'jpeg', 'category_id': 'Technology'}]
-        self.assertEqual(searchByName("SmartWatch"), smartwatch)
+        smartwatch = {'category_id': 'Technology', 'description': 'Lo vendo porque no lo uso', 'image': 'jpeg',
+                           'name': 'Reloj', 'owner_id': 3, 'price': 200, 'product_id': 1, 'state': 'Brandnew'}
+        self.assertEqual(searchByName("Reloj")[0], smartwatch)
 
         # user and product should be created for testing purposes and then deleted when deleteProduct(productID, userID) and deleteUser(userID) work fine
 
@@ -33,7 +27,6 @@ class TestSearchQueries(TestCase):
         self.assertEqual(searchByCategoryAndName(6, "Unexisting_SmartWatch"), 404)
 
         # SEARCH FOR EXISTING PRODUCT
-        smartwatch = [
-            {'product_id': 18, 'owner_id': 1, 'name': 'SmartWatch', 'description': 'asdasd', 'price': 2000, 'state': 'Destroyed',
-             'image': 'jpeg', 'category_id': 'Technology'}]
-        self.assertEqual(searchByCategoryAndName(6, "SmartWatch"), smartwatch)
+        smartwatch = {'category_id': 'Technology', 'description': 'Lo vendo porque no lo uso', 'image': 'jpeg',
+                      'name': 'Reloj', 'owner_id': 3, 'price': 200, 'product_id': 1, 'state': 'Brandnew'}
+        self.assertEqual(searchByCategoryAndName(6, smartwatch['name'])[0], smartwatch)

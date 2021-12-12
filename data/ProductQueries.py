@@ -100,8 +100,8 @@ def getProductByIds(user_id, product_id):
 def addProduct(user_id, data):
     db = connection.connect(host=host, user=user, password=password, database=database)
     mycursor = db.cursor()
-    query = "INSERT INTO Products (owner_id, name, description, price, state, image, category_id) " \
-            "VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    query = "INSERT INTO Products (owner_id, name, description, price, state, image, category_id, buyed) " \
+            "VALUES (%s, %s, %s, %s, %s, %s, %s, 0)"
     values = (
         user_id, data['name'], data['description'], data['price'], data['state'], data['image'], data['category_id'])
     mycursor.execute(query, values)
