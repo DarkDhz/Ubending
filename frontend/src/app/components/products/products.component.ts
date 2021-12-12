@@ -95,7 +95,14 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  loadPorducts(name: String) {
+  wishlistAnimation(num: number) {
+    const heart = document.getElementById('heart-'+num);
+    const like = document.getElementById('liketext-'+num);
+    heart!.classList.toggle('press');
+    like!.classList.toggle('press');
+  }
+
+  loadProducts(name: String) {
 
   }
 
