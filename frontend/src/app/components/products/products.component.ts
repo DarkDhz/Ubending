@@ -51,13 +51,11 @@ export class ProductsComponent implements OnInit {
     }
     catch (error){
     }
-    console.log(this.category)
     this.getProducts(this.category)
 
     const products = document.getElementsByClassName("product_name")
     const btns = document.querySelectorAll('.btn');
     const storeProducts = document.getElementsByClassName("product_card")
-    console.log(btns)
     // @ts-ignore
     if(btns[1].innerText == "All"){
       btns[this.category + 1].classList.add('active');
@@ -123,12 +121,12 @@ export class ProductsComponent implements OnInit {
         category: category
       }
     }
+    console.log(category)
 
     axios.post(path, this.params)
       .then((res) => {
         // @ts-ignore
         this.state.products = res.data
-        console.log(res.data)
       })
       .catch((error) => {
         console.error(error)
@@ -164,7 +162,7 @@ export class ProductsComponent implements OnInit {
       data: {idProduct: idProduct,nameProduct: nameProduct,priceProduct:priceProduct, descProduct:descProduct,image: imagePath}});
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
+
       });
     } else {
       this.router.navigate(['/login-signup'])

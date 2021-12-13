@@ -115,7 +115,10 @@ export class LogInSignUpComponent implements OnInit {
           // @ts-ignore
           localStorage.setItem('currentUser', JSON.stringify({ token: res.data.token}));
           // @ts-ignore
-          alert(res.data.message)
+          console.log('token : ' + res.data.token)
+
+          this.router.navigate(['/home']);
+          alert('USER REGISTER SUCCESSFULLY')
 
         })
         .catch((error) => {

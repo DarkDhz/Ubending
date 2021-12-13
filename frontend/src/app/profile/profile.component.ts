@@ -150,6 +150,8 @@ export class ProfileComponent implements OnInit {
           this.uploadService.deleteFile("user"+this.user_id+"."+this.image_end)
           this.upload("user" + this.user_id)
         }
+        localStorage.removeItem('username')
+        localStorage.removeItem('location')
         this.router.navigate(['/home'])
       })
       .catch((error) => {

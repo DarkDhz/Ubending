@@ -30,9 +30,10 @@ class UserRegister(Resource):
             return {"Your password must have at least 1 number"}, 400
         elif pwCode == 4:
             return {"Your password must have at least 1 uppercase letter."}, 400
-        addUserToDB(data['username'], data['mail'], data['password'])
+        id = addUserToDB(data['username'], data['mail'], data['password'])
 
-        return {'message': "Account created succesfully"}, 200
+        token = generate_auth_token(user_id=id)
+        return {'token': token.decode('ascii')}, 200
 
 
 class UserAccount(Resource):

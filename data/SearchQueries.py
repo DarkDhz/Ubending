@@ -60,7 +60,7 @@ def searchByCategoryAndName(category_id, name, start_point=0, jump=12, token=Non
         query = "SELECT * FROM Products WHERE name LIKE '%" + name + "%' and category_id = %s and buyed = 0 LIMIT %s,%s"
         values = (category_id, start_point, jump + start_point,)
     else:
-        query = "SELECT * FROM Products WHERE name LIKE '%" + name + "%' and category_id = %s and buyed = 0 and owner_id != %s LIMIT %s,%s"
+        query = "SELECT * FROM Products WHERE name LIKE '%" + name + "%' and owner_id != %s and category_id = %s and buyed = 0 LIMIT %s,%s"
         values = (token, category_id, start_point, jump + start_point,)
 
     cursor.execute(query, values)
