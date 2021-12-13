@@ -125,7 +125,6 @@ export class LogInSignUpComponent implements OnInit {
   get confirmPasswordUser(){
     const password =  (<HTMLInputElement>document.getElementById("password-signup")).value
     const repeat_password =  (<HTMLInputElement>document.getElementById("rep-password-signup")).value
-    console.log(password == repeat_password)
     return !(password == repeat_password)
   }
   get emailUser(){
