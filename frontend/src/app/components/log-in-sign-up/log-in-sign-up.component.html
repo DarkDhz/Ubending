@@ -15,6 +15,8 @@
         <small *ngIf="showAlertInvalidEmail" class="text-danger">Please provide a valid email address</small>
         <small *ngIf="showAlertInvalidPassword" class="text-danger">Please provide a valid password(8 characters in length,Lowercase letters,Uppercase letters,Numbers)</small>
         <small *ngIf="showAlertDiferentPassword" class="text-danger">Please provide the same password</small>
+        <small *ngIf="showAlertErrorBE" class="text-danger">{{errorBE}}</small>
+
       </form>
     </div>
     <div class="form-container sign-in-container">
@@ -24,6 +26,8 @@
         <input type="password" placeholder="Password" id="password_signin"/>
         <a href="#" (click)="onClickForgot()" routerLink="/recover">Forgot your password?</a>
         <button (click)="onClickSignIn()">Sign In</button>
+        <small *ngIf="showAlertErrorLoginBE" class="text-danger">{{errorLoginBE}}</small>
+
       </form>
     </div>
     <div class="overlay-container">

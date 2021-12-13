@@ -17,6 +17,10 @@ export class LogInSignUpComponent implements OnInit {
   showAlertInvalidPassword = false;
   showAlertRequired = false;
   showAlertDiferentPassword = false;
+  showAlertErrorBE = false;
+  showAlertErrorLoginBE = false;
+  errorBE = '';
+  errorLoginBE = '';
   constructor(private router: Router) {
 
     const email = document.getElementById("email_signin")!;
@@ -71,8 +75,9 @@ export class LogInSignUpComponent implements OnInit {
       })
       .catch((error) => {
         console.error(error)
+        this.showAlertErrorLoginBE = true;
+        this.errorLoginBE = error.response.data.message.toString()
         // @ts-ignore
-        alert(error.response.data.message)
         //alert(error.response.data.message)
       })
   }
@@ -82,6 +87,7 @@ export class LogInSignUpComponent implements OnInit {
     this.showAlertInvalidPassword = false;
     this.showAlertRequired = false;
     this.showAlertDiferentPassword = false;
+    this.showAlertErrorBE = false;
     const password =  (<HTMLInputElement>document.getElementById("password-signup")).value
     const repeat_password =  (<HTMLInputElement>document.getElementById("rep-password-signup")).value
     if (this.emailUser!.errors?.required || this.passwordUser!.errors?.required){
@@ -111,11 +117,10 @@ export class LogInSignUpComponent implements OnInit {
           // @ts-ignore
           alert(res.data.message)
 
-
         })
         .catch((error) => {
-          console.error(error)
-          alert(error.response.data.message)
+          this.showAlertErrorBE = true;
+          this.errorBE = error.response.data.message.toString()
         })
     }
   }
