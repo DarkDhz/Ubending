@@ -204,7 +204,7 @@ export class Payment {
         Validators.pattern("^[0-9]{5,5}$")]),
       direction: new FormControl('', [
         Validators.required,
-        Validators.pattern("^[a-zA-Z0-9]{2,100}$")])
+        Validators.pattern("^[a-zA-Z0-9 ]{2,100}$")])
     }
 
     );
