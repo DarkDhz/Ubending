@@ -30,7 +30,6 @@ export class SearchBarComponent implements OnInit {
       this.username = "" + name.user
       this.location = "" + loc.loc
     } else {
-      console.log("request")
       const path = environment.path + `/api/userinfo/` + this.token
       axios.get(path)
       .then((res) => {
@@ -59,9 +58,6 @@ export class SearchBarComponent implements OnInit {
       })
     }
 
-
-    console.log("token:" +this.token)
-    console.log(this.isLogged)
   }
 
 

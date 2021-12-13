@@ -71,7 +71,7 @@ export class ProfileComponent implements OnInit {
         this.user_id = res.data.user_id
         // @ts-ignore
         this.image_end = res.data.userphoto
-        if (this.image_end != 'null') {
+        if ((this.image_end != 'null') && (this.image_end != null)) {
           this.show = true
         }
 
