@@ -28,7 +28,7 @@ class WishlistResource(Resource):
         followProduct(product_id, user)
         return {'message': "Product with id [{}] added to wishlist".format(product_id)}, 200
 
-    def delete(self, product_id, token):
+    def delete(self, token, product_id):
         user = verify_auth_token(token)
 
         if user is None:

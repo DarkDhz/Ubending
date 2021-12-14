@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import axios from "axios";
 import {environment} from "../../enviroment";
@@ -53,6 +53,7 @@ export class ProductsComponent implements OnInit {
     }
     this.getProducts(this.category)
 
+
     const products = document.getElementsByClassName("product_name")
     const btns = document.querySelectorAll('.btn');
     const storeProducts = document.getElementsByClassName("product_card")
@@ -80,20 +81,56 @@ export class ProductsComponent implements OnInit {
 
       });
     }
-
-
   }
 
   wishlistAnimation(num: number) {
-    const heart = document.getElementById('heart-'+num);
-    const like = document.getElementById('liketext-'+num);
-    heart!.classList.toggle('press');
-    like!.classList.toggle('press');
+    if (!this.isLogged) {
+      this.loginRequiered()
+    } else {
+      const heart = document.getElementById('heart-'+num);
+      //const like = document.getElementById('liketext-'+num);
+      const click = heart!.classList.toggle('press');
+      //like!.classList.toggle('press');
+
+      if (click) {
+        this.follow(num)
+      } else {
+        this.unfollow(num)
+      }
+    }
+  }
+
+  follow(id: number) {
+    const path = environment.path + '/api/wishlist/' + this.token + "/" + id
+    axios.post(path)
+      .then((res) => {
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  unfollow(id: number) {
+    const path = environment.path + '/api/wishlist/' + this.token + "/" + id
+    axios.delete(path)
+      .then((res) => {
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  isFollowing(id: number, value: boolean) {
+    if (value) {
+      return ['press']
+    }
+    return []
   }
 
   loginRequiered() {
     this.router.navigate(['/login-signup']);
   }
+
   searchByName(){
     const search = document.getElementById("search"); //pass the id of the input of searchbar
     // @ts-ignore
