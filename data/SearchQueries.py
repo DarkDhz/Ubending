@@ -1,6 +1,6 @@
 from data.CategoryQueries import getCategoryNameByID
 from data.ProductQueries import productToJson, convertState, getFollowingProductsList
-from app.database import db
+from app.database import db_host, db_user, db_password, database
 import mysql.connector as connection
 
 
@@ -15,7 +15,7 @@ def searchToJson(elem, fllw):
 
 
 def searchByCategory(category_id, start_point=0, jump=12, token=None):
-
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     cursor = db.cursor()
 
     if token is None:
@@ -28,11 +28,14 @@ def searchByCategory(category_id, start_point=0, jump=12, token=None):
     cursor.execute(query, values)
 
     result = cursor.fetchall()
+    cursor.close()
+    db.close()
 
     return extractProducts(result=result, user_id=token)
 
 
 def searchByName(name, start_point=0, jump=12, token=None):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     cursor = db.cursor()
 
     if token is None:
@@ -45,11 +48,14 @@ def searchByName(name, start_point=0, jump=12, token=None):
     cursor.execute(query, values)
 
     result = cursor.fetchall()
+    cursor.close()
+    db.close()
 
     return extractProducts(result=result, user_id=token)
 
 
 def searchByCategoryAndName(category_id, name, start_point=0, jump=12, token=None):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     cursor = db.cursor()
 
     if token is None:
@@ -60,6 +66,8 @@ def searchByCategoryAndName(category_id, name, start_point=0, jump=12, token=Non
         values = (token, category_id, start_point, jump + start_point,)
 
     cursor.execute(query, values)
+    cursor.close()
+    db.close()
 
     result = cursor.fetchall()
     return extractProducts(result=result, user_id=token)
@@ -82,6 +90,7 @@ def extractProducts(result, user_id):
 
 
 def getFollowingQuery(user_id):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
 
     query = "SELECT product_id FROM ProductsFollowing WHERE user_id = %s"
@@ -90,6 +99,7 @@ def getFollowingQuery(user_id):
 
     myresult = mycursor.fetchall()
     mycursor.close()
+    db.close()
     return myresult
 
 
