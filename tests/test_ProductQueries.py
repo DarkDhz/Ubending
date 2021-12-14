@@ -267,6 +267,10 @@ class TestWhishlist(TestCase):
     def test_get_following_products_list(self):
         # Get some products to user whishlist
         products = searchByName('')[:3]
+
+        for item in products:
+            item.pop('following')
+
         p1 = products[0]['product_id']
         p2 = products[1]['product_id']
         p3 = products[2]['product_id']
