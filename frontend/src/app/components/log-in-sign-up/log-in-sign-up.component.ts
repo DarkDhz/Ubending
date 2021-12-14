@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { first } from 'rxjs/operators';
 import axios from "axios";
 import {environment} from "../../enviroment";
@@ -11,8 +11,16 @@ import {environment} from "../../enviroment";
   styleUrls: ['./log-in-sign-up.component.css']
 })
 export class LogInSignUpComponent implements OnInit {
-
-
+  // @ts-ignore
+  userEmail: FormGroup ;
+  showAlertInvalidEmail = false;
+  showAlertInvalidPassword = false;
+  showAlertRequired = false;
+  showAlertDiferentPassword = false;
+  showAlertErrorBE = false;
+  showAlertErrorLoginBE = false;
+  errorBE = '';
+  errorLoginBE = '';
   constructor(private router: Router) {
 
     const email = document.getElementById("email_signin")!;
@@ -20,6 +28,14 @@ export class LogInSignUpComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userEmail = new FormGroup({
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern('(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}')])
+    })
     const signUpButton = document.getElementById('signUp')!;
     const signInButton = document.getElementById('signIn')!;
     const container = document.getElementById('container')!;
@@ -59,33 +75,68 @@ export class LogInSignUpComponent implements OnInit {
       })
       .catch((error) => {
         console.error(error)
+        this.showAlertErrorLoginBE = true;
+        this.errorLoginBE = error.response.data.message.toString()
         // @ts-ignore
-        alert(error.response.data.message)
         //alert(error.response.data.message)
       })
   }
 
   onClickSignUp(){
-     const path = environment.path + `/register`
-    const parameters = {
-      username: 'Undefined',
-      mail: (<HTMLInputElement>document.getElementById("email-signup")).value,
-      password: (<HTMLInputElement>document.getElementById("password-signup")).value,
-      repeat_password: (<HTMLInputElement>document.getElementById("rep-password-signup")).value
+    this.showAlertInvalidEmail = false;
+    this.showAlertInvalidPassword = false;
+    this.showAlertRequired = false;
+    this.showAlertDiferentPassword = false;
+    this.showAlertErrorBE = false;
+    const password =  (<HTMLInputElement>document.getElementById("password-signup")).value
+    const repeat_password =  (<HTMLInputElement>document.getElementById("rep-password-signup")).value
+    if (this.emailUser!.errors?.required || this.passwordUser!.errors?.required){
+      this.showAlertRequired = true;
+    } else if (this.emailUser!.errors?.pattern) {
+      this.showAlertInvalidEmail = true;
     }
-    axios.post(path, parameters)
-      .then((res) => {
-        // @ts-ignore
-        localStorage.setItem('currentUser', JSON.stringify({ token: res.data.token}));
-        // @ts-ignore
-        alert(res.data.message)
+    else if (this.passwordUser!.errors?.pattern) {
+      this.showAlertInvalidPassword = true;
+    }
+    else if(password != repeat_password){
+      this.showAlertDiferentPassword = true;
+    }
+    else{
+       const path = environment.path + `/register`
+       const parameters = {
+        username: 'Undefined',
+        mail: (<HTMLInputElement>document.getElementById("email-signup")).value,
+        password: password,
+        repeat_password: repeat_password
+      }
 
+      axios.post(path, parameters)
+        .then((res) => {
+          // @ts-ignore
+          localStorage.setItem('currentUser', JSON.stringify({ token: res.data.token}));
+          // @ts-ignore
+          console.log('token : ' + res.data.token)
 
-      })
-      .catch((error) => {
-        console.error(error)
-        alert(error.response.data.message)
-      })
+          this.router.navigate(['/home']);
+          alert('USER REGISTER SUCCESSFULLY')
+
+        })
+        .catch((error) => {
+          this.showAlertErrorBE = true;
+          this.errorBE = error.response.data.message.toString()
+        })
+    }
+  }
+  get passwordUser(){
+    return this.userEmail.get('password')
+  }
+  get confirmPasswordUser(){
+    const password =  (<HTMLInputElement>document.getElementById("password-signup")).value
+    const repeat_password =  (<HTMLInputElement>document.getElementById("rep-password-signup")).value
+    return !(password == repeat_password)
+  }
+  get emailUser(){
+    return this.userEmail.get('email')
   }
 
 

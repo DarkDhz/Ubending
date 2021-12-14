@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import axios from "axios";
 import {environment} from "../../enviroment";
@@ -23,6 +23,9 @@ export class ProductsComponent implements OnInit {
   isLogged = false;
   token = "null";
   state = {products: []}
+  category = 0
+  params = {}
+  name = ''
   wishlist = {products: []}
   isInWishlist = false;
   products_id = [];
@@ -41,154 +44,132 @@ export class ProductsComponent implements OnInit {
     this.getProductsWishlist()
 
     const search = document.getElementById("search"); //pass the id of the input of searchbar
+    try{
+      this.category = JSON.parse(<string>localStorage.getItem('category'));
+    }
+    catch (error){
+    }
+    try{
+      this.name = JSON.parse(<string>localStorage.getItem('nameSearch'));
+      localStorage.setItem('nameSearch', JSON.stringify(''));
+      // @ts-ignore
+      search.value = this.name
+    }
+    catch (error){
+    }
+    this.getProducts(this.category)
+
+
     const products = document.getElementsByClassName("product_name")
     const btns = document.querySelectorAll('.btn');
     const storeProducts = document.getElementsByClassName("product_card")
+    // @ts-ignore
+    if(btns[1].innerText == "All"){
+      btns[this.category + 1].classList.add('active');
+    }
+    else{
+      btns[this.category].classList.add('active');
 
-    search!.addEventListener("keyup", filterProducts);
-
-    function filterProducts(e:any){
-      const text = e.target.value.toLowerCase();
-      for (let i = 0; i < products.length; i++) {
-        // @ts-ignore
-        const item = products.item(i).firstChild!.textContent;
-        if (item!.toLowerCase().indexOf(text) != -1) {
-          // @ts-ignore
-          products.item(i).parentElement!.parentElement!.style.display = "block"
-        } else {
-          // @ts-ignore
-          products.item(i).parentElement!.parentElement!.style.display = "none"
-        }
-      }
     }
 
     for (let i = 0; i < btns.length; i++) {
 
       btns[i].addEventListener('click', (e) => {
-        for(let x=0; x<btns.length; x++)
-        {
-          btns[x].classList.remove('active');
-        }
-        btns[i].classList.add('active');
-
-        e.preventDefault()
-
         // @ts-ignore
-        const filter = e.target.dataset.filter;
-
-        for (let x = 0; x < storeProducts.length; x++) {
-          // @ts-ignore
-          console.log(storeProducts.item(x).classList)
-          if (filter === 'all'){
-            // @ts-ignore
-            storeProducts.item(x).style.display = 'block'
-          } else {
-            // @ts-ignore
-            if (storeProducts.item(x).classList.contains(filter)){
-              // @ts-ignore
-              storeProducts.item(x).style.display = 'block'
-            } else {
-              // @ts-ignore
-              storeProducts.item(x).style.display = 'none'
-            }
-          }
+        if(btns[1].innerText == "All"){
+          localStorage.setItem('category', JSON.stringify(i-1));
+        }
+        else{
+          localStorage.setItem('category', JSON.stringify(i));
 
         }
+        window.location.reload();
 
       });
     }
   }
 
   wishlistAnimation(num: number) {
-    const heart = document.getElementById('heart-'+num);
-    const like = document.getElementById('liketext-'+num);
-    heart!.classList.toggle('press');
-    like!.classList.toggle('press');
+    if (!this.isLogged) {
+      this.loginRequiered()
+    } else {
+      const heart = document.getElementById('heart-'+num);
+      //const like = document.getElementById('liketext-'+num);
+      const click = heart!.classList.toggle('press');
+      //like!.classList.toggle('press');
 
-    if (this.isProductInWishList(num)) {
-      console.log("isProductInWishList",this.isProductInWishList(num))
-      this.deleteProductWishlist(num)
-    } else{
-      console.log("isProductInWishList",this.isProductInWishList(num))
-      this.postProductWishlist(num)
-    }
-  }
-
-  deleteProductWishlist(idProduct:Number){
-    const path = environment.path + `/wishlist/` + this.token + "/" + idProduct
-    axios.delete(path).then((res) => {
-      // @ts-ignore
-      this.products_id.pop(idProduct)
-      console.log("deleteProductWishlist", this.products_id)
-    })
-      .catch((error) => {
-        console.error(error)
-        alert(error.response.data.message)
-      })
-  }
-
-  postProductWishlist(idProduct:Number){
-    const path = environment.path + `/wishlist/` + this.token + "/" + idProduct
-    axios.post(path).then((res) => {
-      // @ts-ignore
-      this.products_id.push(idProduct)
-      console.log("postProductWishlist", this.products_id)
-    })
-      .catch((error) => {
-        console.error(error)
-        alert(error.response.data.message)
-      })
-  }
-
-  getProductsWishlist(){
-    const path = environment.path + '/wishlist/' + this.token
-    axios.get(path)
-      .then((res) => {
-        // @ts-ignore
-        this.wishlist.products = res.data
-        let p = res.data
-        this.getIdProductsWishlist(p)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }
-
-  getIdProductsWishlist(products: unknown){
-    // @ts-ignore
-    for (let x = 0; x < products.length; x++) {
-      // @ts-ignore
-      this.products_id.push(products[x]["product_id"])
-    }
-    console.log("products_id: ", this.products_id)
-  }
-
-  isProductInWishList(id:Number){
-    for (let x = 0; x < this.products_id.length; x++){
-      if (id == this.products_id[x]){
-        return true
+      if (click) {
+        this.follow(num)
+      } else {
+        this.unfollow(num)
       }
     }
-    return false
+  }
+
+  follow(id: number) {
+    const path = environment.path + '/api/wishlist/' + this.token + "/" + id
+    axios.post(path)
+      .then((res) => {
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  unfollow(id: number) {
+    const path = environment.path + '/api/wishlist/' + this.token + "/" + id
+    axios.delete(path)
+      .then((res) => {
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  isFollowing(id: number, value: boolean) {
+    if (value) {
+      return ['press']
+    }
+    return []
   }
 
   loginRequiered() {
     this.router.navigate(['/login-signup']);
   }
 
-  getProducts(){
+  searchByName(){
+    const search = document.getElementById("search"); //pass the id of the input of searchbar
+    // @ts-ignore
+    localStorage.setItem('nameSearch', JSON.stringify(search.value));
+    window.location.reload();
+
+
+  }
+
+  getProducts(category:number){
 
     const path = environment.path + '/api/search/' + this.token
-    const params = {
-      name: '',
-      from: 0,
-      jump: 20
+    if(this.category == 0){
+      this.params = {
+        name: this.name,
+        from: 0,
+        jump: 20
+      }
     }
-    axios.post(path, params)
+    else{
+      this.params = {
+        name: this.name,
+        from: 0,
+        jump: 20,
+        category: category
+      }
+    }
+    console.log(category)
+
+    axios.post(path, this.params)
       .then((res) => {
         // @ts-ignore
         this.state.products = res.data
-        console.log("getProducts", res.data)
       })
       .catch((error) => {
         console.error(error)
@@ -217,13 +198,19 @@ export class ProductsComponent implements OnInit {
   editProfile() {
     this.router.navigate(['/user-profile'])
   }
+
   openDialogPayment(idProduct:Number,nameProduct:String,descProduct:String,priceProduct:Number,imagePath:String) {
-    const dialogRef = this.dialog.open(Payment, {panelClass: 'custom-modalbox',
+    if (this.isLogged) {
+      const dialogRef = this.dialog.open(Payment, {panelClass: 'custom-modalbox',
       data: {idProduct: idProduct,nameProduct: nameProduct,priceProduct:priceProduct, descProduct:descProduct,image: imagePath}});
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+      dialogRef.afterClosed().subscribe(result => {
+
+      });
+    } else {
+      this.router.navigate(['/login-signup'])
+    }
+
   }
 
 }
@@ -258,7 +245,7 @@ export class Payment {
         Validators.pattern("^[0-9]{5,5}$")]),
       direction: new FormControl('', [
         Validators.required,
-        Validators.pattern("^[a-zA-Z0-9]{2,100}$")])
+        Validators.pattern("^[a-zA-Z0-9 ]{2,100}$")])
     }
 
     );

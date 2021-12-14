@@ -69,7 +69,7 @@ api.add_resource(MyProductListResource, '/myproducts/<string:token>', methods=['
 
 
 # WISHLIST RESOURCES
-api.add_resource(WishlistResource, '/wishlist/<string:token>', '/wishlist/<string:token>/<int:product_id>')
+api.add_resource(WishlistResource, '/api/wishlist/<string:token>', '/api/wishlist/<string:token>/<int:product_id>')
 
 # BUY PRODUCT RESOURCE
 api.add_resource(BuyProduct, '/api/buy/<int:product_id>/<string:token>', methods=['POST'])

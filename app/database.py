@@ -15,12 +15,12 @@ database = "Ubending"
 
 """
 # vps
-host = "sql11.freesqldatabase.com"
-user = "sql11453270"
-password = "iedWsHbbSd"
-database = "sql11453270"
+db_host = "54.36.191.29"
+db_user = "root"
+db_password = "ubending"
+database = "Ubending"
 
-"""
+
 """
 # arnau-local
 host = "localhost"
@@ -30,9 +30,9 @@ database = "ubending"
 """
 
 db = connection.connect(
-    host=host,
-    user=user,
-    password=password,
+    host=db_host,
+    user=db_user,
+    password=db_password,
     database=database
 )
 

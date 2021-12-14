@@ -267,6 +267,10 @@ class TestWhishlist(TestCase):
     def test_get_following_products_list(self):
         # Get some products to user whishlist
         products = searchByName('')[:3]
+
+        for item in products:
+            item.pop('following')
+
         p1 = products[0]['product_id']
         p2 = products[1]['product_id']
         p3 = products[2]['product_id']
@@ -274,6 +278,8 @@ class TestWhishlist(TestCase):
         followProduct(p1, self.userID)
         followProduct(p2, self.userID)
         followProduct(p3, self.userID)
+
+        checkIfFollow = getFollowingProduct(self.userID, p1)
 
         # Get product list
         result = getFollowingProductsList(self.userID)
@@ -283,33 +289,7 @@ class TestWhishlist(TestCase):
         unfollowProduct(p2, self.userID)
         unfollowProduct(p3, self.userID)
 
+        self.assertTrue(checkIfFollow)
         self.assertEqual(result, products, "results do not match")
-
-    def test_follow_and_unfollow_product(self):
-        products = searchByName('')[0]
-        p1 = products['product_id']
-
-        result = followProduct(p1, self.userID)
-
-        unfollowProduct(p1, self.userID)
-
-        self.assertEqual(0, result, "selected product doesn't exist")
-
-    def test_get_following_product(self):
-        # Follow a product
-        products = searchByName('')[0]
-        p1 = products['product_id']
-
-        result = followProduct(p1, self.userID)
-
-        self.assertEqual(0, result, "selected product doesn't exist")
-
-        # Get product
-        myobj = getFollowingProduct(self.userID, p1)
-
-        # Remove product
-        unfollowProduct(p1, self.userID)
-
-        self.assertTrue(myobj)
 
 
