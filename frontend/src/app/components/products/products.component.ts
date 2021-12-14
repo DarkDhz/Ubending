@@ -26,9 +26,6 @@ export class ProductsComponent implements OnInit {
   category = 0
   params = {}
   name = ''
-  wishlist = {products: []}
-  isInWishlist = false;
-  products_id = [];
 
   constructor(public dialog: MatDialog,private router: Router) {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
@@ -40,9 +37,6 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.getProducts()
-    //this.getProductsWishlist()
-
     const search = document.getElementById("search"); //pass the id of the input of searchbar
     try{
       this.category = JSON.parse(<string>localStorage.getItem('category'));
@@ -202,7 +196,7 @@ export class ProductsComponent implements OnInit {
   openDialogPayment(idProduct:Number,nameProduct:String,descProduct:String,priceProduct:Number,imagePath:String) {
     if (this.isLogged) {
       const dialogRef = this.dialog.open(Payment, {panelClass: 'custom-modalbox',
-      data: {idProduct: idProduct,nameProduct: nameProduct,priceProduct:priceProduct, descProduct:descProduct,image: imagePath}});
+        data: {idProduct: idProduct,nameProduct: nameProduct,priceProduct:priceProduct, descProduct:descProduct,image: imagePath}});
 
       dialogRef.afterClosed().subscribe(result => {
 
@@ -247,6 +241,7 @@ export class Payment {
         Validators.required,
         Validators.pattern("^[a-zA-Z0-9 ]{2,100}$")])
     }
+
   );
 
   showAlertInvalidEmail = false;
@@ -255,14 +250,13 @@ export class Payment {
   showAlertInvalidDate = false;
   showAlertInvalidCVV = false;
   showAlertInvalidPostalCode = false;
-  showAlertInvalidDirection = false;
+  showAlertInvalidDirection= false;
   showAlertRequired = false;
 
   token = "null";
-
   constructor(
     public dialogRef: MatDialogRef<Payment>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private uploadService: UploadService,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,private uploadService: UploadService,
     private router: Router) {
 
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
@@ -275,72 +269,64 @@ export class Payment {
 
 
   }
-
   onNoClick(): void {
     this.dialogRef.close();
   }
-
-  get emailUser() {
+  get emailUser(){
     return this.userEmail.get('email')
   }
-
-  get cardUser() {
+  get cardUser(){
     return this.userEmail.get('cardNumber')
   }
-
-  get nameUser() {
+  get nameUser(){
     return this.userEmail.get('name')
   }
-
-  get dateUser() {
+  get dateUser(){
     return this.userEmail.get('date')
   }
-
-  get CVVNumber() {
+  get CVVNumber(){
     return this.userEmail.get('CVV')
   }
-
-  get postalCode() {
+  get postalCode(){
     return this.userEmail.get('postalCode')
   }
-
-  get direction() {
+  get direction(){
     return this.userEmail.get('direction')
   }
 
-  buyProduct() {
+  buyProduct(){
     this.showAlertRequired = false;
     this.showAlertInvalidName = false;
     this.showAlertInvalidEmail = false;
     this.showAlertInvalidCard = false;
     this.showAlertInvalidCVV = false;
     this.showAlertInvalidPostalCode = false;
-    this.showAlertInvalidDirection = false;
+    this.showAlertInvalidDirection= false;
     this.showAlertInvalidDate = false;
 
-    if (this.emailUser!.errors?.required || this.nameUser!.errors?.required || this.emailUser!.errors?.pattern || this.dateUser!.errors?.required || this.CVVNumber!.errors?.required || this.direction!.errors?.required) {
+    if (this.emailUser!.errors?.required || this.nameUser!.errors?.required || this.emailUser!.errors?.pattern || this.dateUser!.errors?.required || this.CVVNumber!.errors?.required || this.direction!.errors?.required ){
       this.showAlertRequired = true;
     } else if (this.emailUser!.errors?.pattern) {
       this.showAlertInvalidEmail = true;
     } else if (this.nameUser!.errors?.pattern) {
       this.showAlertInvalidName = true;
-    } else if (this.dateUser!.errors?.pattern) {
-      this.showAlertInvalidDirection = true;
-    } else if (this.cardUser!.errors?.pattern) {
+    } else if(this.dateUser!.errors?.pattern){
+      this.showAlertInvalidDirection= true;
+    } else if(this.cardUser!.errors?.pattern){
       this.showAlertInvalidCard = true;
-    } else if (this.CVVNumber!.errors?.pattern) {
+    } else if(this.CVVNumber!.errors?.pattern){
       this.showAlertInvalidCVV = true;
-    } else if (this.postalCode!.errors?.pattern) {
+    } else if(this.postalCode!.errors?.pattern){
       this.showAlertInvalidPostalCode = true;
-    } else if (this.direction!.errors?.pattern) {
-      this.showAlertInvalidDirection = true;
-    } else {
+    } else if(this.direction!.errors?.pattern){
+      this.showAlertInvalidDirection= true;
+    } else{
       const path = environment.path + `/api/buy/` + this.data.idProduct + "/" + this.token
 
       axios.post(path)
         .then((res) => {
           this.dialogRef.close();
-          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
             this.router.navigate(['/products']));
         })
         .catch((error) => {
@@ -349,4 +335,6 @@ export class Payment {
       this.dialogRef.close();
     }
   }
+
+
 }
