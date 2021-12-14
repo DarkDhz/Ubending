@@ -1,17 +1,33 @@
 <app-search-bar></app-search-bar>
-<div class="slide-container">
-  <section class="row store-products" >
-    <div class="col-md-3" *ngFor="let product of state.products">
-      <div class="card product_card {{ product['category_id'] }}" style="width: 18rem; margin-bottom: 5%; margin-left: 20%; margin-right: 20%">
-        <img class="card-img-top" style="height: 15rem" src="https://ubending.s3.eu-west-3.amazonaws.com/product{{ product['product_id'] }}.{{ product['image'] }}" alt="">
-        <div class="card-body">
-          <h5 class="product_name card-title">{{product['name']}}</h5>
-          <p class="card-text">{{product['price']}}€<br>{{product['state']}}</p>
-          <button class="btn" *ngIf="!isLogged" (click)="loginRequiered()" routerLink="/login-signup" style="background-color: #646DCC; color: white">BUY PRODUCT</button>
-          <button class="btn" *ngIf="isLogged" (click)="openDialogPayment(product['product_id'],product['name'],product['description'],product['price'],product['image'])" style="background-color: #646DCC; color: white">BUY PRODUCT</button>
-        </div>
+<section class="bg-color">
+<div class="title">
+  <p>My Favourite Items List</p>
+  <h1><span>Wish</span> List</h1>
+</div>
+<body>
+<section class="grid">
+  <article class="card" *ngFor="let product of state.products">
+    <span style="--i:0"></span>
+    <span style="--i:1"></span>
+    <span style="--i:2"></span>
+    <span style="--i:3"></span>
+    <div class="glass">
+      <div class="like-ctn">
+        <i [id]="'heart-' + product['product_id']" class="heart-class" (click)="delete(product['product_id'])"></i>
+      </div>
+      <div class="img-product">
+        <img id="img" src="https://ubending.s3.eu-west-3.amazonaws.com/product{{ product['product_id'] }}.{{ product['image'] }}">
+      </div>
+      <div class="content-box">
+        <h2>{{product['name']}}<br><i>{{product['price']}}€</i><br></h2>
+        <a class="buy-btn" (click)="openDialogPayment(product['product_id'],product['name'],product['description'],product['price'],product['image'])">
+          Buy Now
+        </a>
       </div>
     </div>
-  </section>
+  </article>
+</section>
 
-</div>
+</body>
+</section>
+<app-footer></app-footer>

@@ -23,6 +23,9 @@ export class ProductsComponent implements OnInit {
   isLogged = false;
   token = "null";
   state = {products: []}
+  wishlist = {products: []}
+  isInWishlist = false;
+  products_id = [];
 
   constructor(public dialog: MatDialog,private router: Router) {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
@@ -35,6 +38,7 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProducts()
+    this.getProductsWishlist()
 
     const search = document.getElementById("search"); //pass the id of the input of searchbar
     const products = document.getElementsByClassName("product_name")
@@ -100,6 +104,72 @@ export class ProductsComponent implements OnInit {
     const like = document.getElementById('liketext-'+num);
     heart!.classList.toggle('press');
     like!.classList.toggle('press');
+
+    if (this.isProductInWishList(num)) {
+      console.log("isProductInWishList",this.isProductInWishList(num))
+      this.deleteProductWishlist(num)
+    } else{
+      console.log("isProductInWishList",this.isProductInWishList(num))
+      this.postProductWishlist(num)
+    }
+  }
+
+  deleteProductWishlist(idProduct:Number){
+    const path = environment.path + `/wishlist/` + this.token + "/" + idProduct
+    axios.delete(path).then((res) => {
+      // @ts-ignore
+      this.products_id.pop(idProduct)
+      console.log("deleteProductWishlist", this.products_id)
+    })
+      .catch((error) => {
+        console.error(error)
+        alert(error.response.data.message)
+      })
+  }
+
+  postProductWishlist(idProduct:Number){
+    const path = environment.path + `/wishlist/` + this.token + "/" + idProduct
+    axios.post(path).then((res) => {
+      // @ts-ignore
+      this.products_id.push(idProduct)
+      console.log("postProductWishlist", this.products_id)
+    })
+      .catch((error) => {
+        console.error(error)
+        alert(error.response.data.message)
+      })
+  }
+
+  getProductsWishlist(){
+    const path = environment.path + '/wishlist/' + this.token
+    axios.get(path)
+      .then((res) => {
+        // @ts-ignore
+        this.wishlist.products = res.data
+        let p = res.data
+        this.getIdProductsWishlist(p)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  getIdProductsWishlist(products: unknown){
+    // @ts-ignore
+    for (let x = 0; x < products.length; x++) {
+      // @ts-ignore
+      this.products_id.push(products[x]["product_id"])
+    }
+    console.log("products_id: ", this.products_id)
+  }
+
+  isProductInWishList(id:Number){
+    for (let x = 0; x < this.products_id.length; x++){
+      if (id == this.products_id[x]){
+        return true
+      }
+    }
+    return false
   }
 
   loginRequiered() {
@@ -118,7 +188,7 @@ export class ProductsComponent implements OnInit {
       .then((res) => {
         // @ts-ignore
         this.state.products = res.data
-        console.log(res.data)
+        console.log("getProducts", res.data)
       })
       .catch((error) => {
         console.error(error)

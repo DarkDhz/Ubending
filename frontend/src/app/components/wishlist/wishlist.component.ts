@@ -40,12 +40,12 @@ export class WishlistComponent implements OnInit {
   }
 
   getProducts(){
-    const path = environment.path + '/wishlist/' + this.token
+    const path = environment.path + '/api/wishlist/' + this.token
     axios.get(path)
       .then((res) => {
         // @ts-ignore
         this.state.products = res.data
-        console.log(res.data)
+        console.log("WISHLIST: ", res.data)
       })
       .catch((error) => {
         console.error(error)
@@ -73,6 +73,17 @@ export class WishlistComponent implements OnInit {
   editProfile() {
     this.router.navigate(['/user-profile'])
   }
+
+  delete(id: Number): void {
+    const path = environment.path + '/api/wishlist/' + this.token + "/" + id
+    axios.delete(path)
+      .then((res) => {
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
   openDialogPayment(idProduct:Number,nameProduct:String,descProduct:String,priceProduct:Number,imagePath:String) {
     const dialogRef = this.dialog.open(Payment, {panelClass: 'custom-modalbox',
       data: {idProduct: idProduct,nameProduct: nameProduct,priceProduct:priceProduct, descProduct:descProduct,image: imagePath}});

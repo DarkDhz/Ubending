@@ -13,7 +13,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
-import {FlexLayoutModule} from "@angular/flex-layout";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ParticlesButtonComponent } from './components/particles-button/particles-button.component';
 import { CardSliderComponent } from './components/card-slider/card-slider.component';
@@ -40,7 +39,7 @@ import { WishlistComponent } from './components/wishlist/wishlist.component';
     UserProductsComponent,
     DialogEdit,
     Payment,
-    ProductCardComponent
+    ProductCardComponent,
     Payment,
     WishlistComponent
     ],
@@ -56,9 +55,6 @@ import { WishlistComponent } from './components/wishlist/wishlist.component';
     BrowserAnimationsModule,
     SlickCarouselModule,
     FormsModule,
-    MatCardModule,
-    MatButtonModule,
-    FlexLayoutModule
     /*FontAwesomeModule*/
   ],
   providers: [],

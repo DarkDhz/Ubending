@@ -1,10 +1,17 @@
 import mysql.connector as connection
 
-
+"""
 host = "sql11.freesqldatabase.com"
 user = "sql11445855"
 password = "Xny8nFtYVz"
 database = "sql11445855"
+"""
+
+# vps
+host = "54.36.191.29"
+user = "root"
+password = "ubending"
+database = "Ubending"
 
 """
 # vps
