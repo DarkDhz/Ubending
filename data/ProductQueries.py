@@ -1,5 +1,5 @@
 from data.CategoryQueries import getCategoryNameByID
-from app.database import db
+from app.database import db_host, db_user, db_password, database
 import mysql.connector as connection
 import numpy as np
 
@@ -26,6 +26,7 @@ def productToJson(elem):
 
 
 def setBuyed(user_id, product_id):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
 
     query = "UPDATE Products SET buyed = 1, buyer_id = %s WHERE product_id = %s AND owner_id != %s"
@@ -37,11 +38,13 @@ def setBuyed(user_id, product_id):
 
     db.commit()
     mycursor.close()
+    db.close()
 
     return 200
 
 
 def getAllProductsOfUserByID(user_id):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
 
     query = "SELECT * FROM Products WHERE owner_id = %s"
@@ -49,6 +52,8 @@ def getAllProductsOfUserByID(user_id):
     mycursor.execute(query, values)
 
     myresult = mycursor.fetchall()
+    mycursor.close()
+    db.close()
 
     if len(myresult) == 0:
         return 404
@@ -60,6 +65,7 @@ def getAllProductsOfUserByID(user_id):
 
 
 def getProductById(product_id):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
 
     query = "SELECT * FROM Products WHERE product_id = %s"
@@ -67,6 +73,8 @@ def getProductById(product_id):
     mycursor.execute(query, values)
 
     myresult = mycursor.fetchall()
+    mycursor.close()
+    db.close()
 
     if len(myresult) == 0:
         return 404
@@ -75,6 +83,7 @@ def getProductById(product_id):
 
 
 def getProductByIds(user_id, product_id):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
 
     query = "SELECT * FROM Products WHERE product_id = %s and owner_id = %s"
@@ -82,6 +91,8 @@ def getProductByIds(user_id, product_id):
     mycursor.execute(query, values)
 
     myresult = mycursor.fetchall()
+    mycursor.close()
+    db.close()
 
     if len(myresult) == 0:
         return 404
@@ -90,6 +101,7 @@ def getProductByIds(user_id, product_id):
 
 
 def addProduct(user_id, data):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
     query = "INSERT INTO Products (owner_id, name, description, price, state, image, category_id, buyed) " \
             "VALUES (%s, %s, %s, %s, %s, %s, %s, 0)"
@@ -97,10 +109,14 @@ def addProduct(user_id, data):
         user_id, data['name'], data['description'], data['price'], data['state'], data['image'], data['category_id'])
     mycursor.execute(query, values)
     db.commit()
-    return mycursor.lastrowid
+    lastrow = mycursor.lastrowid
+    mycursor.close()
+    db.close()
+    return lastrow
 
 
 def deleteProduct(product_id, owner_id):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
     query = "DELETE FROM Products WHERE product_id = %s and owner_id = %s"
     values = (product_id, owner_id)
@@ -110,9 +126,12 @@ def deleteProduct(product_id, owner_id):
     values2 = (product_id,)
     mycursor.execute(query2, values2)
     db.commit()
+    mycursor.close()
+    db.close()
 
 
 def updateProduct(product_id, owner_id, data):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
     if len(data) <= 1 or data is None:
         return 404
@@ -123,6 +142,8 @@ def updateProduct(product_id, owner_id, data):
             mycursor.execute(query, values)
 
     db.commit()
+    mycursor.close()
+    db.close()
 
 
 def addRating(buyer_id, product_id, value):
@@ -135,6 +156,7 @@ def addRating(buyer_id, product_id, value):
 
     product_owner = product_info['owner_id']
 
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
 
     query = "INSERT INTO Ratings (product_id, user_id, buyer_id, rating) VALUES (%s, %s, %s, %s)"
@@ -143,10 +165,12 @@ def addRating(buyer_id, product_id, value):
 
     db.commit()
     mycursor.close()
+    db.close()
     return 201
 
 
 def getMean(user_id):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
 
     query = "SELECT rating FROM Ratings WHERE user_id = %s"
@@ -158,11 +182,13 @@ def getMean(user_id):
         values.append(element[0])
 
     mycursor.close()
+    db.close()
 
     return np.mean(values)
 
 
 def getFollowingProductsList(user_id):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
 
     query = "SELECT * FROM ProductsFollowing WHERE user_id = %s"
@@ -170,6 +196,8 @@ def getFollowingProductsList(user_id):
     mycursor.execute(query, values)
 
     myresult = mycursor.fetchall()
+    mycursor.close()
+    db.close()
 
     if len(myresult) == 0:
         return 404
@@ -182,6 +210,7 @@ def getFollowingProductsList(user_id):
 
 
 def followProduct(product_id, user_id):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     product_info = getProductById(product_id)
     if product_info == 404:
         return 404
@@ -192,19 +221,26 @@ def followProduct(product_id, user_id):
     values = (product_id, user_id)
     mycursor.execute(query, values)
     db.commit()
+    mycursor.close()
+    db.close()
+
     return 0
 
 
 def unfollowProduct(product_id, user_id):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
     query = "DELETE FROM ProductsFollowing WHERE product_id = %s and user_id = %s"
     values = (product_id, user_id)
     mycursor.execute(query, values)
     db.commit()
+    mycursor.close()
+    db.close()
     return 0
 
 
 def getFollowingProduct(user_id, product_id):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
 
     query = "SELECT * FROM ProductsFollowing WHERE product_id = %s and user_id = %s"
@@ -212,6 +248,8 @@ def getFollowingProduct(user_id, product_id):
     mycursor.execute(query, values)
 
     myresult = mycursor.fetchall()
+    mycursor.close()
+    db.close()
 
     if len(myresult) == 0:
         return False
