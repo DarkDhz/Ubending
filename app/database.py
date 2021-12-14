@@ -6,14 +6,6 @@ user = "sql11445855"
 password = "Xny8nFtYVz"
 database = "sql11445855"
 """
-
-# vps
-host = "54.36.191.29"
-user = "root"
-password = "ubending"
-database = "Ubending"
-
-"""
 # vps
 db_host = "54.36.191.29"
 db_user = "root"
@@ -35,5 +27,3 @@ db = connection.connect(
     password=db_password,
     database=database
 )
-
-

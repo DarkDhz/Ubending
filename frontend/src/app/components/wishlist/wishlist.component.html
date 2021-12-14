@@ -5,7 +5,7 @@
   <h1><span>Wish</span> List</h1>
 </div>
 <body>
-<section class="grid">
+<section *ngIf="!isEmpty"  class="grid">
   <article class="card" *ngFor="let product of state.products">
     <span style="--i:0"></span>
     <span style="--i:1"></span>
@@ -26,6 +26,13 @@
       </div>
     </div>
   </article>
+</section>
+
+<section *ngIf="isEmpty"  class="product__description">
+  <img src="https://i.imgur.com/vnt6sq2.png[/img]">
+  <p class="product__description" >
+    Empty wishlist
+  </p>
 </section>
 
 </body>

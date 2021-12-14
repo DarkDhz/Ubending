@@ -1,17 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import axios from "axios";
 import {environment} from "../../enviroment";
 import {MatDialog} from "@angular/material/dialog";
 import {Payment} from "../products/products.component";
 
-export interface DialogData {
-  idProduct: Number;
-  nameProduct: string;
-  priceProduct: string;
-  descProduct: string;
-  image: string;
-}
+
 
 @Component({
   selector: 'app-wishlist',
@@ -23,6 +17,7 @@ export class WishlistComponent implements OnInit {
   isLogged = false;
   token = "null";
   state = {products: []}
+  isEmpty = false;
 
   constructor(public dialog: MatDialog,private router: Router) {
   }
@@ -43,11 +38,13 @@ export class WishlistComponent implements OnInit {
     const path = environment.path + '/api/wishlist/' + this.token
     axios.get(path)
       .then((res) => {
+        this.isEmpty = false
         // @ts-ignore
         this.state.products = res.data
         console.log("WISHLIST: ", res.data)
       })
       .catch((error) => {
+        this.isEmpty = true
         console.error(error)
       })
   }
@@ -78,6 +75,8 @@ export class WishlistComponent implements OnInit {
     const path = environment.path + '/api/wishlist/' + this.token + "/" + id
     axios.delete(path)
       .then((res) => {
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+          this.router.navigate(['/wishlist']));
       })
       .catch((error) => {
         console.error(error)
@@ -85,12 +84,17 @@ export class WishlistComponent implements OnInit {
   }
 
   openDialogPayment(idProduct:Number,nameProduct:String,descProduct:String,priceProduct:Number,imagePath:String) {
-    const dialogRef = this.dialog.open(Payment, {panelClass: 'custom-modalbox',
-      data: {idProduct: idProduct,nameProduct: nameProduct,priceProduct:priceProduct, descProduct:descProduct,image: imagePath}});
+    if (this.isLogged) {
+      const dialogRef = this.dialog.open(Payment, {panelClass: 'custom-modalbox',
+        data: {idProduct: idProduct,nameProduct: nameProduct,priceProduct:priceProduct, descProduct:descProduct,image: imagePath}});
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+      dialogRef.afterClosed().subscribe(result => {
+
+      });
+    } else {
+      this.router.navigate(['/login-signup'])
+    }
+
   }
 
 }
