@@ -1,12 +1,12 @@
-from app.database import host, user, password, database
-from app.database import db
-
+from app.database import db_host, db_user, db_password, database
+import mysql.connector as connection
 
 def _toJson(data):
     return {'id': data[0], 'name': data[1]}
 
 
 def getAllCategories():
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
 
     query = "SELECT * FROM Category"
@@ -14,6 +14,7 @@ def getAllCategories():
 
     myresult = mycursor.fetchall()
     mycursor.close()
+    db.close()
 
     if len(myresult) == 0:
         return 404
@@ -26,6 +27,7 @@ def getAllCategories():
 
 
 def getCategoryNameByID(id):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
 
     query = "SELECT name FROM Category WHERE category_id = " + str(id)
@@ -33,6 +35,7 @@ def getCategoryNameByID(id):
 
     myresult = mycursor.fetchall()
     mycursor.close()
+    db.close()
 
     if len(myresult) == 0:
         return 404
@@ -41,6 +44,7 @@ def getCategoryNameByID(id):
 
 
 def getCategoryByID(id):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
 
     query = "SELECT * FROM Category WHERE category_id = " + str(id)
@@ -48,6 +52,7 @@ def getCategoryByID(id):
 
     myresult = mycursor.fetchall()
     mycursor.close()
+    db.close()
     if len(myresult) == 0:
         return 404
 

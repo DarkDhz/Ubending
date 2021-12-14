@@ -15,6 +15,7 @@ def searchToJson(elem, fllw):
 
 
 def searchByCategory(category_id, start_point=0, jump=12, token=None):
+
     cursor = db.cursor()
 
     if token is None:
