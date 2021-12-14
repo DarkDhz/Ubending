@@ -66,10 +66,10 @@ def searchByCategoryAndName(category_id, name, start_point=0, jump=12, token=Non
         values = (token, category_id, start_point, jump + start_point,)
 
     cursor.execute(query, values)
+    result = cursor.fetchall()
+
     cursor.close()
     db.close()
-
-    result = cursor.fetchall()
     return extractProducts(result=result, user_id=token)
 
 
