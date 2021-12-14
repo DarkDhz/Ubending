@@ -65,7 +65,7 @@ html{
 }
 
 .title::after{
-  content: '\f005';
+  content: '\f004';
   font-family: FontAwesome;
   color: #dbdbdb;
   width: 50px;
