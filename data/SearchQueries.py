@@ -15,7 +15,6 @@ def searchToJson(elem, fllw):
 
 
 def searchByCategory(category_id, start_point=0, jump=12, token=None):
-    print("hola1")
     db = connection.connect(host=host, user=user, password=password, database=database)
     cursor = db.cursor()
 
@@ -35,7 +34,6 @@ def searchByCategory(category_id, start_point=0, jump=12, token=None):
 
 
 def searchByName(name, start_point=0, jump=12, token=None):
-    print("hola2")
     db = connection.connect(host=host, user=user, password=password, database=database)
     cursor = db.cursor()
 
@@ -55,7 +53,6 @@ def searchByName(name, start_point=0, jump=12, token=None):
 
 
 def searchByCategoryAndName(category_id, name, start_point=0, jump=12, token=None):
-    print("hola3")
     db = connection.connect(host=host, user=user, password=password, database=database)
     cursor = db.cursor()
 
