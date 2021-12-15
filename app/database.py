@@ -5,7 +5,6 @@ host = "sql11.freesqldatabase.com"
 user = "sql11445855"
 password = "Xny8nFtYVz"
 database = "sql11445855"
-
 """
 # vps
 db_host = "54.36.191.29"
@@ -28,5 +27,3 @@ db = connection.connect(
     password=db_password,
     database=database
 )
-
-

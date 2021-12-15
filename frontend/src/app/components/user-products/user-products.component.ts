@@ -48,6 +48,7 @@ export class UserProductsComponent implements OnInit{
       .then((res) => {
         // @ts-ignore
         this.state.products = res.data
+        console.log(res.data)
       })
       .catch((error) => {
         console.error(error)

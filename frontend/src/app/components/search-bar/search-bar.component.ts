@@ -87,6 +87,10 @@ export class SearchBarComponent implements OnInit {
     this.router.navigate(['/user-profile'])
   }
 
+  wishlist() {
+    this.router.navigate(['/wishlist'])
+  }
+
   goToProducts() {
     this.router.navigate(['/products'])
 
