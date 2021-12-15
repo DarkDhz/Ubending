@@ -1,5 +1,5 @@
 from data.CategoryQueries import getCategoryNameByID
-from data.ProductQueries import productToJson, convertState, getFollowingProductsList
+from data.ProductQueries import convertState
 from app.database import db_host, db_user, db_password, database
 import mysql.connector as connection
 

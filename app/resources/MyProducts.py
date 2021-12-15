@@ -1,12 +1,13 @@
 from flask_restful import Resource, reqparse
 from data.ProductQueries import *
 from utils.security import verify_auth_token
+from lock import lock
 
 
 # AUTHENTICATED
 class MyProductResource(Resource):
 
-    def get(self, product_id, token):
+    def get(self, product_id):
 
         parser = reqparse.RequestParser()  # create parameters parser from request
 
@@ -43,8 +44,9 @@ class MyProductResource(Resource):
         # We cannot have a negative price.
         if data['price'] < 0:
             return {'message': "Price attribute cannot be negative."}, 409
-        return {'product_id': addProduct(user, data)}, 200
 
+        with lock.lock:
+            return {'product_id': addProduct(user, data)}, 200
 
     def delete(self, product_id, token):
         user = verify_auth_token(token)
@@ -54,8 +56,9 @@ class MyProductResource(Resource):
 
         product = getProductByIds(user_id=user, product_id=product_id)
         if product is not None:
-            deleteProduct(product_id, user)
-            return {'message': "Product with id [{}] deleted successfully".format(product_id)}, 200
+            with lock.lock:
+                deleteProduct(product_id, user)
+                return {'message': "Product with id [{}] deleted successfully".format(product_id)}, 200
         else:
             return {'message': "Product with id [{}] doest not exist".format(product_id)}, 404
 
@@ -72,15 +75,14 @@ class MyProductResource(Resource):
 
         data = parser.parse_args()
 
-        print(data)
         user = verify_auth_token(token)
 
         if user is None:
             return {'message': 'invalid token'}, 400
-        print(user)
 
-        updateProduct(owner_id=user, product_id=product_id, data=data)
-        return 201
+        with lock.lock:
+            updateProduct(owner_id=user, product_id=product_id, data=data)
+            return 201
 
 
 class MyProductListResource(Resource):
@@ -96,4 +98,3 @@ class MyProductListResource(Resource):
             return {'Message': 'owner has no products or do not exist'}, 404
         else:
             return result, 200
-
