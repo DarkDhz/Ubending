@@ -5,9 +5,6 @@ from utils.security import verify_auth_token
 
 class SearchEngine(Resource):
 
-    def get(self):
-        return 404
-
     def post(self, token):
 
         parser = reqparse.RequestParser()
@@ -53,9 +50,3 @@ class SearchEngine(Resource):
         if result == 404:
             return {"message": "No products found"}, 400
         return result, 200
-
-    def delete(self, id):
-        return 404
-
-    def put(self):
-        return 404

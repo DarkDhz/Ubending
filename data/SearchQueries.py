@@ -1,5 +1,5 @@
 from data.CategoryQueries import getCategoryNameByID
-from data.ProductQueries import productToJson, convertState, getFollowingProductsList
+from data.ProductQueries import convertState
 from app.database import db_host, db_user, db_password, database
 import mysql.connector as connection
 
@@ -29,9 +29,8 @@ def searchByCategory(category_id, start_point=0, jump=12, token=None):
 
     result = cursor.fetchall()
     cursor.close()
-    db.close()
 
-    return extractProducts(result=result, user_id=token)
+    return extractProducts(result=result, user_id=token, db=db)
 
 
 def searchByName(name, start_point=0, jump=12, token=None):
@@ -49,9 +48,8 @@ def searchByName(name, start_point=0, jump=12, token=None):
 
     result = cursor.fetchall()
     cursor.close()
-    db.close()
 
-    return extractProducts(result=result, user_id=token)
+    return extractProducts(result=result, user_id=token, db=db)
 
 
 def searchByCategoryAndName(category_id, name, start_point=0, jump=12, token=None):
@@ -69,16 +67,17 @@ def searchByCategoryAndName(category_id, name, start_point=0, jump=12, token=Non
     result = cursor.fetchall()
 
     cursor.close()
-    db.close()
-    return extractProducts(result=result, user_id=token)
+
+    return extractProducts(result=result, user_id=token, db=db)
 
 
-def extractProducts(result, user_id):
+def extractProducts(result, user_id, db):
+    following = list()
     if len(result) == 0:
         return 404
 
     if user_id is not None:
-        following = getFollowingQuery(user_id=user_id)
+        following = getFollowingQuery(user_id=user_id, db=db)
 
     toReturn = list()
     for elem in result:
@@ -89,8 +88,7 @@ def extractProducts(result, user_id):
     return toReturn
 
 
-def getFollowingQuery(user_id):
-    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
+def getFollowingQuery(user_id, db):
     mycursor = db.cursor()
 
     query = "SELECT product_id FROM ProductsFollowing WHERE user_id = %s"
