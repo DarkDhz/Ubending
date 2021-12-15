@@ -9,6 +9,7 @@ import {ResetPasswordComponent} from "./components/reset-password/reset-password
 import { ProfileComponent } from './profile/profile.component';
 import { ProductsComponent } from './components/products/products.component';
 import {ProductCardComponent} from "./components/product-card/product-card.component";
+import {ReviewsComponent} from "./components/reviews/reviews.component";
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'user-profile', component: ProfileComponent},
   { path: 'products', component: ProductsComponent},
   { path: 'cards', component: ProductCardComponent},
+  { path: 'reviews', component: ReviewsComponent}
 ];
 
 @NgModule({
@@ -34,4 +36,4 @@ const routes: Routes = [
 export class AppRoutingModule { }
 export  const routingComponents = [LogInSignUpComponent,UserProductsComponent, HomeComponent,
                                     RecoverPasswordComponent, ResetPasswordComponent, ProductsComponent,
-                                    ProfileComponent]
+                                    ProfileComponent, ReviewsComponent]

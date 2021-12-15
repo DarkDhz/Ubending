@@ -22,6 +22,7 @@ import { HomeProductsComponent } from './components/home-products/home-products.
 import {UserProductsComponent, DialogEdit} from "./components/user-products/user-products.component";
 import {Payment} from "./components/products/products.component";
 import { ProductCardComponent } from './components/product-card/product-card.component';
+import { ReviewsComponent } from './components/reviews/reviews.component';
 
 
 /*import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';*/
@@ -39,7 +40,8 @@ import { ProductCardComponent } from './components/product-card/product-card.com
     UserProductsComponent,
     DialogEdit,
     Payment,
-    ProductCardComponent
+    ProductCardComponent,
+    ReviewsComponent
     ],
   imports: [
     BrowserModule,

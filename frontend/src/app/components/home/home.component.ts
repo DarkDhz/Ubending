@@ -66,6 +66,14 @@ export class HomeComponent implements OnInit {
     this.$router.replace({path: '/', query: {}})
   }
 
+  onClickReviews() {
+    this.router.navigate(['/reviews'])
+  }
+
+  onClickProducts() {
+    this.router.navigate(['/products'])
+  }
+
   menuToggle(){
     const toggleMenu = document.querySelector('.menu')
     toggleMenu!.classList.toggle('active')
@@ -86,7 +94,4 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/user-profile'])
   }
 
-  allProducts() {
-    this.router.navigate(['/products'])
-  }
 }
