@@ -3,7 +3,7 @@
 <div class="title">
   <h1><span>Sellers</span> Ratings</h1>
 </div>
-<div *ngIf="!isLogged">
+<div *ngIf="false">
   <section class="grid">
     <article class="card" *ngFor="let review of ['ana','paco','sara','luis','celia','ramon','alba']">
       <h4 class="reviews__heading">Seller {{review}}</h4>
@@ -64,18 +64,6 @@
 </div>
 
 <div *ngIf="isLogged">
-  <div class="reviews-container">
-    <div class="row">
-      <div class="col-12">
-        <nav>
-          <div class="links">
-            <a class="nav-link active" (click)="setActiveLink(0)">Not reviewed (12)</a>
-            <a class="nav-link" (click)="setActiveLink(1)">Reviewed (0)</a>
-          </div>
-        </nav>
-      </div>
-    </div>
-  </div>
   <app-not-reviewed-grid id="not-reviewed"></app-not-reviewed-grid>
   <section id="reviewed-grid" style="visibility: hidden" class="grid">
   </section>

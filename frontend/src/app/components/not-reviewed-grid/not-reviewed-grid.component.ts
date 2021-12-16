@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {RatingComponent} from "../rating/rating.component";
 import {MatDialog} from "@angular/material/dialog";
+import {environment} from "../../enviroment";
+import axios from "axios";
 
 @Component({
   selector: 'app-not-reviewed-grid',
@@ -9,12 +11,57 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class NotReviewedGridComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  token = "null";
+  isLogged = false;
+  state = {products: []}
+
+  constructor(public dialog: MatDialog) {
+    const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+    if (currentUser != null) {
+      this.token = currentUser.token;
+      this.isLogged = true;
+    } else {
+
+    }
+    this.getProducts()
+  }
 
   ngOnInit(): void {
   }
 
-  openRatingDialog(){
-    this.dialog.open(RatingComponent);
+  openRatingDialog(id: number){
+    this.dialog.open(RatingComponent, {data: id});
+  }
+
+  getProducts(){
+
+    const path = environment.path + '/api/to_rate/' + this.token
+
+    axios.get(path)
+      .then((res) => {
+        // @ts-ignore
+        this.state.products = res.data
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  setActiveLink(e: number){
+    if (e == 0) {
+      this.getProducts()
+    } else {
+
+    }
+    const links = document.querySelectorAll('.nav-link');
+    for(let i=0; i<links.length; i++){
+      if(e==i){
+        links[i].classList.add('active');
+      }else{
+        links[i].classList.remove('active');
+      }
+
+
+    }
   }
 }

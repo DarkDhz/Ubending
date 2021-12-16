@@ -174,23 +174,26 @@ class TestRateQueries(TestCase):
         self.assertEqual(result, 201, "invalid rating")
 
     def test_get_mean_rating_product(self):
+        seller = getAccountByEmail('testingseller@gmail.com')['user_id']
+        data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": None, "category_id": 2}
+        p1 = addProduct(seller, data)
+        p2 = addProduct(seller, data)
+
         # get the buyer
         buyer = getAccountByEmail("testingreal@gmail.com")['user_id']
 
-        # get a random product
-        product = searchByName('')[:2]
-        p1 = product[0]['product_id']
-        p2 = product[1]['product_id']
 
         # rate the products
         addRating(buyer, p1, 5)
         addRating(buyer, p2, 4)
 
         # get mean
-        mean = getMean(product[0]['owner_id'])
+        mean = getMean(seller)
 
         # remove the added ratings
         removeRatings(buyer)
+        deleteProduct(p1, seller)
+        deleteProduct(p2, seller)
 
         self.assertEqual(mean, 4.5, "invalid mean")
 
