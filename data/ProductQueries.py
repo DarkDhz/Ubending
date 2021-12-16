@@ -48,7 +48,7 @@ def getAllProductsOfUserByID(user_id):
     mycursor = db.cursor()
 
     query = "SELECT * FROM Products WHERE owner_id = %s AND buyed = 0"
-    values = (user_id,)
+    values = (user_id,) 
     mycursor.execute(query, values)
 
     myresult = mycursor.fetchall()
