@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'user-products', component: UserProductsComponent},
   { path: 'home', component: HomeComponent},
   { path: 'recover', component: RecoverPasswordComponent},
-  { path: 'reset/:token', component: ResetPasswordComponent},
+  { path: 'reset', component: ResetPasswordComponent},
   { path: 'user-profile', component: ProfileComponent},
   { path: 'products', component: ProductsComponent},
   { path: 'wishlist', component: WishlistComponent},

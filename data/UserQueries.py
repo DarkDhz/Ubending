@@ -161,8 +161,6 @@ def updateUserProfile(user_id, data):
         __updateValue('location', data['location'], user_id, cursor)
 
     if data['userphoto'] is not None and data['userphoto'] != '':
-        print("phoyo")
-        print(data['userphoto'])
         __updateValue('userphoto', data['userphoto'], user_id, cursor)
 
     db.commit()

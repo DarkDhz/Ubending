@@ -32,7 +32,6 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 
 
 @app.route("/user-profile")
-@app.route("/reset/")
 @app.route("/reset")
 @app.route("/reviews")
 @app.route("/recover")
