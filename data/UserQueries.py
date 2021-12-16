@@ -1,7 +1,7 @@
 import re
-from app.database import db
-from utils.security import hash_password, verify_password, generate_auth_token, get_reset_token
 
+from utils.security import hash_password, verify_password, generate_auth_token, get_reset_token
+import mysql.connector as connection
 
 def _toJson(elem):
     return {'user_id': elem[0], 'username': elem[1], 'password': elem[2],
@@ -10,6 +10,7 @@ def _toJson(elem):
 
 
 def getAccountByEmail(email):
+    db = connection.connect(host="54.36.191.29", user="root", password="ubending", database="Ubending")
     mycursor = db.cursor()
 
     query = "SELECT * FROM Users WHERE mail = %s"
@@ -19,6 +20,7 @@ def getAccountByEmail(email):
 
     myresult = mycursor.fetchall()
     mycursor.close()
+    db.close()
     if len(myresult) == 0:
         return 404
 
@@ -26,6 +28,7 @@ def getAccountByEmail(email):
 
 
 def getAccountByID(user_id):
+    db = connection.connect(host="54.36.191.29", user="root", password="ubending", database="Ubending")
     cursor = db.cursor()
 
     query = "SELECT * FROM Users WHERE user_id = %s"
@@ -36,6 +39,7 @@ def getAccountByID(user_id):
     result = cursor.fetchall()
 
     cursor.close()
+    db.close()
     if len(result) == 0:
         return 404
 
@@ -56,6 +60,7 @@ def validatePasswordFormat(password, repeat_password):
 
 
 def addUserToDB(username, email, password):
+    db = connection.connect(host="54.36.191.29", user="root", password="ubending", database="Ubending")
     mycursor = db.cursor()
     query = "INSERT INTO Users (username, password, mail, admin) " \
             "VALUES (%s, %s, %s, 0)"
@@ -65,20 +70,24 @@ def addUserToDB(username, email, password):
     mycursor.execute(query, values)
     db.commit()
     mycursor.close()
+    db.close()
     return mycursor.lastrowid
 
 
 def deleteUserFromDB(user_id):
+    db = connection.connect(host="54.36.191.29", user="root", password="ubending", database="Ubending")
     mycursor = db.cursor()
     query = "DELETE FROM Users WHERE user_id = " + str(user_id)
     mycursor.execute(query)
     db.commit()
     mycursor.close()
+    db.close()
 
     return mycursor.lastrowid
 
 
 def validateLogin(mail, password):
+    db = connection.connect(host="54.36.191.29", user="root", password="ubending", database="Ubending")
     mycursor = db.cursor()
     query = "SELECT * FROM Users WHERE mail = %s"
 
@@ -87,6 +96,7 @@ def validateLogin(mail, password):
     mycursor.execute(query, values)
     myresult = mycursor.fetchall()
     mycursor.close()
+    db.close()
     if len(myresult) == 0:
         return 404
 
@@ -97,6 +107,7 @@ def validateLogin(mail, password):
 
 
 def validateEmail(mail):
+    db = connection.connect(host="54.36.191.29", user="root", password="ubending", database="Ubending")
     mycursor = db.cursor()
     query = "SELECT * FROM Users WHERE mail = %s"
 
@@ -104,6 +115,8 @@ def validateEmail(mail):
 
     mycursor.execute(query, values)
     myresult = mycursor.fetchall()
+    mycursor.close()
+    db.close()
 
     if len(myresult) == 0:
         return 404
@@ -111,14 +124,19 @@ def validateEmail(mail):
 
 
 def updatePassword(user_id, password):
+    db = connection.connect(host="54.36.191.29", user="root", password="ubending", database="Ubending")
     mycursor = db.cursor()
     query = "UPDATE Users SET password = %s WHERE user_id = %s"
     values = (hash_password(password), user_id['user_id'])
     mycursor.execute(query, values)
     db.commit()
+    mycursor.close()
+    db.close()
 
 
 def updateUserProfile(user_id, data):
+    db = connection.connect(host="54.36.191.29", user="root", password="ubending", database="Ubending")
+    cursor = db.cursor()
     if len(data) == 0 or data is None:
         return 404
 
@@ -129,7 +147,7 @@ def updateUserProfile(user_id, data):
                 return result
             else:
                 password = hash_password(data['password'])
-                __updateValue('password', password, user_id)
+                __updateValue('password', password, user_id, cursor)
         else:
             return 5
 
@@ -137,26 +155,26 @@ def updateUserProfile(user_id, data):
         return 6
 
     if data['username'] is not None and data['username'] != '':
-        __updateValue('username', data['username'], user_id)
+        __updateValue('username', data['username'], user_id, cursor)
 
     if data['location'] is not None and data['location'] != '':
-        __updateValue('location', data['location'], user_id)
+        __updateValue('location', data['location'], user_id, cursor)
 
     if data['userphoto'] is not None and data['userphoto'] != '':
         print("phoyo")
         print(data['userphoto'])
-        __updateValue('userphoto', data['userphoto'], user_id)
+        __updateValue('userphoto', data['userphoto'], user_id, cursor)
 
     db.commit()
+    cursor.close()
+    db.close()
 
 
-def __updateValue(item, value, user_id):
-    cursor = db.cursor()
+def __updateValue(item, value, user_id, cursor):
 
     query = "UPDATE Users SET " + item + " = %s WHERE user_id = %s"
     values = (value, user_id)
     cursor.execute(query, values)
-    cursor.close()
 
 
 """
