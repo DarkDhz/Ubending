@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {range} from "rxjs";
+import {RatingComponent} from "../rating/rating.component";
 
 // @ts-ignore
 // @ts-ignore
@@ -10,18 +11,19 @@ import {range} from "rxjs";
 })
 export class ReviewsComponent implements OnInit {
 
+  isLogged = false;
   // Total Stars
   starsTotal = 5;
 
   // Score of each review (name os seller that has been reviewed)
   ratings = {
-    'ana': {'total': 24, 'avg': 4.7, '5stars': 8, '4stars': 13, '3stars': 2, '2stars': 1, '1stars': 0},
-    'paco': {'total': 18, 'avg': 3.4, '5stars': 3, '4stars': 13, '3stars': 2, '2stars': 1, '1stars': 0},
-    'sara': {'total': 17, 'avg': 2.3, '5stars': 1, '4stars': 13, '3stars': 2, '2stars': 1, '1stars': 0},
-    'luis': {'total': 24, 'avg': 3.6, '5stars': 8, '4stars': 13, '3stars': 2, '2stars': 1, '1stars': 0},
-    'celia': {'total': 24, 'avg': 4.1, '5stars': 8, '4stars': 13, '3stars': 2, '2stars': 1, '1stars': 0},
-    'ramon': {'total': 16, 'avg': 1.7, '5stars': 0, '4stars': 13, '3stars': 2, '2stars': 1, '1stars': 0},
-    'alba': {'total': 19, 'avg': 0.4, '5stars': 0, '4stars': 1, '3stars': 2, '2stars': 1, '1stars': 15}};
+    'ana': {'total': 24, 'avg': 4.7, 'mine':5, '5stars': 8, '4stars': 13, '3stars': 2, '2stars': 1, '1stars': 0},
+    'paco': {'total': 18, 'avg': 3.4, 'mine':4, '5stars': 3, '4stars': 13, '3stars': 2, '2stars': 1, '1stars': 0},
+    'sara': {'total': 17, 'avg': 2.3, 'mine':3, '5stars': 1, '4stars': 13, '3stars': 2, '2stars': 1, '1stars': 0},
+    'luis': {'total': 24, 'avg': 3.6, 'mine':3, '5stars': 8, '4stars': 13, '3stars': 2, '2stars': 1, '1stars': 0},
+    'celia': {'total': 24, 'avg': 4.1, 'mine':2, '5stars': 8, '4stars': 13, '3stars': 2, '2stars': 1, '1stars': 0},
+    'ramon': {'total': 16, 'avg': 1.7, 'mine':4, '5stars': 0, '4stars': 13, '3stars': 2, '2stars': 1, '1stars': 0},
+    'alba': {'total': 19, 'avg': 0.4, 'mine':1, '5stars': 0, '4stars': 1, '3stars': 2, '2stars': 1, '1stars': 15}};
 
 
   constructor() {
@@ -45,6 +47,8 @@ export class ReviewsComponent implements OnInit {
 
       // Set width of stars-inner to percentage
       document.getElementById('starts-inner-'+i)!.style.width = starPercentageRounded;
+      // @ts-ignore
+      //document.getElementById('mine-starts-inner-'+i)!.style.width = (this.ratings)[i]['mine'];
 
       // Add average rating
       // @ts-ignore
@@ -88,6 +92,25 @@ export class ReviewsComponent implements OnInit {
       document.getElementById('1-stars-perc'+ i)!.innerHTML = rounded1+'%';
       (<HTMLProgressElement>document.getElementById('1-progress-bar'+i))!.value = Number(rounded1);
 
+    }
+  }
+
+  setActiveLink(e: number){
+    const links = document.querySelectorAll('.nav-link');
+    for(let i=0; i<links.length; i++){
+      if(e==i){
+        links[i].classList.add('active');
+      }else{
+        links[i].classList.remove('active');
+      }
+
+      if(e==0){
+        document.getElementById('not-reviewed')!.style.visibility = 'visible';
+        document.getElementById('reviewed-grid')!.style.visibility = 'hidden';
+      }else if(e==1){
+        document.getElementById('not-reviewed')!.style.visibility = 'hidden';
+        document.getElementById('reviewed-grid')!.style.visibility = 'visible';
+      }
     }
   }
 

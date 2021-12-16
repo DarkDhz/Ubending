@@ -23,6 +23,8 @@ import {UserProductsComponent, DialogEdit} from "./components/user-products/user
 import {Payment} from "./components/products/products.component";
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ReviewsComponent } from './components/reviews/reviews.component';
+import { RatingComponent } from './components/rating/rating.component';
+import { NotReviewedGridComponent } from './components/not-reviewed-grid/not-reviewed-grid.component';
 
 
 /*import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';*/
@@ -41,7 +43,9 @@ import { ReviewsComponent } from './components/reviews/reviews.component';
     DialogEdit,
     Payment,
     ProductCardComponent,
-    ReviewsComponent
+    ReviewsComponent,
+    RatingComponent,
+    NotReviewedGridComponent
     ],
   imports: [
     BrowserModule,

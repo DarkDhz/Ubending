@@ -467,6 +467,7 @@ mat-dialog-container{
   border-radius: 5px;
   border: 1px solid #646DCC;
   color: #646DCC;
+  cursor: pointer;
 }
 
 .card .glass .content-box .buy-btn:hover{
