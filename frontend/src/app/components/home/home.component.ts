@@ -90,6 +90,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/user-products'])
   }
 
+  wishlist() {
+    this.router.navigate(['/wishlist'])
+  }
+
   editProfile() {
     this.router.navigate(['/user-profile'])
   }

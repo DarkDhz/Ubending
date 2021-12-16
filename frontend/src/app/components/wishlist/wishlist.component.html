@@ -1,0 +1,39 @@
+<app-search-bar></app-search-bar>
+<section class="bg-color">
+<div class="title">
+  <h1><span>Wish</span> List</h1>
+</div>
+<body>
+<section *ngIf="!isEmpty"  class="grid">
+  <article class="card" *ngFor="let product of state.products">
+    <span style="--i:0"></span>
+    <span style="--i:1"></span>
+    <span style="--i:2"></span>
+    <span style="--i:3"></span>
+    <div class="glass">
+      <div class="like-ctn">
+        <i [id]="'heart-' + product['product_id']" class="heart-class" (click)="delete(product['product_id'])"></i>
+      </div>
+      <div class="img-product">
+        <img id="img" src="https://ubending.s3.eu-west-3.amazonaws.com/product{{ product['product_id'] }}.{{ product['image'] }}">
+      </div>
+      <div class="content-box">
+        <h2>{{product['name']}}<br><i>{{product['price']}}€</i><br></h2>
+        <a class="buy-btn" (click)="openDialogPayment(product['product_id'],product['name'],product['description'],product['price'],product['image'])">
+          Buy Now
+        </a>
+      </div>
+    </div>
+  </article>
+</section>
+
+<div *ngIf="isEmpty"  class="product__description">
+  <img src="https://i.imgur.com/oJqauJb.png[/img]">
+  <p class="product__description" >
+    Empty wishlist
+  </p>
+</div>
+
+</body>
+</section>
+<app-footer></app-footer>

@@ -14,7 +14,7 @@
         <div *ngFor="let product of state.products">
           <article class="product__card">
 
-            <img style="height: 10rem;" src="https://ubending.s3.eu-west-3.amazonaws.com/product{{ product['product_id'] }}.{{ product['image'] }}" alt="" class="product__img">
+            <img src="https://ubending.s3.eu-west-3.amazonaws.com/product{{ product['product_id'] }}.{{ product['image'] }}" alt="" class="product__img">
 
             <h3 class="product__title">{{product['name']}}</h3>
             <span class="product__price">{{product['price']}}€</span>
