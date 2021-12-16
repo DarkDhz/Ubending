@@ -180,7 +180,7 @@ def getMean(user_id):
     values = list()
     for element in result:
         values.append(element[0])
-
+    print(values)
     mycursor.close()
     db.close()
 
