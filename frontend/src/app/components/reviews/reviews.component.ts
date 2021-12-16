@@ -15,6 +15,8 @@ export class ReviewsComponent implements OnInit {
   // Total Stars
   starsTotal = 5;
 
+  token = "null";
+
   // Score of each review (name os seller that has been reviewed)
   ratings = {
     'ana': {'total': 24, 'avg': 4.7, 'mine':5, '5stars': 8, '4stars': 13, '3stars': 2, '2stars': 1, '1stars': 0},
@@ -27,6 +29,11 @@ export class ReviewsComponent implements OnInit {
 
 
   constructor() {
+    const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+    if (currentUser != null) {
+      this.token = currentUser.token;
+      this.isLogged = true;
+    }
   }
 
   ngOnInit(): void {
@@ -95,23 +102,6 @@ export class ReviewsComponent implements OnInit {
     }
   }
 
-  setActiveLink(e: number){
-    const links = document.querySelectorAll('.nav-link');
-    for(let i=0; i<links.length; i++){
-      if(e==i){
-        links[i].classList.add('active');
-      }else{
-        links[i].classList.remove('active');
-      }
 
-      if(e==0){
-        document.getElementById('not-reviewed')!.style.visibility = 'visible';
-        document.getElementById('reviewed-grid')!.style.visibility = 'hidden';
-      }else if(e==1){
-        document.getElementById('not-reviewed')!.style.visibility = 'hidden';
-        document.getElementById('reviewed-grid')!.style.visibility = 'visible';
-      }
-    }
-  }
 
 }

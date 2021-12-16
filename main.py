@@ -34,6 +34,7 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 @app.route("/user-profile")
 @app.route("/reset/")
 @app.route("/reset")
+@app.route("/reviews")
 @app.route("/recover")
 @app.route("/home")
 @app.route("/user-products")
@@ -76,6 +77,7 @@ api.add_resource(BuyProduct, '/api/buy/<int:product_id>/<string:token>', methods
 
 # RATE ENDPOINT
 api.add_resource(RatingsProductResource, '/api/ratings/<int:user_id>', methods=['GET'])
+api.add_resource(RatingsProductListResource, '/api/to_rate/<string:token>', methods=['GET'])
 api.add_resource(RateProductResource, '/api/rate/<int:product_id>/<string:token>', methods=['POST'])
 
 if __name__ == '__main__':
