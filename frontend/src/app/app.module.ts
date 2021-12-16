@@ -21,6 +21,9 @@ import { HomeProductsComponent } from './components/home-products/home-products.
 import {UserProductsComponent, DialogEdit} from "./components/user-products/user-products.component";
 import {Payment} from "./components/products/products.component";
 import { ProductCardComponent } from './components/product-card/product-card.component';
+import { ReviewsComponent } from './components/reviews/reviews.component';
+import { RatingComponent } from './components/rating/rating.component';
+import { NotReviewedGridComponent } from './components/not-reviewed-grid/not-reviewed-grid.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
 
 
@@ -41,7 +44,10 @@ import { WishlistComponent } from './components/wishlist/wishlist.component';
     Payment,
     ProductCardComponent,
     Payment,
-    WishlistComponent
+    WishlistComponent,
+    ReviewsComponent,
+    RatingComponent,
+    NotReviewedGridComponent
     ],
   imports: [
     BrowserModule,

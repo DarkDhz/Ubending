@@ -1,0 +1,17 @@
+<section class="grid">
+  <article class="card" *ngFor="let product of [1,2,3,4,5,6,7,8]">
+    <span class='sombra' style="--i:0"></span>
+    <span class='sombra' style="--i:1"></span>
+    <span class='sombra' style="--i:2"></span>
+    <span class='sombra' style="--i:3"></span>
+    <div class="glass">
+      <div class="img-product">
+        <img id="img" src="https://i.imgur.com/iwaAllL.jpg[/img]">
+      </div>
+      <div class="content-box">
+        <h2>Product<br><i>@Seller</i><br></h2>
+        <a class="buy-btn" (click)="openRatingDialog()"> Rate it </a>
+      </div>
+    </div>
+  </article>
+</section>

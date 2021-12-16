@@ -8,7 +8,8 @@ import {RecoverPasswordComponent} from "./components/recover-password/recover-pa
 import {ResetPasswordComponent} from "./components/reset-password/reset-password.component";
 import { ProfileComponent } from './profile/profile.component';
 import { ProductsComponent } from './components/products/products.component';
-import {ProductCardComponent} from "./components/product-card/product-card.component";
+import {ProductCardComponent} from "./components/product-card/product-card.component";º
+import {ReviewsComponent} from "./components/reviews/reviews.component";
 import {WishlistComponent} from "./components/wishlist/wishlist.component";
 
 
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'products', component: ProductsComponent},
   { path: 'wishlist', component: WishlistComponent},
   { path: 'cards', component: ProductCardComponent},
+  { path: 'reviews', component: ReviewsComponent}
 ];
 
 @NgModule({
@@ -36,4 +38,4 @@ const routes: Routes = [
 export class AppRoutingModule { }
 export  const routingComponents = [LogInSignUpComponent,UserProductsComponent, HomeComponent,
                                     RecoverPasswordComponent, ResetPasswordComponent, ProductsComponent,
-                                    ProfileComponent, WishlistComponent]
+                                    ProfileComponent, ReviewsComponent, WishlistComponent]
