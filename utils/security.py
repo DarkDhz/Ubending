@@ -56,7 +56,10 @@ def send_reset_email(user_id, mail, mail_svr):
                   sender='noreply@ubending.com',
                   recipients=[mail])
     msg.body = f'''To reset your password visit the following link:
-    https://ubending4.herokuapp.com/reset/{token.decode('ascii')}
+    https://ubending4.herokuapp.com/reset/
+    
+    Add this token in the token form:
+    {token.decode('ascii')}
 
 If you did not make this request, please ignore this email and no changes will be made.
 '''

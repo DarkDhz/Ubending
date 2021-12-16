@@ -65,7 +65,6 @@ class UserAccount(Resource):
         parser.add_argument('location', type=str, required=False)
         parser.add_argument('userphoto', type=str, required=False)
 
-
         data = parser.parse_args()
 
         user = verify_auth_token(token)
@@ -108,7 +107,6 @@ class UserLogin(Resource):
         if result == 400:
             return {'message': 'invalid password'}, 400
         return {'token': result.decode('ascii')}, 200
-
 
 
 class ResetRequest(Resource):

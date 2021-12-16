@@ -1,15 +1,11 @@
 import werkzeug
 from flask_restful import Resource, reqparse
-
-import lock
-from data.ProductQueries import getProductById, setBuyed, addRating, getMean
+from lock import lock
+from data.ProductQueries import getProductById, setBuyed, addRating, getMean, getPendingToValorate
 from utils.security import verify_auth_token
 
 
 class BuyProduct(Resource):
-
-    def get(self):
-        return 404
 
     def post(self, product_id, token):
 
@@ -18,19 +14,14 @@ class BuyProduct(Resource):
         if user is None:
             return {'message': 'invalid token'}, 400
 
-        result = setBuyed(user_id=user, product_id=product_id)
+        with lock.lock:
+            result = setBuyed(user_id=user, product_id=product_id)
 
-        if result == 200:
-            return {"message": "Product buy success"}, 200
-        elif result == 400:
-            return {"message": "You can't buy your own product or product already bought"}, 400
-        return {"message": "Error buying product"}, 400
-
-    def delete(self):
-        return 404
-
-    def put(self):
-        return 404
+            if result == 200:
+                return {"message": "Product buy success"}, 200
+            elif result == 400:
+                return {"message": "You can't buy your own product or product already bought"}, 400
+            return {"message": "Error buying product"}, 400
 
 
 class ProductResource(Resource):
@@ -41,34 +32,6 @@ class ProductResource(Resource):
             return {'Message': 'Product not found'}, 404
         else:
             return result, 200
-
-    def post(self, product_id, user_id):
-        return {'message': "Not developed yet"}, 404
-
-    def delete(self, user_id, product_id):
-        return {'message': "Not developed yet"}, 404
-
-    def put(self, id):
-        with lock.lock:
-            return {'message': "Not developed yet"}, 404
-
-
-class ProductListResource(Resource):
-
-    def get(self, id):
-        return {'message': "Not developed yet"}, 404
-
-    def post(self, id):
-        with lock.lock:
-            return {'message': "Not developed yet"}, 404
-
-    def delete(self, id):
-        with lock.lock:
-            return {'message': "Not developed yet"}, 404
-
-    def put(self, id):
-        with lock.lock:
-            return {'message': "Not developed yet"}, 404
 
 
 class RateProductResource(Resource):
@@ -85,17 +48,30 @@ class RateProductResource(Resource):
 
         data = parser.parse_args()
 
-        result = addRating(buyer_id=user, product_id=product_id, value=data['rating'])
+        with lock.lock:
+            result = addRating(buyer_id=user, product_id=product_id, value=data['rating'])
 
-        if result == 404:
-            return {'message': 'error adding valoration'}, 500
+            if result == 404:
+                return {'message': 'error adding valoration'}, 500
 
-        return {'message': "Rating added"}, 201
+            return {'message': "Rating added"}, 201
 
 
 class RatingsProductResource(Resource):
 
     def get(self, user_id):
-        meanValue = getMean(user_id=user_id)
+        mean_value = getMean(user_id=user_id)
 
-        return {'value': meanValue}, 200
+        return {'value': mean_value}, 200
+
+
+class RatingsProductListResource(Resource):
+
+    def get(self, token):
+        user = verify_auth_token(token)
+
+        if user is None:
+            return {'message': 'invalid token'}, 400
+
+        products = getPendingToValorate(user)
+        return products, 200
