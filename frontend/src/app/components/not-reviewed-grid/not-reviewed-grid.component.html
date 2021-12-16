@@ -10,6 +10,9 @@
     </div>
   </div>
 </div>
+<div *ngIf="this.state.products.length == 0" class="row">
+  <a style="text-align: center" class="nav-link col" >Nothing to show there, go and buy something</a>
+</div>
 <section class="grid">
   <article class="card" *ngFor="let product of state.products">
     <span class='sombra' style="--i:0"></span>
