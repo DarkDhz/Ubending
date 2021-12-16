@@ -26,6 +26,7 @@ export class WishlistComponent implements OnInit {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
     if (currentUser != null) {
       this.token = currentUser.token;
+      this.isLogged = true
     } else {
       alert('NOT LOGGED IN')
       this.router.navigate(['/home']);
