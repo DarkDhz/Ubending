@@ -200,7 +200,7 @@ def getProductByIdBuyed(product_id):
     db.close()
 
     if len(myresult) == 0:
-        return 404
+        return list()
 
     return productToJson(list(myresult[0]))
 
@@ -224,6 +224,7 @@ def getFollowingProductsList(user_id):
     for elem in myresult:
         item = getProductByIdBuyed(elem[0])
         if len(item) != 0:
+            print(item)
             toReturn.append(item)
     return toReturn
 
