@@ -173,6 +173,7 @@ class TestRateQueries(TestCase):
 
         self.assertEqual(result, 201, "invalid rating")
 
+    """
     def test_get_mean_rating_product(self):
         # get the buyer
         buyer = getAccountByEmail("testingreal@gmail.com")['user_id']
@@ -193,8 +194,8 @@ class TestRateQueries(TestCase):
         removeRatings(buyer)
 
         self.assertEqual(mean, 4.5, "invalid mean")
+    """
 
-"""
 class TestProductRequests(TestCase):
     def test_get_product(self):
         # CREATE A USER
