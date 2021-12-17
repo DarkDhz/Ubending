@@ -47,21 +47,4 @@ export class NotReviewedGridComponent implements OnInit {
       })
   }
 
-  setActiveLink(e: number){
-    if (e == 0) {
-      this.getProducts()
-    } else {
-
-    }
-    const links = document.querySelectorAll('.nav-link');
-    for(let i=0; i<links.length; i++){
-      if(e==i){
-        links[i].classList.add('active');
-      }else{
-        links[i].classList.remove('active');
-      }
-
-
-    }
-  }
 }

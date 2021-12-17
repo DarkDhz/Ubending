@@ -58,6 +58,7 @@ export class SearchBarComponent implements OnInit {
       })
     }
 
+    this.isLogged = true;
   }
 
 
