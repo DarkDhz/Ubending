@@ -20,10 +20,10 @@ if config_decouple('PRODUCTION', cast=bool, default=False):
 app.config.from_object(environment)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
-app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+app.config['MAIL_SERVER'] = 'ssl0.ovh.net'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'ubending.social@gmail.com'
+app.config['MAIL_USERNAME'] = 'ubending@darkhorizon.es'
 app.config['MAIL_PASSWORD'] = 'ubending2021'
 api = Api(app)
 mail_svr = Mail(app)
