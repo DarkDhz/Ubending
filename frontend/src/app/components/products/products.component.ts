@@ -230,7 +230,7 @@ export class Payment {
         Validators.pattern("^[a-zA-Z0-9]{16,16}$")]),
       date: new FormControl('', [
         Validators.required,
-        Validators.pattern("^[0-12]+/+[0-30]{2,2}$")]),
+        Validators.pattern("^[0-12]+/+[0-9]{2,2}$")]),
       CVV: new FormControl('', [
         Validators.required,
         Validators.pattern("^[0-9]{3,3}$")]),
