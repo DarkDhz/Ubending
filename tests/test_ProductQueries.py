@@ -173,30 +173,28 @@ class TestRateQueries(TestCase):
 
         self.assertEqual(result, 201, "invalid rating")
 
+    """
     def test_get_mean_rating_product(self):
-        seller = getAccountByEmail('testingseller@gmail.com')['user_id']
-        data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": None, "category_id": 2}
-        p1 = addProduct(seller, data)
-        p2 = addProduct(seller, data)
-
         # get the buyer
         buyer = getAccountByEmail("testingreal@gmail.com")['user_id']
 
+        # get a random product
+        product = searchByName('')[:2]
+        p1 = product[0]['product_id']
+        p2 = product[1]['product_id']
 
         # rate the products
         addRating(buyer, p1, 5)
         addRating(buyer, p2, 4)
 
         # get mean
-        mean = getMean(seller)
+        mean = getMean(product[0]['owner_id'])
 
         # remove the added ratings
         removeRatings(buyer)
-        deleteProduct(p1, seller)
-        deleteProduct(p2, seller)
 
         self.assertEqual(mean, 4.5, "invalid mean")
-
+    """
 """
 class TestProductRequests(TestCase):
     def test_get_product(self):
@@ -230,13 +228,15 @@ class TestProductRequests(TestCase):
         x = requests.post(url, data=myobj)
 
         self.assertEqual(404, x.status_code, "Product does exist.")
-"""
 
-"""
+
 # get a product
 url = 'http://127.0.0.1:5000/user/3/product'
 myobj = {'price': '299', 'name': 'testing', 'description': 'hola', 'state': 0}
 x = requests.post(url, data=myobj)
+
+
+
 
 
 url = 'http://127.0.0.1:5000/user/1/product/1'
@@ -258,7 +258,7 @@ url = 'http://127.0.0.1:5000/myproducts'
 myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0OTEzNywiZXhwIjoxNjM2NjQ5NzM3fQ.eyJ1c2VyX2lkIjozfQ.U4fjXix65nT_1xqVKQGVKZoh818kh0Rc1zlUSLMtLnkHOktZ4Rm13YCImedCnZNxS6lTbiI6YSdReBJcCJZ7hQ'}
 x = requests.get(url, data=myobj)
 x.json()
-"""
+
 
 from data.SearchQueries import *
 
@@ -267,15 +267,9 @@ class TestWhishlist(TestCase):
     # GET TESTING USER
     userID = getAccountByEmail('testingreal@gmail.com')['user_id']
 
-    '''
     def test_get_following_products_list(self):
         # Get some products to user whishlist
         products = searchByName('')[:3]
-
-        for item in products:
-            item.pop('following')
-            item.pop('owner_name')
-
         p1 = products[0]['product_id']
         p2 = products[1]['product_id']
         p3 = products[2]['product_id']
@@ -296,6 +290,5 @@ class TestWhishlist(TestCase):
 
         self.assertTrue(checkIfFollow)
         self.assertEqual(result, products, "results do not match")
-    '''
-
+"""
 
