@@ -13,6 +13,7 @@ import {ReviewsComponent} from "./components/reviews/reviews.component";
 import {WishlistComponent} from "./components/wishlist/wishlist.component";
 
 
+
 const routes: Routes = [
   { path: '', redirectTo: '/home',pathMatch: 'full'},
   { path: 'login-signup', component: LogInSignUpComponent},
@@ -38,4 +39,4 @@ const routes: Routes = [
 export class AppRoutingModule { }
 export  const routingComponents = [LogInSignUpComponent,UserProductsComponent, HomeComponent,
                                     RecoverPasswordComponent, ResetPasswordComponent, ProductsComponent,
-                                    ProfileComponent, ReviewsComponent, WishlistComponent]
+                                    ProfileComponent, ReviewsComponent, WishlistComponent, ProductCardComponent]
