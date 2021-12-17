@@ -64,9 +64,20 @@
 </div>
 
 <div *ngIf="isLogged">
-  <app-not-reviewed-grid id="not-reviewed"></app-not-reviewed-grid>
-  <section id="reviewed-grid" style="visibility: hidden" class="grid">
-  </section>
+  <div class="reviews-container">
+    <div class="row">
+      <div class="col-12">
+        <nav>
+          <div class="links">
+            <a class="nav-link active" (click)="setActiveLink(0)">Not reviewed</a>
+            <a class="nav-link" (click)="setActiveLink(1)">Reviewed</a>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <app-not-reviewed-grid id="not-reviewed-grid"></app-not-reviewed-grid>
+  <app-reviewed-grid id="reviewed-grid" style="display: none"></app-reviewed-grid>
 </div>
 </body>
 <app-footer></app-footer>

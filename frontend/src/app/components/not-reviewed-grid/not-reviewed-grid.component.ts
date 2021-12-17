@@ -3,6 +3,7 @@ import {RatingComponent} from "../rating/rating.component";
 import {MatDialog} from "@angular/material/dialog";
 import {environment} from "../../enviroment";
 import axios from "axios";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-not-reviewed-grid',
@@ -15,13 +16,13 @@ export class NotReviewedGridComponent implements OnInit {
   isLogged = false;
   state = {products: []}
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private router: Router) {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
     if (currentUser != null) {
       this.token = currentUser.token;
       this.isLogged = true;
     } else {
-
+      this.router.navigate(['/login-signup']);
     }
     this.getProducts()
   }
@@ -47,21 +48,4 @@ export class NotReviewedGridComponent implements OnInit {
       })
   }
 
-  setActiveLink(e: number){
-    if (e == 0) {
-      this.getProducts()
-    } else {
-
-    }
-    const links = document.querySelectorAll('.nav-link');
-    for(let i=0; i<links.length; i++){
-      if(e==i){
-        links[i].classList.add('active');
-      }else{
-        links[i].classList.remove('active');
-      }
-
-
-    }
-  }
 }
