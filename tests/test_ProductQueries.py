@@ -273,6 +273,7 @@ class TestWhishlist(TestCase):
 
         for item in products:
             item.pop('following')
+            item.pop('owner_name')
 
         p1 = products[0]['product_id']
         p2 = products[1]['product_id']
