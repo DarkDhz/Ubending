@@ -288,5 +288,5 @@ class TestWhishlist(TestCase):
 
         self.assertTrue(checkIfFollow)
         self.assertEqual(result, products, "results do not match")
-
+"""
 
