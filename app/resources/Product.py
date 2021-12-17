@@ -1,7 +1,7 @@
 import werkzeug
 from flask_restful import Resource, reqparse
 from lock import lock
-from data.ProductQueries import getProductById, setBuyed, addRating, getMean, getPendingToValorate
+from data.ProductQueries import getProductById, setBuyed, addRating, getMean, getPendingToValorate, getAlreadyValorate
 from utils.security import verify_auth_token
 
 
@@ -65,7 +65,7 @@ class RatingsProductResource(Resource):
         return {'value': mean_value}, 200
 
 
-class RatingsProductListResource(Resource):
+class ToRateProductListResource(Resource):
 
     def get(self, token):
         user = verify_auth_token(token)
@@ -74,4 +74,16 @@ class RatingsProductListResource(Resource):
             return {'message': 'invalid token'}, 400
 
         products = getPendingToValorate(user)
+        return products, 200
+
+
+class RatedProductListResource(Resource):
+
+    def get(self, token):
+        user = verify_auth_token(token)
+
+        if user is None:
+            return {'message': 'invalid token'}, 400
+
+        products = getAlreadyValorate(user)
         return products, 200

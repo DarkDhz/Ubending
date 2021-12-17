@@ -102,6 +102,30 @@ export class ReviewsComponent implements OnInit {
     }
   }
 
+  setActiveLink(e: number){
+    /*
+    if (e == 0) {
+      this.getProducts()
+    } else {
 
+    }*/
+    const links = document.querySelectorAll('.nav-link');
+    for(let i=0; i<links.length; i++){
+      if(e==i){
+        links[i].classList.add('active');
+      }else{
+        links[i].classList.remove('active');
+      }
+
+      if(e==0){
+        document.getElementById('not-reviewed-grid')!.style.display = 'block';
+        document.getElementById('reviewed-grid')!.style.display = 'none';
+
+      } else if(e==1){
+        document.getElementById('not-reviewed-grid')!.style.display = 'none';
+        document.getElementById('reviewed-grid')!.style.display = 'block';
+      }
+    }
+  }
 
 }

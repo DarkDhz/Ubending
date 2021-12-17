@@ -20,10 +20,10 @@ if config_decouple('PRODUCTION', cast=bool, default=False):
 app.config.from_object(environment)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
-app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+app.config['MAIL_SERVER'] = 'ssl0.ovh.net'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'ubending.social@gmail.com'
+app.config['MAIL_USERNAME'] = 'ubending@darkhorizon.es'
 app.config['MAIL_PASSWORD'] = 'ubending2021'
 api = Api(app)
 mail_svr = Mail(app)
@@ -76,7 +76,8 @@ api.add_resource(BuyProduct, '/api/buy/<int:product_id>/<string:token>', methods
 
 # RATE ENDPOINT
 api.add_resource(RatingsProductResource, '/api/ratings/<int:user_id>', methods=['GET'])
-api.add_resource(RatingsProductListResource, '/api/to_rate/<string:token>', methods=['GET'])
+api.add_resource(ToRateProductListResource, '/api/to_rate/<string:token>', methods=['GET'])
+api.add_resource(RatedProductListResource, '/api/rated/<string:token>', methods=['GET'])
 api.add_resource(RateProductResource, '/api/rate/<int:product_id>/<string:token>', methods=['POST'])
 
 if __name__ == '__main__':

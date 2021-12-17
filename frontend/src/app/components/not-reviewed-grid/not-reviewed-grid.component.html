@@ -1,15 +1,3 @@
-<div *ngIf="false" class="reviews-container">
-  <div class="row">
-    <div class="col-12">
-      <nav>
-        <div class="links">
-          <a id="not-reviewed" class="nav-link active" (click)="setActiveLink(0)">Not reviewed</a>
-          <a id="reviewed-grid" class="nav-link" (click)="setActiveLink(1)">Reviewed</a>
-        </div>
-      </nav>
-    </div>
-  </div>
-</div>
 <div *ngIf="this.state.products.length == 0" class="row">
   <a style="text-align: center" class="nav-link col" >Nothing to show there, go and buy something</a>
 </div>
