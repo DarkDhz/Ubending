@@ -276,16 +276,16 @@ def getPendingToValorate(user_id):
 
     toReturn = list()
     for elem in myresult:
-        if not isRated(user_id, mycursor):
+        if not isRated(user_id, mycursor, elem[0]):
             toReturn.append(customRatingToJson(list(elem)))
     mycursor.close()
     db.close()
     return toReturn
 
 
-def isRated(id, mycursor):
-    query = "SELECT * FROM Ratings WHERE buyer_id = %s"
-    values = (id,)
+def isRated(id, mycursor, product):
+    query = "SELECT * FROM Ratings WHERE buyer_id = %s and product_id = %s"
+    values = (id, product)
     mycursor.execute(query, values)
     result = mycursor.fetchall()
     if len(result) == 0:
@@ -302,7 +302,7 @@ def getAlreadyValorate(user_id):
     mycursor = db.cursor()
 
     query = "SELECT pr.product_id, pr.name, pr.image, R.rating, U.username FROM Products pr " \
-            "INNER JOIN Ratings R on pr.buyer_id = R.buyer_id INNER JOIN Users U on R.buyer_id = U.user_id" \
+            "INNER JOIN Ratings R on pr.product_id = R.product_id INNER JOIN Users U on R.buyer_id = U.user_id" \
             " WHERE pr.buyed = 1 and pr.buyer_id = %s"
 
     values = (user_id,)
