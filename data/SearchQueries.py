@@ -11,7 +11,7 @@ def searchToJson(elem, fllw):
         elem[5] = convertState(elem[5])
     return {'product_id': elem[0], 'owner_id': elem[1], 'name': elem[2],
             'description': elem[3], 'price': elem[4], 'state': elem[5],
-            'image': elem[6], 'category_id': elem[7], 'following': fllw}
+            'image': elem[6], 'category_id': elem[7], 'following': fllw, 'owner_name': elem[11]}
 
 
 def searchByCategory(category_id, start_point=0, jump=12, token=None):
@@ -19,10 +19,12 @@ def searchByCategory(category_id, start_point=0, jump=12, token=None):
     cursor = db.cursor()
 
     if token is None:
-        query = "SELECT * FROM Products WHERE category_id = %s and buyed = 0 LIMIT %s,%s"
+        query = "SELECT * FROM Products P INNER JOIN Users U on U.user_id = P.owner_id " \
+                "WHERE category_id = %s and buyed = 0 LIMIT %s,%s"
         values = (category_id, start_point, jump + start_point,)
     else:
-        query = "SELECT * FROM Products WHERE category_id = %s and buyed = 0 and owner_id != %s LIMIT %s,%s"
+        query = "SELECT * FROM Products P INNER JOIN Users U on U.user_id = P.owner_id " \
+                "WHERE category_id = %s and buyed = 0 and owner_id != %s LIMIT %s,%s"
         values = (token, category_id, start_point, jump + start_point,)
 
     cursor.execute(query, values)
@@ -38,13 +40,16 @@ def searchByName(name, start_point=0, jump=12, token=None):
     cursor = db.cursor()
 
     if token is None:
-        query = "SELECT * FROM Products WHERE name LIKE '%" + name + "%' and buyed = 0 LIMIT %s,%s"
+        query = "SELECT * FROM Products P INNER JOIN Users U on U.user_id = P.owner_id " \
+                "WHERE name LIKE '%" + name + "%' and buyed = 0 LIMIT %s,%s"
         values = (start_point, jump + start_point,)
     else:
-        query = "SELECT * FROM Products WHERE name LIKE '%" + name + "%' and buyed = 0 and owner_id != %s LIMIT %s,%s"
+        query = "SELECT * FROM Products P INNER JOIN Users U on U.user_id = P.owner_id " \
+                " WHERE name LIKE '%" + name + "%' and buyed = 0 and owner_id != %s LIMIT %s,%s"
         values = (token, start_point, jump + start_point,)
 
     cursor.execute(query, values)
+
 
     result = cursor.fetchall()
     cursor.close()
@@ -57,10 +62,10 @@ def searchByCategoryAndName(category_id, name, start_point=0, jump=12, token=Non
     cursor = db.cursor()
 
     if token is None:
-        query = "SELECT * FROM Products WHERE name LIKE '%" + name + "%' and category_id = %s and buyed = 0 LIMIT %s,%s"
+        query = "SELECT * FROM Products P INNER JOIN Users U on U.user_id = P.owner_id WHERE name LIKE '%" + name + "%' and category_id = %s and buyed = 0 LIMIT %s,%s"
         values = (category_id, start_point, jump + start_point,)
     else:
-        query = "SELECT * FROM Products WHERE name LIKE '%" + name + "%' and owner_id != %s and category_id = %s and buyed = 0 LIMIT %s,%s"
+        query = "SELECT * FROM Products P INNER JOIN Users U on U.user_id = P.owner_id WHERE name LIKE '%" + name + "%' and owner_id != %s and category_id = %s and buyed = 0 LIMIT %s,%s"
         values = (token, category_id, start_point, jump + start_point,)
 
     cursor.execute(query, values)
