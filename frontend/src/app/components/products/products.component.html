@@ -43,7 +43,7 @@
         <img id="img" src="https://ubending.s3.eu-west-3.amazonaws.com/product{{ product['product_id'] }}.{{ product['image'] }}">
       </div>
       <div class="content-box">
-        <h2>{{product['name']}}<br><i>{{product['price']}}€</i><br></h2>
+        <h2>{{product['name']}}<h3>@seller</h3><br><i>{{product['price']}}€</i><br></h2>
         <a class="buy-btn" (click)="openDialogPayment(product['product_id'],product['name'],product['description'],product['price'],product['image'])">
           Buy Now
         </a>
