@@ -70,6 +70,21 @@ body {
   }
 }
 
+.img-custom{
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  z-index: 1;
+  overflow: hidden;
+  height: 15vw;
+  object-fit: cover;
+  border-radius: 32px;
+}
+
 /********************STARS*******************/
 
 .average-ratings__stars {

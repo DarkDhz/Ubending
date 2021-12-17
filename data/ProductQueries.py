@@ -293,6 +293,35 @@ def isRated(id, mycursor):
     return True
 
 
+def customRatedToJson(data):
+    return {'product_id': data[0], 'name': data[1], 'image': data[2], 'valoration': data[3], 'user': data[4]}
+
+
+def getAlreadyValorate(user_id):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
+    mycursor = db.cursor()
+
+    query = "SELECT pr.product_id, pr.name, pr.image, R.rating, U.username FROM Products pr " \
+            "INNER JOIN Ratings R on pr.buyer_id = R.buyer_id INNER JOIN Users U on R.buyer_id = U.user_id" \
+            " WHERE pr.buyed = 1 and pr.buyer_id = %s"
+
+    values = (user_id,)
+    mycursor.execute(query, values)
+
+    myresult = mycursor.fetchall()
+    mycursor.close()
+    db.close()
+
+    if len(myresult) == 0:
+        return 404
+
+    toReturn = list()
+    for elem in myresult:
+        toReturn.append(customRatedToJson(list(elem)))
+
+    return toReturn
+
+
 '''
 # add a rating
 

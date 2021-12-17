@@ -3,6 +3,7 @@ import {RatingComponent} from "../rating/rating.component";
 import {MatDialog} from "@angular/material/dialog";
 import {environment} from "../../enviroment";
 import axios from "axios";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-not-reviewed-grid',
@@ -13,16 +14,15 @@ export class NotReviewedGridComponent implements OnInit {
 
   token = "null";
   isLogged = false;
-  p = [1,2,3,4,5,6,7,8];
   state = {products: []}
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private router: Router) {
     const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
     if (currentUser != null) {
       this.token = currentUser.token;
       this.isLogged = true;
     } else {
-
+      this.router.navigate(['/login-signup']);
     }
     this.getProducts()
   }

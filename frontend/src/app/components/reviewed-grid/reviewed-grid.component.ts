@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
+import {environment} from "../../enviroment";
+import axios from "axios";
 
 @Component({
   selector: 'app-reviewed-grid',
@@ -7,21 +10,66 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReviewedGridComponent implements OnInit {
 
+  token = "null";
+  isLogged = false;
+  state = {products: []}
   p = [1,2,3,4,5,6,7,8];
   ratings = {1: 2, 2: 3, 3: 4, 4: 4, 5: 5, 6: 3, 7: 4, 8: 3}
 
-  constructor() { }
+  constructor(private router: Router) {
+    const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+    if (currentUser != null) {
+      this.token = currentUser.token;
+      this.isLogged = true;
+    } else {
+      this.router.navigate(['/login-signup']);
+    }
+    this.getProducts()
+  }
 
   ngOnInit(): void {
   }
 
-  ngAfterViewInit(): void{
-    for(let i in this.ratings) {
+  load = false;
+
+  getProducts(){
+    const path = environment.path + '/api/rated/' + this.token
+
+    axios.get(path)
+      .then((res) => {
+        // @ts-ignore
+        this.state.products = res.data
+        this.representImages()
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  calculateWidth(val: number) {
+    return String(40*Number(val)-15);
+  }
+
+  representImages() {
+    for(let i in this.state.products) {
+      console.log(i)
       // @ts-ignore
-      let rat = this.ratings[i];
-      // Set width of stars-inner to percentage
-      document.getElementById('starts-inner-' + i)!.style.width = String(40*Number(rat)-15);
-      console.log(document.getElementById('starts-inner-' + i)!.style.width);
+      document.getElementById('starts-inner-' + i['product_id'])!.style.width = String(40*Number(i['valoration'])-15);
+      // @ts-ignore
+      console.log(document.getElementById('starts-inner-' + i['product_id'])!.style.width);
+      console.log('asd')
+      // @ts-ignore
+      console.log(i*100)
+    }
+  }
+
+  ngAfterViewInit(): void{
+    for(let i in this.state.products) {
+      // @ts-ignore
+      document.getElementById('starts-inner-' + i['product_id'])!.style.width = String(40*Number(i['valoration'])-15);
+      // @ts-ignore
+      console.log(document.getElementById('starts-inner-' + i['product_id'])!.style.width);
+      console.log('asd')
       // @ts-ignore
       console.log(i*100)
     }
