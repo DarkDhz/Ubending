@@ -29,23 +29,28 @@ export class RatingComponent implements OnInit {
   }
 
   getRating() {
-    let star5 = (<HTMLInputElement>document.getElementById("star5")).value;
-    if (star5 == 'on') {
+    let star5 = (<HTMLInputElement>document.getElementById("star1")).checked;
+    if (star5) {
       return 5
     } else {
-      let star4 = (<HTMLInputElement>document.getElementById("star4")).value;
-      if (star4 == 'on') {
+      let star4 = (<HTMLInputElement>document.getElementById("star2")).checked;
+      if (star4) {
         return 4
       } else {
-        let star3 = (<HTMLInputElement>document.getElementById("star3")).value;
-        if (star3 == 'on') {
+        let star3 = (<HTMLInputElement>document.getElementById("star3")).checked;
+        if (star3) {
           return 3
         } else {
-          let star2 = (<HTMLInputElement>document.getElementById("star2")).value;
-          if (star2 == 'on') {
+          let star2 = (<HTMLInputElement>document.getElementById("star4")).checked;
+          if (star2) {
             return 2
           } else {
-            return 1
+            let star1 = (<HTMLInputElement>document.getElementById("star5")).checked;
+            if (star1) {
+              return 1
+            } else {
+              return 0
+            }
           }
         }
       }

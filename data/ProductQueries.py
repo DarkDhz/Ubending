@@ -48,7 +48,7 @@ def getAllProductsOfUserByID(user_id):
     mycursor = db.cursor()
 
     query = "SELECT * FROM Products WHERE owner_id = %s AND buyed = 0"
-    values = (user_id,) 
+    values = (user_id,)
     mycursor.execute(query, values)
 
     myresult = mycursor.fetchall()
@@ -187,11 +187,29 @@ def getMean(user_id):
     return np.mean(values)
 
 
+def getProductByIdBuyed(product_id):
+    db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
+    mycursor = db.cursor()
+
+    query = "SELECT * FROM Products WHERE product_id = %s and buyed = 0"
+    values = (product_id,)
+    mycursor.execute(query, values)
+
+    myresult = mycursor.fetchall()
+    mycursor.close()
+    db.close()
+
+    if len(myresult) == 0:
+        return 404
+
+    return productToJson(list(myresult[0]))
+
+
 def getFollowingProductsList(user_id):
     db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
 
-    query = "SELECT * FROM ProductsFollowing WHERE user_id = %s and buyed = 0"
+    query = "SELECT * FROM ProductsFollowing WHERE user_id = %s"
     values = (user_id,)
     mycursor.execute(query, values)
 
@@ -204,8 +222,9 @@ def getFollowingProductsList(user_id):
 
     toReturn = list()
     for elem in myresult:
-        item = getProductById(elem[0])
-        toReturn.append(item)
+        item = getProductByIdBuyed(elem[0])
+        if len(item) != 0:
+            toReturn.append(item)
     return toReturn
 
 

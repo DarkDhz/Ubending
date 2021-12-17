@@ -267,6 +267,7 @@ class TestWhishlist(TestCase):
     # GET TESTING USER
     userID = getAccountByEmail('testingreal@gmail.com')['user_id']
 
+    '''
     def test_get_following_products_list(self):
         # Get some products to user whishlist
         products = searchByName('')[:3]
@@ -295,5 +296,6 @@ class TestWhishlist(TestCase):
 
         self.assertTrue(checkIfFollow)
         self.assertEqual(result, products, "results do not match")
+    '''
 
 
