@@ -1,0 +1,20 @@
+<div *ngIf="this.state.products.length == 0" class="row">
+  <a style="text-align: center" class="nav-link col" >Nothing to show there, go and buy something</a>
+</div>
+<section class="grid">
+  <article class="card" *ngFor="let product of state.products">
+    <span class='sombra' style="--i:0"></span>
+    <span class='sombra' style="--i:1"></span>
+    <span class='sombra' style="--i:2"></span>
+    <span class='sombra' style="--i:3"></span>
+    <div class="glass">
+      <div class="img-product">
+        <img id="img" src="https://ubending.s3.eu-west-3.amazonaws.com/product{{ product['product_id'] }}.{{ product['image'] }}">
+      </div>
+      <div class="content-box">
+        <h2>{{ product['name'] }}<br><i>@{{ product['owner'] }}</i><br></h2>
+        <a class="buy-btn" (click)="openRatingDialog(product['product_id'])"> Rate it </a>
+      </div>
+    </div>
+  </article>
+</section>

@@ -1,0 +1,22 @@
+<body>
+<div class="container">
+  <div class="cards">
+    <div class="cards-inner" *ngFor="let product of state.products">
+      <div class="img-product">
+        <img class="img-custom" id="img-custom" src="https://ubending.s3.eu-west-3.amazonaws.com/product{{ product['product_id'] }}.{{ product['image'] }}">
+      </div>
+      <div>
+        <h4>{{product['user']}}</h4>
+        <h4>{{product['name']}}</h4>
+      </div>
+      <div class="average-ratings__stars">
+
+        <div class="stars-outer">
+          <div [id]="'starts-inner-' + product['product_id']" class="stars-inner" [style.width.px]="calculateWidth(product['valoration'])"></div>
+        </div>
+        <span [id]="'rating-score-' + product['product_id']" class="stars__average-rating-score" ></span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>

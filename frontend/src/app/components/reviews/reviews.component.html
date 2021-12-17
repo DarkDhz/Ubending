@@ -1,0 +1,83 @@
+<app-search-bar></app-search-bar>
+<body>
+<div class="title">
+  <h1><span>Sellers</span> Ratings</h1>
+</div>
+<div *ngIf="false">
+  <section class="grid">
+    <article class="card" *ngFor="let review of ['ana','paco','sara','luis','celia','ramon','alba']">
+      <h4 class="reviews__heading">Seller {{review}}</h4>
+      <div class="reviews__average-ratings">
+        <div class="average-ratings__stars">
+          <div class="stars-outer">
+            <div [id]="'starts-inner-' + review" class="stars-inner"></div>
+          </div>
+          <span [id]="'rating-score-' + review" class="stars__average-rating-score"></span>
+        </div>
+        <div [id]="'total-customers-' + review" class="average-ratings__total-customers"></div>
+      </div>
+      <div class="reviews__breakdown">
+        <div class="reviews-breakdown__wrapper">
+          <div class="reviews__single-star-average">
+            <div class="single-star-average__amount">5 star</div>
+            <div class="single-star-average__progress-bar">
+              <progress [id]="'5-progress-bar'+review" class="progress-bar__data" value="30" max="100"></progress>
+            </div>
+            <div [id]="'5-stars-perc' + review" class="single-star-average__percentage"></div>
+          </div>
+
+          <div class="reviews__single-star-average">
+            <div class="single-star-average__amount">4 star</div>
+            <div class="single-star-average__progress-bar">
+              <progress [id]="'4-progress-bar'+review" class="progress-bar__data" max="100"></progress>
+            </div>
+            <div [id]="'4-stars-perc' + review" class="single-star-average__percentage"></div>
+          </div>
+
+          <div class="reviews__single-star-average">
+            <div class="single-star-average__amount">3 star</div>
+            <div class="single-star-average__progress-bar">
+              <progress [id]="'3-progress-bar'+review" class="progress-bar__data" max="100"></progress>
+            </div>
+            <div [id]="'3-stars-perc' + review" class="single-star-average__percentage"></div>
+          </div>
+
+          <div class="reviews__single-star-average">
+            <div class="single-star-average__amount">2 star</div>
+            <div class="single-star-average__progress-bar">
+              <progress [id]="'2-progress-bar'+review" class="progress-bar__data" max="100"></progress>
+            </div>
+            <div [id]="'2-stars-perc' + review" class="single-star-average__percentage"></div>
+          </div>
+
+          <div class="reviews__single-star-average">
+            <div class="single-star-average__amount">1 star</div>
+            <div class="single-star-average__progress-bar">
+              <progress [id]="'1-progress-bar'+review" class="progress-bar__data" max="100"></progress>
+            </div>
+            <div [id]="'1-stars-perc' + review" class="single-star-average__percentage"></div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+</div>
+
+<div *ngIf="isLogged">
+  <div class="reviews-container">
+    <div class="row">
+      <div class="col-12">
+        <nav>
+          <div class="links">
+            <a class="nav-link active" (click)="setActiveLink(0)">Not reviewed</a>
+            <a class="nav-link" (click)="setActiveLink(1)">Reviewed</a>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <app-not-reviewed-grid id="not-reviewed-grid"></app-not-reviewed-grid>
+  <app-reviewed-grid id="reviewed-grid" style="display: none"></app-reviewed-grid>
+</div>
+</body>
+<app-footer></app-footer>

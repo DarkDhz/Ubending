@@ -7,7 +7,7 @@ from data.ProductQueries import *
 class TestSearchQueries(TestCase):
     def test_search_by_category(self):
         technologyItems = {'category_id': 'Technology', 'description': 'Lo vendo porque no lo uso', 'image': 'jpeg',
-                           'name': 'Reloj', 'owner_id': 3, 'price': 200, 'product_id': 1, 'state': 'Brandnew'}
+                           'name': 'Reloj', 'owner_id': 3, 'price': 200, 'product_id': 1, 'state': 'Brandnew', 'following': False, 'owner_name': 'Arnau'}
         self.assertEqual(searchByCategory(6)[0], technologyItems)
 
     def test_search_by_name(self):
@@ -16,7 +16,7 @@ class TestSearchQueries(TestCase):
 
         # SEARCH FOR EXISTING PRODUCT
         smartwatch = {'category_id': 'Technology', 'description': 'Lo vendo porque no lo uso', 'image': 'jpeg',
-                           'name': 'Reloj', 'owner_id': 3, 'price': 200, 'product_id': 1, 'state': 'Brandnew'}
+                           'name': 'Reloj', 'owner_id': 3, 'price': 200, 'product_id': 1, 'state': 'Brandnew', 'following': False, 'owner_name': 'Arnau'}
         self.assertEqual(searchByName("Reloj")[0], smartwatch)
 
         # user and product should be created for testing purposes and then deleted when deleteProduct(productID, userID) and deleteUser(userID) work fine
@@ -28,5 +28,5 @@ class TestSearchQueries(TestCase):
 
         # SEARCH FOR EXISTING PRODUCT
         smartwatch = {'category_id': 'Technology', 'description': 'Lo vendo porque no lo uso', 'image': 'jpeg',
-                      'name': 'Reloj', 'owner_id': 3, 'price': 200, 'product_id': 1, 'state': 'Brandnew'}
+                      'name': 'Reloj', 'owner_id': 3, 'price': 200, 'product_id': 1, 'state': 'Brandnew', 'following': False, 'owner_name': 'Arnau'}
         self.assertEqual(searchByCategoryAndName(6, smartwatch['name'])[0], smartwatch)

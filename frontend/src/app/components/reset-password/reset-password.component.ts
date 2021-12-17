@@ -22,7 +22,7 @@ export class ResetPasswordComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.token = this.route.snapshot.paramMap.get('token');
+    //this.token = this.route.snapshot.paramMap.get('token');
   }
 
   get password1(){
@@ -56,7 +56,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onClickReset(){
-    const path = environment.path + `/api/reset_password/` + this.token
+    const path = environment.path + `/api/reset_password/` + (<HTMLInputElement>document.getElementById("token_input")).value;
 
     const params = {
       password: (<HTMLInputElement>document.getElementById("newPassword")).value,

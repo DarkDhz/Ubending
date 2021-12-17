@@ -12,8 +12,8 @@
     <a class="btn" data-filter="all">All</a>
     <a class="btn" data-filter="Cars">Cars</a>
     <a class="btn" data-filter="Bikes">Bikes</a>
-    <a class="btn" data-filter="Home">Home</a>
     <a class="btn" data-filter="Toys">Toys</a>
+    <a class="btn" data-filter="Home">Home</a>
     <a class="btn" data-filter="Sports">Sports</a>
     <a class="btn" data-filter="Technology">Technology</a>
     <a class="btn" data-filter="Videogames">Videogames</a>
@@ -32,16 +32,18 @@
     <span style="--i:1"></span>
     <span style="--i:2"></span>
     <span style="--i:3"></span>
-    <div [id]="'liketext-' + product['product_id']" class="like-text">Wishlisted!</div>
+    <!-- <div *ngIf="product['following']" [id]="'liketext-' + product['product_id']" class="like-text">Wishlisted!</div>
+    <div *ngIf="!product['following']" [id]="'liketext-' + product['product_id']" class="like-text">Wishlisted!</div>-->
     <div class="glass">
       <div class="like-ctn">
-        <i [id]="'heart-' + product['product_id']" class="heart-class" (click)="wishlistAnimation(product['product_id'])"></i>
+        <i *ngIf="product['following']" [id]="'heart-' + product['product_id']" class="heart-class press" (click)="wishlistAnimation(product['product_id'])"></i>
+        <i *ngIf="!product['following']" [id]="'heart-' + product['product_id']" class="heart-class" (click)="wishlistAnimation(product['product_id'])"></i>
       </div>
       <div class="img-product">
         <img id="img" src="https://ubending.s3.eu-west-3.amazonaws.com/product{{ product['product_id'] }}.{{ product['image'] }}">
       </div>
       <div class="content-box">
-        <h2>{{product['name']}}<br><i>{{product['price']}}€</i><br></h2>
+        <h2>{{product['name']}}<h3>@{{product['owner_name']}}</h3><br><i>{{product['price']}}€</i><br></h2>
         <a class="buy-btn" (click)="openDialogPayment(product['product_id'],product['name'],product['description'],product['price'],product['image'])">
           Buy Now
         </a>

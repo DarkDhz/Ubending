@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import axios from "axios";
 import {environment} from "../../enviroment";
@@ -53,6 +53,7 @@ export class ProductsComponent implements OnInit {
     }
     this.getProducts(this.category)
 
+
     const products = document.getElementsByClassName("product_name")
     const btns = document.querySelectorAll('.btn');
     const storeProducts = document.getElementsByClassName("product_card")
@@ -80,20 +81,56 @@ export class ProductsComponent implements OnInit {
 
       });
     }
-
-
   }
 
   wishlistAnimation(num: number) {
-    const heart = document.getElementById('heart-'+num);
-    const like = document.getElementById('liketext-'+num);
-    heart!.classList.toggle('press');
-    like!.classList.toggle('press');
+    if (!this.isLogged) {
+      this.loginRequiered()
+    } else {
+      const heart = document.getElementById('heart-'+num);
+      //const like = document.getElementById('liketext-'+num);
+      const click = heart!.classList.toggle('press');
+      //like!.classList.toggle('press');
+
+      if (click) {
+        this.follow(num)
+      } else {
+        this.unfollow(num)
+      }
+    }
+  }
+
+  follow(id: number) {
+    const path = environment.path + '/api/wishlist/' + this.token + "/" + id
+    axios.post(path)
+      .then((res) => {
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  unfollow(id: number) {
+    const path = environment.path + '/api/wishlist/' + this.token + "/" + id
+    axios.delete(path)
+      .then((res) => {
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  isFollowing(id: number, value: boolean) {
+    if (value) {
+      return ['press']
+    }
+    return []
   }
 
   loginRequiered() {
     this.router.navigate(['/login-signup']);
   }
+
   searchByName(){
     const search = document.getElementById("search"); //pass the id of the input of searchbar
     // @ts-ignore
@@ -159,7 +196,7 @@ export class ProductsComponent implements OnInit {
   openDialogPayment(idProduct:Number,nameProduct:String,descProduct:String,priceProduct:Number,imagePath:String) {
     if (this.isLogged) {
       const dialogRef = this.dialog.open(Payment, {panelClass: 'custom-modalbox',
-      data: {idProduct: idProduct,nameProduct: nameProduct,priceProduct:priceProduct, descProduct:descProduct,image: imagePath}});
+        data: {idProduct: idProduct,nameProduct: nameProduct,priceProduct:priceProduct, descProduct:descProduct,image: imagePath}});
 
       dialogRef.afterClosed().subscribe(result => {
 
@@ -180,10 +217,10 @@ export class ProductsComponent implements OnInit {
 
 export class Payment {
   userEmail = new FormGroup({
-    email: new FormControl('', [
-      Validators.required,
-      Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
-  ,
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
+      ,
       name: new FormControl('', [
         Validators.required,
         Validators.pattern("^[a-zA-Z]{2,10} [a-zA-Z ]{2,100}$")]),
@@ -193,7 +230,7 @@ export class Payment {
         Validators.pattern("^[a-zA-Z0-9]{16,16}$")]),
       date: new FormControl('', [
         Validators.required,
-        Validators.pattern("^[0-12]+/+[0-30]{2,2}$")]),
+        Validators.pattern("^[0-12]+/+[0-9]{2,2}$")]),
       CVV: new FormControl('', [
         Validators.required,
         Validators.pattern("^[0-9]{3,3}$")]),
@@ -205,7 +242,7 @@ export class Payment {
         Validators.pattern("^[a-zA-Z0-9 ]{2,100}$")])
     }
 
-    );
+  );
 
   showAlertInvalidEmail = false;
   showAlertInvalidName = false;
@@ -222,13 +259,13 @@ export class Payment {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,private uploadService: UploadService,
     private router: Router) {
 
-      const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
-      if (currentUser != null) {
-        this.token = currentUser.token;
-      } else {
-        alert('NOT LOGGED IN')
-        this.router.navigate(['/home']);
-      }
+    const currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+    if (currentUser != null) {
+      this.token = currentUser.token;
+    } else {
+      alert('NOT LOGGED IN')
+      this.router.navigate(['/home']);
+    }
 
 
   }
@@ -236,7 +273,7 @@ export class Payment {
     this.dialogRef.close();
   }
   get emailUser(){
-      return this.userEmail.get('email')
+    return this.userEmail.get('email')
   }
   get cardUser(){
     return this.userEmail.get('cardNumber')

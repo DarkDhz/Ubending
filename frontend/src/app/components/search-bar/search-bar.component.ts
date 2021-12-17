@@ -57,7 +57,6 @@ export class SearchBarComponent implements OnInit {
         console.error(error)
       })
     }
-
   }
 
 
@@ -67,6 +66,14 @@ export class SearchBarComponent implements OnInit {
   onClickSignIn(){
     // @ts-ignore
     this.$router.replace({path: '/', query: {}})
+  }
+
+  onClickReviews() {
+    this.router.navigate(['/reviews'])
+  }
+
+  onClickProducts() {
+    this.router.navigate(['/products'])
   }
 
   menuToggle(){
@@ -85,6 +92,10 @@ export class SearchBarComponent implements OnInit {
 
   editProfile() {
     this.router.navigate(['/user-profile'])
+  }
+
+  wishlist() {
+    this.router.navigate(['/wishlist'])
   }
 
   goToProducts() {

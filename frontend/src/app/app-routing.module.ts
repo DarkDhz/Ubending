@@ -9,6 +9,9 @@ import {ResetPasswordComponent} from "./components/reset-password/reset-password
 import { ProfileComponent } from './profile/profile.component';
 import { ProductsComponent } from './components/products/products.component';
 import {ProductCardComponent} from "./components/product-card/product-card.component";
+import {ReviewsComponent} from "./components/reviews/reviews.component";
+import {WishlistComponent} from "./components/wishlist/wishlist.component";
+
 
 
 const routes: Routes = [
@@ -17,10 +20,12 @@ const routes: Routes = [
   { path: 'user-products', component: UserProductsComponent},
   { path: 'home', component: HomeComponent},
   { path: 'recover', component: RecoverPasswordComponent},
-  { path: 'reset/:token', component: ResetPasswordComponent},
+  { path: 'reset', component: ResetPasswordComponent},
   { path: 'user-profile', component: ProfileComponent},
   { path: 'products', component: ProductsComponent},
+  { path: 'wishlist', component: WishlistComponent},
   { path: 'cards', component: ProductCardComponent},
+  { path: 'reviews', component: ReviewsComponent}
 ];
 
 @NgModule({
@@ -34,4 +39,4 @@ const routes: Routes = [
 export class AppRoutingModule { }
 export  const routingComponents = [LogInSignUpComponent,UserProductsComponent, HomeComponent,
                                     RecoverPasswordComponent, ResetPasswordComponent, ProductsComponent,
-                                    ProfileComponent]
+                                    ProfileComponent, ReviewsComponent, WishlistComponent, ProductCardComponent]

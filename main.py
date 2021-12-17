@@ -20,10 +20,10 @@ if config_decouple('PRODUCTION', cast=bool, default=False):
 app.config.from_object(environment)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
-app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+app.config['MAIL_SERVER'] = 'ssl0.ovh.net'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'ubending.social@gmail.com'
+app.config['MAIL_USERNAME'] = 'ubending@darkhorizon.es'
 app.config['MAIL_PASSWORD'] = 'ubending2021'
 api = Api(app)
 mail_svr = Mail(app)
@@ -32,13 +32,14 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 
 
 @app.route("/user-profile")
-@app.route("/reset/")
 @app.route("/reset")
+@app.route("/reviews")
 @app.route("/recover")
 @app.route("/home")
 @app.route("/user-products")
 @app.route("/login-signup")
 @app.route("/products")
+@app.route("/wishlist")
 @app.route('/')
 def mainPage():
     return render_template('index.html', static_url_path='', static_folder='dist', template_folder='dist')
@@ -68,13 +69,15 @@ api.add_resource(MyProductListResource, '/myproducts/<string:token>', methods=['
 
 
 # WISHLIST RESOURCES
-api.add_resource(WishlistResource, '/wishlist/<string:token>')
+api.add_resource(WishlistResource, '/api/wishlist/<string:token>', '/api/wishlist/<string:token>/<int:product_id>')
 
 # BUY PRODUCT RESOURCE
 api.add_resource(BuyProduct, '/api/buy/<int:product_id>/<string:token>', methods=['POST'])
 
 # RATE ENDPOINT
 api.add_resource(RatingsProductResource, '/api/ratings/<int:user_id>', methods=['GET'])
+api.add_resource(ToRateProductListResource, '/api/to_rate/<string:token>', methods=['GET'])
+api.add_resource(RatedProductListResource, '/api/rated/<string:token>', methods=['GET'])
 api.add_resource(RateProductResource, '/api/rate/<int:product_id>/<string:token>', methods=['POST'])
 
 if __name__ == '__main__':

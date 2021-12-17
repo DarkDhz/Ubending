@@ -19,6 +19,91 @@ html{
 }
 
 /*--------------Nav Bar----------------*/
+.product__description{
+  text-align: center;
+  background: #eee;
+
+}
+
+.product__description p{
+  font-style: italic;
+  font-weight: 700;
+  margin: 0;
+  position: relative;
+}
+
+.product__description img {
+  width: 25%;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 20px;
+}
+
+.containers{
+  width: 90%;
+  margin: 0 auto;
+}
+
+.title{
+  margin-bottom: 10px;
+  padding-bottom: 40px;
+  text-align: center;
+  position: relative;
+}
+
+.title::before{
+  content: '';
+  width: 200px;
+  height: 3px;
+  background: #dbdbdb;
+  opacity: .6;
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.title::after{
+  content: '\f004';
+  font-family: FontAwesome;
+  color: #dbdbdb;
+  width: 50px;
+  height: 20px;
+  line-height: 20px;
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  background: #eee;
+  transform: translateX(-50%);
+  font-size: 16px;
+}
+
+.title p{
+  color: #999;
+  font-style: italic;
+  font-weight: 700;
+  margin: 0;
+}
+
+.title h1{
+  font-size: 44px;
+  color: #131313;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.title h1 span{
+  color: #646DCC;
+}
+
+.bg-color{
+  /*background: linear-gradient(135deg, #646DCC 0%, #C86BC3 100%);*/
+  background: #eee;
+  padding: 60px 0;
+  font-family: 'Roboto', sans-serif;
+}
 
 nav{
   height: 80px;
@@ -384,7 +469,7 @@ mat-dialog-container{
   position: absolute;
   top: 0;
   width: 250px;
-  height: 280px;
+  height: 250px;
   display: block;
   background: #000000;
   border-radius: 50%;
@@ -413,7 +498,7 @@ mat-dialog-container{
 .card .glass{
   position: absolute;
   width: 320px;
-  height: 29rem;
+  height: 420px;
   background: rgba(255,255,255,0.5);
   border-radius: 20px;
   border: 1px solid #fff;
@@ -459,12 +544,6 @@ mat-dialog-container{
   font-style: normal;
 }
 
-.card .glass .content-box h2 h3{
-  font-size: 15px;
-  font-weight: 400;
-  font-style: italic;
-  color: #646DCC;
-}
 .card .glass .content-box .buy-btn{
   position: relative;
   padding: 9px 14px;
@@ -473,7 +552,6 @@ mat-dialog-container{
   border-radius: 5px;
   border: 1px solid #646DCC;
   color: #646DCC;
-  cursor: pointer;
 }
 
 .card .glass .content-box .buy-btn:hover{
@@ -521,8 +599,8 @@ mat-dialog-container{
   border: 1px solid #646DCC;
   display:inline-block;
   margin:0 0 15px;
-  color: rgba(100, 109, 204, 0.36);
   transition:.2s;
+  color:#e23b3b;
 }
 
 .heart-class:hover {
@@ -548,11 +626,11 @@ mat-dialog-container{
   font-weight: bolder;
   font-size: 45px;
   animation: fade 2s;
+  color: rgba(100, 109, 204, 0.36);
 }
 
 .heart-class.press {
   animation: size .4s;
-  color:#e23b3b;
 }
 
 @keyframes fade {
