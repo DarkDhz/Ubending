@@ -47,8 +47,8 @@ def getAllProductsOfUserByID(user_id):
     db = connection.connect(host=db_host, user=db_user, password=db_password, database=database)
     mycursor = db.cursor()
 
-    query = "SELECT * FROM Products WHERE owner_id = %s"
-    values = (user_id,)
+    query = "SELECT * FROM Products WHERE owner_id = %s AND buyed = 0"
+    values = (user_id,) 
     mycursor.execute(query, values)
 
     myresult = mycursor.fetchall()
