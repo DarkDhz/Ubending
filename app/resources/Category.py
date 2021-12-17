@@ -11,16 +11,6 @@ class CategoryListResource(Resource):
         else:
             return result, 200
 
-    def post(self, id):
-        return {'message': "Not developed yet"}, 404
-
-    def delete(self, id):
-        return {'message': "Not developed yet"}, 404
-
-    def put(self, user_id, product_id):
-
-        return {'message': "Not developed yet"}, 404
-
 
 class CategoryResource(Resource):
 
@@ -31,11 +21,3 @@ class CategoryResource(Resource):
         else:
             return result, 200
 
-    def post(self, id):
-        return {'message': "Not developed yet"}, 404
-
-    def delete(self, id):
-        return {'message': "Not developed yet"}, 404
-
-    def put(self, user_id, product_id):
-        return {'message': "Not developed yet"}, 404

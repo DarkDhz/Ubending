@@ -1,16 +1,18 @@
 from unittest import TestCase
-from data.ProductQueries import _toJson, convertState, getAllProductsOfUserByID, getProductById, getProductByIds, addProduct, deleteProduct, updateProduct
+from data.ProductQueries import *
 from data.UserQueries import *
-import requests
+from data.SearchQueries import *
+from data.TestQueries import *
 
 
 class TestProductQueries(TestCase):
     product = [33, 1, 'potato', 'a really nice potato', 5.0, 1, None, None]
 
     def test__to_json(self):
-        self.assertEqual(_toJson(self.product), {'product_id': 33, 'owner_id': 1, 'name': 'potato',
-            'description': 'a really nice potato', 'price': 5.0, 'state': 'Used',
-            'image': None, 'category_id': None}, 'The JSON do not match')
+        self.assertEqual(productToJson(self.product), {'product_id': 33, 'owner_id': 1, 'name': 'potato',
+                                                       'description': 'a really nice potato', 'price': 5.0,
+                                                       'state': 'Used',
+                                                       'image': None, 'category_id': None}, 'The JSON do not match')
 
     def test_convert_state(self):
         self.assertEqual(convertState(0), "Brandnew")
@@ -64,15 +66,37 @@ class TestProductQueries(TestCase):
         self.assertEqual(404, item)
 
         # Now search for 1st product
-        #TODO: Look for an item id that exists
+        # TODO: Look for an item id that exists
+
+    def test_buy_product(self):
+        # get the buyer and the seller ids
+        seller = getAccountByEmail('testingseller@gmail.com')['user_id']
+        buyer = getAccountByEmail('testingreal@gmail.com')['user_id']
+
+        # seller adds a product
+        productData = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": None,
+                       "category_id": 2}
+        testProduct = addProduct(seller, productData)
+
+        # seller tries to buy it's product
+        response = setBuyed(user_id=seller, product_id=testProduct)
+        self.assertEqual(response, 400)
+
+        # now user tries to buy the product
+        response = setBuyed(user_id=buyer, product_id=testProduct)
+        self.assertEqual(response, 200)
+
+        # user tries to buy the product that is already bought
+        response = setBuyed(user_id=buyer, product_id=testProduct)
+        self.assertEqual(response, 400)
+
+        # finally delete the test product
+        deleteProduct(testProduct, seller)
 
     def test_get_product_by_ids(self):
         # First search a product from a user that does not exist
         item = getProductByIds(0, 1)
         self.assertEqual(404, item)
-
-        # Now search product for existing user
-        #TODO: Do item ids even exist? Like seriously
 
     def test_add_product(self):
         userID = addUserToDB("userPostingProduct-TESTAddProduct", "userpostingtest@gmail.com", "aaa")
@@ -97,7 +121,7 @@ class TestProductQueries(TestCase):
         productID = addProduct(userID, data)
         productDeleted = deleteProduct(productID, userID)
 
-        self.assertEqual(productDeleted, None,  "Product does exist.")
+        self.assertEqual(productDeleted, None, "Product does exist.")
 
         deleteUserFromDB(userID)
 
@@ -107,7 +131,8 @@ class TestProductQueries(TestCase):
         data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": None, "category_id": 2}
         productID = addProduct(userID, data)
 
-        newData = {"name": "Bike", "description": "Old used bike", "price": 200, "state": 1, "image": None, "category_id": 2}
+        newData = {"name": "Bike", "description": "Old used bike", "price": 200, "state": 1, "image": None,
+                   "category_id": 2}
         updateProduct(productID, userID, newData)
 
         product = getProductById(productID)
@@ -121,6 +146,56 @@ class TestProductQueries(TestCase):
 
         deleteProduct(productID, userID)
         deleteUserFromDB(userID)
+
+
+class TestRateQueries(TestCase):
+
+    def test_rate_product(self):
+        # get the buyer
+        buyer = getAccountByEmail("testingreal@gmail.com")['user_id']
+
+        # get a random product
+        product = searchByName('')[0]['product_id']
+
+        # add invalid rating value
+        result = addRating(buyer, product, 6)
+        self.assertEqual(result, 404, "invalid rating")
+
+        # rate an invalid product
+        result = addRating(buyer, -1, 2)
+        self.assertEqual(result, 404, "invalid product")
+
+        # rate a valid product
+        result = addRating(buyer, product, 5)
+
+        # remove the added ratings
+        removeRatings(buyer)
+
+        self.assertEqual(result, 201, "invalid rating")
+
+    def test_get_mean_rating_product(self):
+        seller = getAccountByEmail('testingseller@gmail.com')['user_id']
+        data = {"name": "PC", "description": "New PC", "price": 1200, "state": 0, "image": None, "category_id": 2}
+        p1 = addProduct(seller, data)
+        p2 = addProduct(seller, data)
+
+        # get the buyer
+        buyer = getAccountByEmail("testingreal@gmail.com")['user_id']
+
+
+        # rate the products
+        addRating(buyer, p1, 5)
+        addRating(buyer, p2, 4)
+
+        # get mean
+        mean = getMean(seller)
+
+        # remove the added ratings
+        removeRatings(buyer)
+        deleteProduct(p1, seller)
+        deleteProduct(p2, seller)
+
+        self.assertEqual(mean, 4.5, "invalid mean")
 
 """
 class TestProductRequests(TestCase):
@@ -157,14 +232,6 @@ class TestProductRequests(TestCase):
         self.assertEqual(404, x.status_code, "Product does exist.")
 """
 
-
-
-
-
-
-
-
-
 """
 # get a product
 url = 'http://127.0.0.1:5000/user/3/product'
@@ -192,3 +259,41 @@ myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0OTEzNywiZXhwIjoxNjM2NjQ5N
 x = requests.get(url, data=myobj)
 x.json()
 """
+
+from data.SearchQueries import *
+
+
+class TestWhishlist(TestCase):
+    # GET TESTING USER
+    userID = getAccountByEmail('testingreal@gmail.com')['user_id']
+
+    def test_get_following_products_list(self):
+        # Get some products to user whishlist
+        products = searchByName('')[:3]
+
+        for item in products:
+            item.pop('following')
+            item.pop('owner_name')
+
+        p1 = products[0]['product_id']
+        p2 = products[1]['product_id']
+        p3 = products[2]['product_id']
+
+        followProduct(p1, self.userID)
+        followProduct(p2, self.userID)
+        followProduct(p3, self.userID)
+
+        checkIfFollow = getFollowingProduct(self.userID, p1)
+
+        # Get product list
+        result = getFollowingProductsList(self.userID)
+
+        # unfollow the products
+        unfollowProduct(p1, self.userID)
+        unfollowProduct(p2, self.userID)
+        unfollowProduct(p3, self.userID)
+
+        self.assertTrue(checkIfFollow)
+        self.assertEqual(result, products, "results do not match")
+
+

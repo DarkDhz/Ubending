@@ -1,0 +1,132 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Cards */
+.cards {
+  display: grid;
+  position: relative;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  padding: 70px 30px 50px;
+  z-index: 10;
+}
+
+.cards .cards-inner {
+  display: block;
+  position: relative;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(90deg, rgba(132,140,230,.5) 0%, rgba(126,104,193,.5) 58%, rgba(149,159,255,.5) 100%);
+  backdrop-filter: blur(80px);
+  border: 1px solid #646DCC;
+  padding: 20px;
+  border-radius: 5px;
+  transition: box-shadow 0.4s;
+}
+
+.cards .cards-inner:hover {
+  box-shadow: 0 5px 20px rgba(1, 45, 128, 0.5);
+}
+
+.cards .cards-inner div i {
+  margin-right: 20px;
+  font-size: 24px;
+}
+
+.cards .cards-inner div p {
+  margin-top: 20px;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+@media (min-width: 600px) {
+  main h1 {
+    max-width: 500px;
+    margin: auto;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 912px) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1100px;
+    margin: auto;
+  }
+}
+
+.img-custom{
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  z-index: 1;
+  overflow: hidden;
+  height: 15vw;
+  object-fit: cover;
+  border-radius: 32px;
+}
+
+/********************STARS*******************/
+
+.average-ratings__stars {
+  display: flex;
+  align-items: center;
+  padding: 0 25px;
+  width: 250px;
+  height: 50px;
+  border-radius: 32px;
+  background-color: rgba(245, 248, 255, 0.7);
+  margin-bottom: 8px;
+  margin-top: 20px;
+  z-index: 2;
+}
+
+.stars-outer {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 1.7rem;
+}
+
+.stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  font-size: 1.7rem;
+}
+
+.stars-outer::before {
+  content: '\f005 \2000 \f005 \2000 \f005 \2000 \f005 \2000 \f005';
+  font-family: FontAwesome;
+  font-weight: 900;
+  color: #ccc;
+}
+
+.stars-inner::before {
+  content: '\f005 \2000 \f005 \2000 \f005 \2000 \f005 \2000 \f005';
+  font-family: FontAwesome;
+  font-weight: 900;
+  color: #f8ce0b;
+}

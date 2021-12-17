@@ -4,12 +4,19 @@
   </button>
   <div class="container" id="container">
     <div class="form-container sign-up-container">
-      <form action="#">
+      <form [formGroup]="userEmail" action="#">
         <h1>Create Account</h1>
-        <input type="email" placeholder="Email" id="email-signup"/>
-        <input type="password" placeholder="Password" id="password-signup"/>
-        <input type="password" placeholder="Repeat password" id="rep-password-signup"/>
+        <input [class.is-invalid]="emailUser!.invalid && emailUser!.touched" class="form-control" formControlName="email" type="email" placeholder="Email" id="email-signup"/>
+        <input [class.is-invalid]="passwordUser!.invalid && passwordUser!.touched" class="form-control" formControlName="password" type="password" placeholder="Password" id="password-signup"/>
+        <input [class.is-invalid]="confirmPasswordUser" class="form-control" formControlName="confirmPassword" type="password" placeholder="Repeat password" id="rep-password-signup"/>
         <button style="margin-top: 20px" (click)="onClickSignUp()">Sign Up</button>
+        <small *ngIf="showAlertRequired" class="text-danger">All fields are required</small>
+        <!--question mark(?) is a safe navigator operator-->
+        <small *ngIf="showAlertInvalidEmail" class="text-danger">Please provide a valid email address</small>
+        <small *ngIf="showAlertInvalidPassword" class="text-danger">Please provide a valid password<br> (8 characters long, Lowercase and Uppercase letters, Numbers)</small>
+        <small *ngIf="showAlertDiferentPassword" class="text-danger">Please provide the same password</small>
+        <small *ngIf="showAlertErrorBE" class="text-danger">{{errorBE}}</small>
+
       </form>
     </div>
     <div class="form-container sign-in-container">
@@ -19,6 +26,8 @@
         <input type="password" placeholder="Password" id="password_signin"/>
         <a href="#" (click)="onClickForgot()" routerLink="/recover">Forgot your password?</a>
         <button (click)="onClickSignIn()">Sign In</button>
+        <small *ngIf="showAlertErrorLoginBE" class="text-danger">{{errorLoginBE}}</small>
+
       </form>
     </div>
     <div class="overlay-container">

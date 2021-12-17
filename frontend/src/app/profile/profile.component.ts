@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import axios from "axios";
 import {Router} from "@angular/router";
+import {environment} from "../enviroment";
+import {UploadService} from "../services/upload.service";
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +13,10 @@ export class ProfileComponent implements OnInit {
 
   token = "null";
 
+  // @ts-ignore
+  user_id : number;
+  // @ts-ignore
+  image_end: string;
   // @ts-ignore
   name:object;
   // @ts-ignore
@@ -25,8 +31,11 @@ export class ProfileComponent implements OnInit {
   user = {username: "LLUIS", password: "123456789Aa",confirmPassword: "123456789Aa",position: "08036"}
   showAlertError: Boolean = false;
   errorMessage = ''
+  show = false;
 
-  constructor(private router: Router) {}
+  params = {};
+
+  constructor(private router: Router, private uploadService: UploadService) {}
 
   ngOnInit(): void {
 
@@ -53,11 +62,19 @@ export class ProfileComponent implements OnInit {
   }
 
   getUser(){
-    const path = `https://ubending4.herokuapp.com/api/userinfo/` + this.token
+    const path = environment.path + `/api/userinfo/` + this.token
     axios.get(path)
       .then((res) => {
         // @ts-ignore
         this.name.value = res.data.username
+        // @ts-ignore
+        this.user_id = res.data.user_id
+        // @ts-ignore
+        this.image_end = res.data.userphoto
+        if ((this.image_end != 'null') && (this.image_end != null)) {
+          this.show = true
+        }
+
         // @ts-ignore
         let loc = res.data.location
 
@@ -80,10 +97,26 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  // @ts-ignore
+  selectedFiles : FileList;
+
+  upload(filename: String) {
+    const file = this.selectedFiles.item(0);
+    // @ts-ignore
+    const extension = file.type.split('/').pop();
+    this.uploadService.uploadFile(file, filename + "." + extension);
+  }
+
+  // @ts-ignore
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+  }
+
   changeProfile(){
-    const path = `https://ubending4.herokuapp.com/api/userinfo/` + this.token
+    const path = environment.path + `/api/userinfo/` + this.token
     this.showAlertError = false;
-    const params = {
+    if (this.selectedFiles == undefined) {
+      this.params = {
         // @ts-ignore
         username: this.name.value,
         // @ts-ignore
@@ -93,10 +126,32 @@ export class ProfileComponent implements OnInit {
         // @ts-ignore
         location: this.position.value
       }
+    } else {
 
-    axios.put(path, params)
+      this.params = {
+        // @ts-ignore
+        username: this.name.value,
+        // @ts-ignore
+        password: this.password.value,
+        // @ts-ignore
+        repeat_password: this.confirmPassword.value,
+        // @ts-ignore
+        location: this.position.value,
+        // @ts-ignore
+        userphoto: this.selectedFiles.item(0).type.split('/').pop()
+      }
+    }
+
+
+    axios.put(path, this.params)
       .then((res) => {
         alert('USER INFO UPDATED')
+        if (this.selectedFiles != undefined) {
+          this.uploadService.deleteFile("user"+this.user_id+"."+this.image_end)
+          this.upload("user" + this.user_id)
+        }
+        localStorage.removeItem('username')
+        localStorage.removeItem('location')
         this.router.navigate(['/home'])
       })
       .catch((error) => {
@@ -104,39 +159,5 @@ export class ProfileComponent implements OnInit {
         this.errorMessage = error.response.data.message
       })
   }
-
-  /*
-  get password1(){
-    // @ts-ignore
-    return this.password?.value
-  }
-
-  get password2(){
-    // @ts-ignore
-    return this.confirmPassword?.value
-  }
-
-  validatePasswords(){// @ts-ignore
-    if (this.password?.value != this.confirmPassword?.value){
-      this.showAlertInvalid = false;
-      this.showAlertDifferentPasswords = true;
-
-    } else {
-      // @ts-ignore
-      if(this.name.value.length <1 || this.position.value.length <1 || this.password.value.length <1 || this.confirmPassword.value.length <1){
-        this.showAlertInvalid = true;
-        this.showAlertDifferentPasswords = false;
-      }
-      else{
-        this.changeProfile()
-      }
-
-
-    }
-  }
-  */
-
-
-
 
 }
