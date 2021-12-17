@@ -195,7 +195,7 @@ class TestRateQueries(TestCase):
 
         self.assertEqual(mean, 4.5, "invalid mean")
     """
-
+"""
 class TestProductRequests(TestCase):
     def test_get_product(self):
         # CREATE A USER
@@ -228,13 +228,15 @@ class TestProductRequests(TestCase):
         x = requests.post(url, data=myobj)
 
         self.assertEqual(404, x.status_code, "Product does exist.")
-"""
 
-"""
+
 # get a product
 url = 'http://127.0.0.1:5000/user/3/product'
 myobj = {'price': '299', 'name': 'testing', 'description': 'hola', 'state': 0}
 x = requests.post(url, data=myobj)
+
+
+
 
 
 url = 'http://127.0.0.1:5000/user/1/product/1'
@@ -256,7 +258,7 @@ url = 'http://127.0.0.1:5000/myproducts'
 myobj = {'token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYzNjY0OTEzNywiZXhwIjoxNjM2NjQ5NzM3fQ.eyJ1c2VyX2lkIjozfQ.U4fjXix65nT_1xqVKQGVKZoh818kh0Rc1zlUSLMtLnkHOktZ4Rm13YCImedCnZNxS6lTbiI6YSdReBJcCJZ7hQ'}
 x = requests.get(url, data=myobj)
 x.json()
-"""
+
 
 from data.SearchQueries import *
 
