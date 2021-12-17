@@ -1,0 +1,20 @@
+<body>
+<div class="container">
+  <div class="cards">
+    <div class="cards-inner"*ngFor="let product of p">
+      <div>
+        <i></i>
+      </div>
+      <div>
+        <h4>Seller{{product}}</h4>
+      </div>
+      <div class="average-ratings__stars">
+        <div class="stars-outer">
+          <div [id]="'starts-inner-' + product" class="stars-inner"></div>
+        </div>
+        <span [id]="'rating-score-' + product" class="stars__average-rating-score"></span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>

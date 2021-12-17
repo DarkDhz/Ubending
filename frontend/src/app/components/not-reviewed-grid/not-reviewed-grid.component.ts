@@ -13,6 +13,7 @@ export class NotReviewedGridComponent implements OnInit {
 
   token = "null";
   isLogged = false;
+  p = [1,2,3,4,5,6,7,8];
   state = {products: []}
 
   constructor(public dialog: MatDialog) {

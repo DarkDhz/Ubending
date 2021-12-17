@@ -34,7 +34,6 @@ export class ReviewsComponent implements OnInit {
       this.token = currentUser.token;
       this.isLogged = true;
     }
-    this.isLogged = true;
   }
 
   ngOnInit(): void {
@@ -118,7 +117,14 @@ export class ReviewsComponent implements OnInit {
         links[i].classList.remove('active');
       }
 
+      if(e==0){
+        document.getElementById('not-reviewed-grid')!.style.display = 'block';
+        document.getElementById('reviewed-grid')!.style.display = 'none';
 
+      } else if(e==1){
+        document.getElementById('not-reviewed-grid')!.style.display = 'none';
+        document.getElementById('reviewed-grid')!.style.display = 'block';
+      }
     }
   }
 

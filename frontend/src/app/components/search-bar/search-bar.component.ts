@@ -57,8 +57,6 @@ export class SearchBarComponent implements OnInit {
         console.error(error)
       })
     }
-
-    this.isLogged = true;
   }
 
 

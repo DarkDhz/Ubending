@@ -25,6 +25,7 @@ import { ReviewsComponent } from './components/reviews/reviews.component';
 import { RatingComponent } from './components/rating/rating.component';
 import { NotReviewedGridComponent } from './components/not-reviewed-grid/not-reviewed-grid.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
+import { ReviewedGridComponent } from './components/reviewed-grid/reviewed-grid.component';
 
 
 /*import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';*/
@@ -47,7 +48,8 @@ import { WishlistComponent } from './components/wishlist/wishlist.component';
     WishlistComponent,
     ReviewsComponent,
     RatingComponent,
-    NotReviewedGridComponent
+    NotReviewedGridComponent,
+    ReviewedGridComponent
     ],
   imports: [
     BrowserModule,
